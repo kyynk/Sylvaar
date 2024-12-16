@@ -12,6 +12,7 @@ public class KeyboardInputManager : InputManager
         axis = Vector3.zero;
         if (Input.GetKey("w"))
         {
+            Debug.Log("w");
             axis.z = 1.0f;
         }
         if (Input.GetKey("s"))
