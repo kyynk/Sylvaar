@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerControllerClassTemplate : MonoBehaviour
 {
     public enum STATE
     {
