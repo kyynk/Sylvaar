@@ -7,10 +7,14 @@ public class PlayerController : MonoBehaviour
     public Vector3 ModelDefaultRotation;
     private Vector3 movingVec;
 
-    void Start()
+    private Rigidbody rigid;
+    [SerializeField]
+    private bool isThrust = false;
+    private void Awake()
     {
         // the dafault rotation is 180
         model.transform.rotation = Quaternion.Euler(0, 90, 0);
+        rigid = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -34,9 +38,10 @@ public class PlayerController : MonoBehaviour
 
             model.transform.forward = movingVec;
             model.transform.rotation = model.transform.rotation * Quaternion.Euler(ModelDefaultRotation);
-
         }
-        transform.Translate(movingVec * velocity * Time.deltaTime, Space.World);
+        Vector3 newVelocity = movingVec * velocity;
+        newVelocity.y = rigid.velocity.y;
+        rigid.velocity = newVelocity;
     }
 
     public void Move(Vector3 vector)
