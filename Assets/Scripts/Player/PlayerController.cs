@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float velocity = 3.0f;
+    public float jumpThrust = 3.0f;
     public GameObject model;
     public Vector3 ModelDefaultRotation;
     private Vector3 movingVec;
@@ -12,8 +13,6 @@ public class PlayerController : MonoBehaviour
     private bool isThrust = false;
     private void Awake()
     {
-        // the dafault rotation is 180
-        model.transform.rotation = Quaternion.Euler(0, 90, 0);
         rigid = GetComponent<Rigidbody>();
     }
 
@@ -35,17 +34,23 @@ public class PlayerController : MonoBehaviour
         if (movingVec.magnitude > 0.1f)
         {
             // rotate from default direction with movingVec
-
-            model.transform.forward = movingVec;
-            model.transform.rotation = model.transform.rotation * Quaternion.Euler(ModelDefaultRotation);
+            model.transform.forward = Vector3.Slerp(
+                    model.transform.forward, movingVec, 0.1f);
+            //model.transform.rotation = model.transform.rotation * Quaternion.Euler(ModelDefaultRotation);
         }
         Vector3 newVelocity = movingVec * velocity;
-        newVelocity.y = rigid.velocity.y;
+        newVelocity.y = rigid.velocity.y + (isThrust ? 1.0f : 0.0f) * jumpThrust;
         rigid.velocity = newVelocity;
+        isThrust = false;
     }
 
     public void Move(Vector3 vector)
     {
         movingVec = vector;
+    }
+
+    public void Jump(bool _isThrust)
+    {
+        isThrust = _isThrust;
     }
 }
