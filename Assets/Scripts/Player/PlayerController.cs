@@ -7,6 +7,12 @@ public class PlayerController : MonoBehaviour
     public Vector3 ModelDefaultRotation;
     private Vector3 movingVec;
 
+    void Start()
+    {
+        // the dafault rotation is 180
+        model.transform.rotation = Quaternion.Euler(0, 90, 0);
+    }
+
     void Update()
     {
         // Using Transform to Translate.
