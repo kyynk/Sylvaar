@@ -4,7 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     public float velocity = 3.0f;
     public GameObject model;
-
+    public Vector3 ModelDefaultRotation;
     private Vector3 movingVec;
 
     void Update()
@@ -24,7 +24,11 @@ public class PlayerController : MonoBehaviour
 
         if (movingVec.magnitude > 0.1f)
         {
+            // rotate from default direction with movingVec
+
             model.transform.forward = movingVec;
+            model.transform.rotation = model.transform.rotation * Quaternion.Euler(ModelDefaultRotation);
+
         }
         transform.Translate(movingVec * velocity * Time.deltaTime, Space.World);
     }
