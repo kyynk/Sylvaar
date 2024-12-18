@@ -1,5 +1,5 @@
 ﻿// 命名空間，方便組織代碼
-namespace Game.Weapons
+namespace Weapons
 {
     /// <summary>
     /// 定義武器的通用接口

@@ -37,6 +37,7 @@ namespace AVG
                     panel.ShowEvent(null, false);
                     panel.ShowDialogBox(dialog.characterName, dialogContent);
                     panel.ShowChoices(null, null, null, false);
+                    panel.PlayAudio(dialog.voiceClip);
                     break;
                 case "event":
                     eventImage = Resources.Load<Sprite>(
@@ -51,7 +52,9 @@ namespace AVG
                     panel.ShowCharacter(null, false);
                     panel.ShowEvent(null, false);
                     panel.ShowDialogBox(null, null, false);
-                    panel.ShowChoices(dialog.choices, dialog.nextSceneIds, choicePrefab, true);
+                    panel.ShowChoices(dialog.choices, dialog.nextSceneIDs, choicePrefab, true);
+                    panel.PlayAudio(dialog.voiceClip);
+                    AVGMachine.Instance.Pause(true);
                     break;
                 case "narration":
                     dialogContent = dialog.dialogText;
@@ -68,9 +71,7 @@ namespace AVG
         public bool IsDialogComplete()
         {
             TypewriterEffect typewriter = panel.GetComponentInChildren<TypewriterEffect>();
-            // TODO
-            // return typewriter.IsFinished;
-            return false;
+            return typewriter.IsFinished;
         }
     }
 }

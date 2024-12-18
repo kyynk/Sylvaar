@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -85,6 +86,25 @@ namespace AVG
                 button.transform.parent = choicePanel.transform;
                 button.transform.localScale = Vector3.one;
                 button.GetComponentInChildren<TextMeshProUGUI>().text = choices[i];
+                var choiceButton = button.GetComponentInChildren<AVGChoiceButton>();
+                choiceButton.targetDialogID = nextSceneIDs[i];
+                button.GetComponentInChildren<Button>().onClick.AddListener( ()=> choiceButton.BranchDialog() );
+            }
+        }
+
+        public void PlayAudio(string voiceClip)
+        {
+            var voice = Resources.Load<AudioClip>($"Audio/{voiceClip}");
+            if (voice != null)
+            {
+                var aSource = GetComponent<AudioSource>();
+                if (aSource == null)
+                {
+                    aSource = gameObject.AddComponent<AudioSource>();
+                }
+                aSource.Stop();
+                aSource.clip = voice;
+                aSource.Play();
             }
         }
     }

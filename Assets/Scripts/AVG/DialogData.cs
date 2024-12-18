@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 namespace AVG
 {
@@ -13,7 +14,7 @@ namespace AVG
         public string soundEffect;
         public string dialogText;
         public List<string> choices;
-        public List<int> nextSceneIds;
+        [FormerlySerializedAs("nextSceneIds")] public List<int> nextSceneIDs;
         public string animation;
         public string voiceClip;
         public string displayType;
