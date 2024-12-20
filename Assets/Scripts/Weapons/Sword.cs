@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Weapons
+namespace Weapons
 {
     /// <summary>
     /// 實現近戰武器（如劍）的邏輯

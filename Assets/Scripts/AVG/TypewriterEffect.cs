@@ -1,4 +1,5 @@
 using System;
+using Input;
 using TMPro;
 using UnityEngine;
 
@@ -106,6 +107,7 @@ namespace AVG
         }
 
         public bool IsTyping => state == STATE.TYPING;
+        public bool IsFinished => state == STATE.FINISHED;
 
         private void GoToState(STATE targetState)
         {

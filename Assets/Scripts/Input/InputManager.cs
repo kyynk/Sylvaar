@@ -1,25 +1,33 @@
-using UnityEngine.Events;
+using AVG;
 using UnityEngine;
+using UnityEngine.Events;
 
-public abstract class InputManager : MonoBehaviour
+namespace Input
 {
-    public UnityEvent<Vector3> evtDpadAxis;
-    public UnityEvent<bool> evtJump;
-    public UnityEvent<bool> evtRun;
-    public UnityEvent<bool> evtDialogClick;
-    
-    protected abstract void CalculateDpadAxis();
-    protected abstract void CalculateJump();
-    protected abstract void CalculateRun();
-    protected abstract void CalculateDialogClick();
-    protected abstract void PostProcessDpadAxis();
-
-    private void Update()
+    public abstract class InputManager : MonoBehaviour
     {
-        CalculateDpadAxis();
-        CalculateJump();
-        CalculateRun();
-        CalculateDialogClick();
-        PostProcessDpadAxis();
+        public UnityEvent<Vector3> evtDpadAxis;
+        public UnityEvent<bool> evtJump;
+        public UnityEvent<bool> evtRun;
+        public UnityEvent<bool> evtDialogClick;
+    
+        protected abstract void CalculateDpadAxis();
+        protected abstract void CalculateJump();
+        protected abstract void CalculateRun();
+        protected abstract void CalculateDialogClick();
+        protected abstract void PostProcessDpadAxis();
+        // this func for trigger AVG dialog
+        // protected abstract void MuteCharacterMove(bool _isMute);
+
+        private void Update()
+        {
+            // wait for AVG
+            // MuteCharacterMove(!AVGMachine.Instance.IsFinished());
+            CalculateDpadAxis();
+            CalculateJump();
+            CalculateRun();
+            CalculateDialogClick();
+            PostProcessDpadAxis();
+        }
     }
 }

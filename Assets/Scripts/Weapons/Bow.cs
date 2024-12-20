@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Weapons
+namespace Weapons
 {
     /// <summary>
     /// 實現遠程武器（如弓箭）的邏輯
