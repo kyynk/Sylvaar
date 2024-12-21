@@ -22,57 +22,57 @@ namespace Tests
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown("1"))
+            if (Input.GetKeyDown("1"))
             {
                 panel.ShowCharacter(hikari);
             }
 
-            if (UnityEngine.Input.GetKeyDown("2"))
+            if (Input.GetKeyDown("2"))
             {
                 panel.ShowCharacter(akane, position:"left");
             }
 
-            if (UnityEngine.Input.GetKeyDown("3"))
+            if (Input.GetKeyDown("3"))
             {
                 panel.ShowCharacter(null, false);
             }
 
-            if (UnityEngine.Input.GetKeyDown("4"))
+            if (Input.GetKeyDown("4"))
             {
                 panel.ShowDialogBox("akane", "Hello world.");
             }
 
-            if (UnityEngine.Input.GetKeyDown("5"))
+            if (Input.GetKeyDown("5"))
             {
                 panel.ShowDialogBox("hikari", "How are you?");
             }
 
-            if (UnityEngine.Input.GetKeyDown("6"))
+            if (Input.GetKeyDown("6"))
             {
                 panel.ShowDialogBox(null, null, false);
             }
 
-            if (UnityEngine.Input.GetKeyDown("7"))
+            if (Input.GetKeyDown("7"))
             {
                 panel.ShowEvent(event01);
             }
 
-            if (UnityEngine.Input.GetKeyDown("8"))
+            if (Input.GetKeyDown("8"))
             {
                 panel.ShowEvent(event02);
             }
 
-            if (UnityEngine.Input.GetKeyDown("9"))
+            if (Input.GetKeyDown("9"))
             {
                 panel.ShowEvent(null, false);
             }
 
-            if (UnityEngine.Input.GetKeyDown("0"))
+            if (Input.GetKeyDown("0"))
             {
                 panel.ShowChoices(new List<string> { "Yes", "No" }, new List<int> { 0, 0 }, buttonPrefab, true);
             }
 
-            if (UnityEngine.Input.GetKeyDown("-"))
+            if (Input.GetKeyDown("-"))
             {
                 panel.ShowChoices(null, null, null, false);
             }
