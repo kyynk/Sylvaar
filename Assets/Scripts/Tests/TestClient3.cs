@@ -12,7 +12,7 @@ namespace Tests
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown("1"))
+            if (Input.GetKeyDown("1"))
             {
                 AVGMachine.Instance.LoadFromCSV("AVGScripts/scene1.csv");
                 AVGMachine.Instance.Play();
