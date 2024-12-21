@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using Weapons;
 
 namespace Player
 {
@@ -10,7 +11,8 @@ namespace Player
             LOCALMOTION,
             JUMP,
             FALL,
-            ROLL
+            ROLL,
+            ATTACK
         }
 
         [SerializeField]
@@ -28,6 +30,7 @@ namespace Player
         [SerializeField]
         private bool isRunning = false;
         private bool triggerEnter = false;
+        private IWeapon currentWeapon;
 
         private void Awake()
         {
@@ -135,6 +138,13 @@ namespace Player
                         GoToState(STATE.IDLE);
                     }
                     break;
+                case STATE.ATTACK:// the state after attack is idle
+                    stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+                    if (stateInfo.IsName("attack") && stateInfo.normalizedTime >= 1f)
+                    {
+                        GoToState(STATE.IDLE);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -215,5 +225,19 @@ namespace Player
                 }
             }
         }
+
+        public void Attack()
+        {
+            if (state == STATE.ATTACK || currentWeapon == null)
+                return;
+
+            if (currentWeapon.CanAttack())
+            {
+                GoToState(STATE.ATTACK);
+                anim.CrossFadeInFixedTime("attack", 0.1f); // 播放攻擊動畫
+                currentWeapon.Attack();
+            }
+        }
+
     }
 }
