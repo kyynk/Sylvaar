@@ -62,6 +62,11 @@ namespace KeyboardInput
         
         }
 
+        protected override void CalculateInteract()
+        {
+            
+        }
+
         // wait AVG
         // protected override void MuteCharacterMove(bool _isMute)
         // {
