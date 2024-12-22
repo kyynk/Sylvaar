@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IDamageable
     {
         public float Health { get; private set; } = 50f;
         public float MaxHealth { get; private set; } = 50f;
@@ -12,7 +12,7 @@ namespace Enemy
         public void TakeDamage(float damage)
         {
             if (!IsAlive) return;
-
+            Debug.Log("Enemy takes damage!"); 
             Health -= damage;
             Health = Mathf.Clamp(Health, 0, MaxHealth);
 
