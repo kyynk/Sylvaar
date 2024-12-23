@@ -7,14 +7,15 @@ namespace Weapons
     /// </summary>
     public class Sword : MonoBehaviour, IWeapon
     {
-        public string WeaponName => "Sword"; // 武器名稱
-        public float Damage => 50f;         // 傷害
-        public float Range => 2f;           // 攻擊範圍
-        public float CooldownTime => 1f;    // 攻擊冷卻時間
+        public string WeaponName => "Sword";
+        public WeaponType WeaponType => WeaponType.Sword;
+        public float Damage => 50f;
+        public float Range => 2f;
+        public float CooldownTime => 1f;
 
-        private float lastAttackTime;       // 記錄最後一次攻擊的時間
+        private float lastAttackTime;
 
-        private bool isAttacking = false;   // 用於標記當前是否處於攻擊中
+        private bool isAttacking = false;
 
         public void Attack()
         {
