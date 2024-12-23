@@ -234,7 +234,7 @@ namespace Player
             if (currentWeapon.CanAttack())
             {
                 GoToState(STATE.ATTACK);
-                anim.CrossFadeInFixedTime("attack", 0.1f); // 播放攻擊動畫
+                anim.CrossFadeInFixedTime("attack", 0.1f);
                 currentWeapon.Attack();
             }
         }

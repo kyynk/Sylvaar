@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; } // 單例模式實例
+    public static GameManager Instance { get; private set; } 
 
-    [SerializeField] private WeaponFactory weaponFactory; // 武器工廠
+    [SerializeField] private WeaponFactory weaponFactory; 
 
-    private GameObject currentWeapon; // 當前裝備的武器
+    private GameObject currentWeapon; 
 
     private void Awake()
     {
-        // 設置單例模式
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); // 防止跨場景銷毀
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -27,7 +26,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-    // 全局輸入處理（切換武器測試）
     private void Update()
     {
     }

@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace Weapons
 {
-    /// <summary>
-    /// ¹ê²{¬ÞµPªºÅÞ¿è
-    /// </summary>
     public class Shield : MonoBehaviour, IWeapon
     {
         public string WeaponName => "Shield";

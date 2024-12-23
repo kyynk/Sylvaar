@@ -2,9 +2,6 @@
 
 namespace Weapons
 {
-    /// <summary>
-    /// 實現近戰武器（如劍）的邏輯
-    /// </summary>
     public class Sword : MonoBehaviour, IWeapon
     {
         public string WeaponName => "Sword";
