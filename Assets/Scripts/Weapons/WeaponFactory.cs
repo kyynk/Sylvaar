@@ -45,11 +45,5 @@ namespace Weapons
             }
         }
 
-        public GameObject EquipWeapon(string weaponName)
-        {
-            //DestroyCurrentWeapon();
-
-            return CreateWeapon(weaponName);
-        }
     }
 }
