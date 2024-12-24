@@ -34,21 +34,31 @@ namespace Weapons
 
         private void ThrowBomb()
         {
-            // create bomb
+            // 實例化炸彈
             GameObject bombInstance = Instantiate(gameObject, transform.position, Quaternion.identity);
 
-            // delete coiped bomb script, avoid reapet excute Attack
+            // 移除 Bomb 腳本，避免重複執行 Attack 等邏輯
             Destroy(bombInstance.GetComponent<Bomb>());
+            bombInstance.transform.localScale = new Vector3(1, 1, 1);
 
-            // add rigibody by bomb
-            Rigidbody bombRigidbody = bombInstance.AddComponent<Rigidbody>();
+            // 添加 Rigidbody 組件
+            Rigidbody rb = bombInstance.AddComponent<Rigidbody>();
+            // rb.isKinematic = false;
 
-            // calculate throw direction
-            Vector3 throwDirection = CalculateThrowDirection();
-            bombRigidbody.AddForce(throwDirection * ThrowForce, ForceMode.VelocityChange);
+            SphereCollider collider = bombInstance.AddComponent<SphereCollider>();
+            // collider.radius = 0.5f;
 
-            // past 2 second Bomb explode
-            Destroy(bombInstance, AfterThrowDestroyTime); // add a little time, make sure have been deleted after explode
+            // 獲取相機的正前方向
+            Vector3 throwDirection = Camera.main.transform.forward;
+
+            // 添加向上的分量，讓炸彈拋出時有拋物線效果
+            throwDirection += Vector3.up * 4.5f;
+
+            // 設置剛體的速度（模擬投擲）
+            rb.AddForce(throwDirection.normalized * ThrowForce, ForceMode.Impulse);
+
+            // 設定炸彈在 1 秒後爆炸
+            Destroy(bombInstance, 5.1f);
             Invoke(nameof(Explode), 1f);
         }
 
