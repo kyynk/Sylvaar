@@ -226,16 +226,24 @@ namespace Entities.Player
             }
         }
 
-        public void Attack()
+        public void EquipWeapon(IWeapon weapon)
         {
-            if (state == STATE.ATTACK || currentWeapon == null)
-                return;
+            currentWeapon = weapon;
+        }
 
-            if (currentWeapon.CanAttack())
+        public void Attack(bool _isAttack)
+        {
+            if(_isAttack && currentWeapon != null)
             {
-                GoToState(STATE.ATTACK);
-                anim.CrossFadeInFixedTime("attack", 0.1f);
-                currentWeapon.Attack();
+                Debug.Log("PlayerController Attack");
+                Debug.Log("state: " + state + "currentWeapon" + currentWeapon.WeaponName);
+                if (state == STATE.ATTACK || currentWeapon == null)
+                    return;
+
+                if (currentWeapon.CanAttack())
+                {
+                   currentWeapon.Attack();
+                }
             }
         }
 

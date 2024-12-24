@@ -61,7 +61,6 @@ namespace Weapons
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"Sword hits {other.name}");
             if (!isAttacking) return;
 
             if (other.tag == "Enemy")

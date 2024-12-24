@@ -30,6 +30,7 @@ namespace KeyboardInput
             CalculateJump();
             CalculateRun();
             CalculateDialogClick();
+            CalculateAttack();
             PostProcessDpadAxis();
         }
     }
