@@ -238,13 +238,15 @@ namespace Entities.Player
             {
                 currentWeapon.transform.SetParent(rightHand);
                 currentWeapon.transform.localPosition = Vector3.zero;
+                currentWeapon.transform.localPosition = new Vector3(0, 0.02f, 0);
                 currentWeapon.transform.localRotation = Quaternion.identity;
             }
             else
             {
                 currentWeapon.transform.SetParent(leftHand);
                 currentWeapon.transform.localPosition = Vector3.zero;
-                currentWeapon.transform.localRotation = Quaternion.identity;
+                currentWeapon.transform.localPosition = new Vector3(0, 0.02f, 0);
+                currentWeapon.transform.localRotation = Quaternion.Euler(new Vector3(-120, 0, -120));
             }
         }
 

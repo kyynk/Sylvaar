@@ -23,7 +23,6 @@ namespace Weapons
 
             // set the pos on the player's hand, the weapon's pivot should be at the bottom
             weaponInstance.transform.localPosition = Vector3.zero;
-            weaponInstance.transform.localPosition = new Vector3(9, 9, 9);
             weaponInstance.transform.localRotation = Quaternion.identity;
 
             return weaponInstance;
