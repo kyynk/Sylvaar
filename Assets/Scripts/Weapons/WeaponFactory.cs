@@ -5,7 +5,6 @@ namespace Weapons
 {
     public class WeaponFactory : MonoBehaviour
     {
-        [SerializeField] private Transform playerWeaponHandle; //the pos that the weapon will be attached to
         [SerializeField] private List<GameObject> weaponPrefabs;
 
         public GameObject CreateWeapon(string weaponName)
@@ -20,29 +19,14 @@ namespace Weapons
             }
 
             // Instantiate the weapon
-            GameObject weaponInstance = Instantiate(weaponPrefab, playerWeaponHandle);
+            GameObject weaponInstance = Instantiate(weaponPrefab);
 
             // set the pos on the player's hand, the weapon's pivot should be at the bottom
             weaponInstance.transform.localPosition = Vector3.zero;
-            weaponInstance.transform.localPosition = new Vector3(3f, 1.5f, 0);
+            weaponInstance.transform.localPosition = new Vector3(9, 9, 9);
             weaponInstance.transform.localRotation = Quaternion.identity;
 
             return weaponInstance;
-        }
-
-        public void DestroyCurrentWeapon()
-        {
-            if (playerWeaponHandle.childCount > 0)
-            {
-                foreach (Transform child in playerWeaponHandle)
-                {
-                    // check if child name in weaponPrefabs
-                    if (weaponPrefabs.Exists(w => (w.name + "(Clone)") == child.name ))
-                    {
-                        Destroy(child.gameObject);
-                    }
-                }
-            }
         }
 
     }

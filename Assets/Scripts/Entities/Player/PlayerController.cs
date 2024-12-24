@@ -30,7 +30,10 @@ namespace Entities.Player
         [SerializeField]
         private bool isRunning = false;
         private bool triggerEnter = false;
-        private IWeapon currentWeapon;
+        private GameObject currentWeapon;
+        // 左右手的位置 (Transform)
+        [SerializeField] private Transform rightHand;  // 右手
+        [SerializeField] private Transform leftHand;   // 左手
 
         private void Awake()
         {
@@ -226,9 +229,32 @@ namespace Entities.Player
             }
         }
 
-        public void EquipWeapon(IWeapon weapon)
+        // EquipWeapon方法，將武器裝備到玩家的左右手
+        public void EquipWeapon(GameObject weaponGameObj)
         {
-            currentWeapon = weapon;
+            currentWeapon = weaponGameObj;
+            IWeapon weapon = weaponGameObj.GetComponent<IWeapon>();
+            if (currentWeapon != null && weapon.WeaponType != WeaponType.Shield)
+            {
+                currentWeapon.transform.SetParent(rightHand);
+                currentWeapon.transform.localPosition = Vector3.zero;
+                currentWeapon.transform.localRotation = Quaternion.identity;
+            }
+            else
+            {
+                currentWeapon.transform.SetParent(leftHand);
+                currentWeapon.transform.localPosition = Vector3.zero;
+                currentWeapon.transform.localRotation = Quaternion.identity;
+            }
+        }
+
+        public void DestroyCurrentWeapon()
+        {
+            if (currentWeapon != null)
+            {
+                Destroy(currentWeapon.gameObject);
+                currentWeapon = null;
+            }
         }
 
         public void Attack(bool _isAttack)
@@ -236,13 +262,13 @@ namespace Entities.Player
             if(_isAttack && currentWeapon != null)
             {
                 Debug.Log("PlayerController Attack");
-                Debug.Log("state: " + state + "currentWeapon" + currentWeapon.WeaponName);
+                IWeapon weapon = currentWeapon.GetComponent<IWeapon>();
                 if (state == STATE.ATTACK || currentWeapon == null)
                     return;
 
-                if (currentWeapon.CanAttack())
+                if (weapon.CanAttack())
                 {
-                   currentWeapon.Attack();
+                    weapon.Attack();
                 }
             }
         }

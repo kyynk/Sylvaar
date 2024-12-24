@@ -43,9 +43,11 @@ namespace Core
 
         public void EquipWeapon(string weaponName)
         {
-            weaponFactory.DestroyCurrentWeapon();
+            PlayerController playerController = PlayerHandler.GetComponent<PlayerController>();
+            playerController.DestroyCurrentWeapon();
             currentWeapon = weaponFactory.CreateWeapon(weaponName);
-            PlayerHandler.GetComponent<PlayerController>().EquipWeapon(currentWeapon.GetComponent<IWeapon>());
+            PlayerHandler.GetComponent<PlayerController>().EquipWeapon(currentWeapon);
         }
+
     }
 }
