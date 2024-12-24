@@ -1,5 +1,7 @@
-public interface IDamageable
+namespace Core
 {
-    void TakeDamage(float amount);
+    public interface IDamageable
+    {
+        void TakeDamage(float amount);
+    }
 }
-

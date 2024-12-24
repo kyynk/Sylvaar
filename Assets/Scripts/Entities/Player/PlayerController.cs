@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Weapons;
 
-namespace Player
+namespace Entities.Player
 {
     public class PlayerController : MonoBehaviour
     {

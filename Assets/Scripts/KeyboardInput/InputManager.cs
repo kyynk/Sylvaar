@@ -15,7 +15,6 @@ namespace KeyboardInput
         protected abstract void CalculateRun();
         protected abstract void CalculateDialogClick();
         protected abstract void PostProcessDpadAxis();
-
         protected abstract void CalculateInteract();
         // this func for trigger AVG dialog
         // protected abstract void MuteCharacterMove(bool _isMute);

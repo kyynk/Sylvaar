@@ -1,39 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Weapons;
 
-public class GameManager : MonoBehaviour
+namespace Core
 {
-    public static GameManager Instance { get; private set; } 
-
-    [SerializeField] private WeaponFactory weaponFactory; 
-
-    private GameObject currentWeapon; 
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        public static GameManager Instance { get; private set; } 
+
+        [SerializeField] private WeaponFactory weaponFactory; 
+
+        private GameObject currentWeapon; 
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+
+        private void Start()
+        {
+        }
+
+        private void Update()
+        {
+        }
+
+        public void EquipWeapon(string weaponName)
+        {
+            weaponFactory.DestroyCurrentWeapon();
+            currentWeapon = weaponFactory.CreateWeapon(weaponName);
+        }
     }
-
-    private void Start()
-    {
-    }
-
-
-    private void Update()
-    {
-    }
-
-    public void EquipWeapon(string weaponName)
-    {
-        weaponFactory.DestroyCurrentWeapon();
-        currentWeapon = weaponFactory.CreateWeapon(weaponName);
-    }
-
 }
