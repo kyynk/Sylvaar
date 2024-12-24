@@ -1,43 +1,45 @@
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
+namespace AVG
 {
-    private static T instance;
-    [SerializeField] private bool dontDestroyOnLoad = true;
-
-    public static T Instance
+    public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
-        get
+        private static T instance;
+        [SerializeField] private bool dontDestroyOnLoad = true;
+
+        public static T Instance
         {
-            if (instance == null)
+            get
             {
-                instance = FindObjectOfType<T>();
                 if (instance == null)
                 {
-                    GameObject go = new GameObject($"{typeof(T).Name}");
-                    instance = go.AddComponent<T>();
+                    instance = FindObjectOfType<T>();
+                    if (instance == null)
+                    {
+                        GameObject go = new GameObject($"{typeof(T).Name}");
+                        instance = go.AddComponent<T>();
+                    }
                 }
+                return instance;
             }
-            return instance;
         }
-    }
 
-    protected virtual void Awake()
-    {
-        if (instance != null && instance != this)
+        protected virtual void Awake()
         {
-            Destroy(gameObject);
-            return;
-        }
-        instance = (T)this;
-        if (dontDestroyOnLoad)
-        {
-            DontDestroyOnLoad(gameObject);
+            if (instance != null && instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            instance = (T)this;
+            if (dontDestroyOnLoad)
+            {
+                DontDestroyOnLoad(gameObject);
+            }
+
+            Init();
         }
 
-        Init();
+        protected virtual void Init() { }
     }
-
-    protected virtual void Init() { }
 }

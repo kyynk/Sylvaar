@@ -1,7 +1,7 @@
 using AVG;
 using UnityEngine;
 
-namespace Player
+namespace Entities.Player
 {
     public class TriggerZone : MonoBehaviour
     {

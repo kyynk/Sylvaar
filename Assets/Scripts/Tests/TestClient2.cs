@@ -23,37 +23,37 @@ namespace Tests
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown("1"))
+            if (Input.GetKeyDown("1"))
             {
                 AVGUIManager.Instance.AVGUIShow();
                 DialogData dialog = dialogs[0];
                 AVGUIManager.Instance.AVGUILoadDialog(dialog);
             }
-            if (UnityEngine.Input.GetKeyDown("2"))
+            if (Input.GetKeyDown("2"))
             {
                 AVGUIManager.Instance.AVGUIShow();
                 DialogData dialog = dialogs[1];
                 AVGUIManager.Instance.AVGUILoadDialog(dialog);
             }
-            if (UnityEngine.Input.GetKeyDown("3"))
+            if (Input.GetKeyDown("3"))
             {
                 AVGUIManager.Instance.AVGUIShow();
                 DialogData dialog = dialogs[2];
                 AVGUIManager.Instance.AVGUILoadDialog(dialog);
             }
-            if (UnityEngine.Input.GetKeyDown("4"))
+            if (Input.GetKeyDown("4"))
             {
                 AVGUIManager.Instance.AVGUIShow();
                 DialogData dialog = dialogs[3];
                 AVGUIManager.Instance.AVGUILoadDialog(dialog);
             }
-            if (UnityEngine.Input.GetKeyDown("5"))
+            if (Input.GetKeyDown("5"))
             {
                 AVGUIManager.Instance.AVGUIShow();
                 DialogData dialog = dialogs[4];
                 AVGUIManager.Instance.AVGUILoadDialog(dialog);
             }
-            if (UnityEngine.Input.GetKeyDown("6"))
+            if (Input.GetKeyDown("6"))
             {
                 AVGUIManager.Instance.AVGUIHide();
             }

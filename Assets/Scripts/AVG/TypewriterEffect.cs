@@ -1,5 +1,5 @@
 using System;
-using Input;
+using KeyboardInput;
 using TMPro;
 using UnityEngine;
 

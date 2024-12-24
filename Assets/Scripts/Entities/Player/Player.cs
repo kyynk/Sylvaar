@@ -1,6 +1,7 @@
+using Core;
 using UnityEngine;
 
-namespace Player
+namespace Entities.Player
 {
     public class Player : MonoBehaviour, IDamageable
     {

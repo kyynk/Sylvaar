@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Input;
+using KeyboardInput;
 using UnityEngine;
 
 namespace AVG
