@@ -10,9 +10,12 @@ namespace KeyboardInput
         private bool jump;
         private bool run;
         private bool dialogClick;
+        private bool isAttacking = false;
+        private bool isInDialog;
+        private bool attack;
         // wait AVG
         // private bool isMute;
-    
+
         protected override void CalculateDpadAxis()
         {
             axis = Vector3.zero;
@@ -55,8 +58,20 @@ namespace KeyboardInput
 
         protected override void CalculateDialogClick()
         {
-            dialogClick = Input.GetKeyDown("mouse 0");
-            evtDialogClick?.Invoke(dialogClick);
+            if (isInDialog)
+            {
+                dialogClick = UnityEngine.Input.GetKeyDown("mouse 0");
+                evtDialogClick?.Invoke(dialogClick);
+            }
+        }
+
+        protected override void CalculateAttack()
+        {
+            if (!isInDialog)
+            {
+                attack = UnityEngine.Input.GetKeyDown("mouse 0");
+                evtAttack?.Invoke(attack);
+            }
         }
 
         protected override void PostProcessDpadAxis()
@@ -64,16 +79,14 @@ namespace KeyboardInput
         
         }
 
-        protected override void CalculateInteract()
+        public void EnterDialogMode()
         {
-            if (Input.GetKeyDown("f"))
-            {
-                IInteractable interactable = playerInteract.GetInteractableObject();
-                if (interactable != null)
-                {
-                    interactable.Interact();
-                }
-            }
+            isInDialog = true;
+        }
+
+        public void ExitDialogMode()
+        {
+            isInDialog = false;
         }
 
         // wait AVG
