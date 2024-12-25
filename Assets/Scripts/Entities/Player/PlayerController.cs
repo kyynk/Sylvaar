@@ -31,9 +31,8 @@ namespace Entities.Player
         private bool isRunning = false;
         private bool triggerEnter = false;
         private GameObject currentWeapon;
-        // 左右手的位置 (Transform)
-        [SerializeField] private Transform rightHand;  // 右手
-        [SerializeField] private Transform leftHand;   // 左手
+        [SerializeField] private Transform rightHand;  
+        [SerializeField] private Transform leftHand;   
 
         private void Awake()
         {

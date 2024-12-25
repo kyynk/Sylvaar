@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Entities.Player
+namespace Core.Camera
 {
     public class CameraController : MonoBehaviour
     {
@@ -82,11 +82,9 @@ namespace Entities.Player
 
         private void HandleInput()
         {
-            // 獲取滑鼠移動輸入
             lookDelta.x = Input.GetAxis("Mouse X");
             lookDelta.y = Input.GetAxis("Mouse Y");
 
-            // 檢查是否觸發 Lock On
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 LockOn();
