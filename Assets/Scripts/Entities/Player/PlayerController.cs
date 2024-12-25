@@ -239,7 +239,8 @@ namespace Entities.Player
                 currentWeapon.transform.localPosition = new Vector3(0, 0.02f, 0);
                 currentWeapon.transform.localRotation = Quaternion.identity;
             }
-            else
+
+            if (currentWeapon != null && weapon.WeaponType == WeaponType.Shield)
             {
                 currentWeapon.transform.SetParent(leftHand);
                 currentWeapon.transform.localPosition = Vector3.zero;
