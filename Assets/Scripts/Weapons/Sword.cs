@@ -61,7 +61,6 @@ namespace Weapons
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"Sword Collision detected");
             if (!isAttacking) return;
 
             if (other.tag == "Enemy")
@@ -69,6 +68,7 @@ namespace Weapons
                 Debug.Log($"Sword hits {other.name}");
                 if (other.TryGetComponent<IDamageable>(out var damageable))
                 {
+                    Debug.Log($"Dealing {Damage} damage to {other.name}");
                     damageable.TakeDamage(Damage);
                 }
             }

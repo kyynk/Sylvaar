@@ -1,10 +1,21 @@
-﻿using UnityEngine;
+﻿using Entities.Player;
+using UnityEngine;
 using Weapons;
 
 namespace Core
 {
     public class GameManager : MonoBehaviour
     {
+        public GameObject PlayerHandler;
+        public enum GameState
+        {
+            MainMenu,
+            InGame,
+            Cutscene,
+            Paused,
+            GameOver
+        }
+
         public static GameManager Instance { get; private set; } 
 
         [SerializeField] private WeaponFactory weaponFactory; 
@@ -32,8 +43,10 @@ namespace Core
 
         public void EquipWeapon(string weaponName)
         {
-            weaponFactory.DestroyCurrentWeapon();
+            PlayerController playerController = PlayerHandler.GetComponent<PlayerController>();
             currentWeapon = weaponFactory.CreateWeapon(weaponName);
+            PlayerHandler.GetComponent<PlayerController>().EquipWeapon(currentWeapon);
         }
+
     }
 }

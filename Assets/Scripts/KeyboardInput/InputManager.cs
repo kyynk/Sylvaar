@@ -9,11 +9,13 @@ namespace KeyboardInput
         public UnityEvent<bool> evtJump;
         public UnityEvent<bool> evtRun;
         public UnityEvent<bool> evtDialogClick;
+        public UnityEvent<bool> evtAttack;
     
         protected abstract void CalculateDpadAxis();
         protected abstract void CalculateJump();
         protected abstract void CalculateRun();
         protected abstract void CalculateDialogClick();
+        protected abstract void CalculateAttack();
         protected abstract void PostProcessDpadAxis();
         protected abstract void CalculateInteract();
         // this func for trigger AVG dialog
@@ -28,6 +30,7 @@ namespace KeyboardInput
             CalculateJump();
             CalculateRun();
             CalculateDialogClick();
+            CalculateAttack();
             PostProcessDpadAxis();
         }
     }
