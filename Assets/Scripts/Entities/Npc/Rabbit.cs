@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rabbit : MonoBehaviour
+namespace Interactable
 {
-    // Start is called before the first frame update
-    void Start()
+    public class RabbitNPC : NPCInteractable
     {
-        
-    }
+        public override void Interact()
+        {
+            Debug.Log("Hey, squirrel! Want to hear a secret?");
+            Debug.Log("There's a golden acorn deep in the forest, and I know how to find it!");
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            ShowOptions(
+                "Sure!", "Hehe, great! Be quick!",
+                "No!", "Hmph! Fine, don't help then."
+            );
+        }
+
+        private void ShowOptions(string optionA, string responseA, string optionB, string responseB)
+        {
+            // TODO: Implement UI for showing options and capturing player's choice.
+            Debug.Log($"Option A: {optionA}");
+            Debug.Log($"Option B: {optionB}");
+        }
     }
 }
+
