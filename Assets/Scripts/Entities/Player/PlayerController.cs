@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Weapons;
 
 namespace Entities.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        private enum Hands
+        {
+            Left,
+            Right
+        }
         public enum STATE
         {
             IDLE,
@@ -30,7 +36,7 @@ namespace Entities.Player
         [SerializeField]
         private bool isRunning = false;
         private bool triggerEnter = false;
-        private GameObject currentWeapon;
+        private List<GameObject> currentWeapon;
         [SerializeField] private Transform rightHand;  
         [SerializeField] private Transform leftHand;   
 
@@ -38,6 +44,7 @@ namespace Entities.Player
         {
             anim = model.GetComponentInChildren<Animator>();
             rigid = GetComponent<Rigidbody>();
+            currentWeapon = new List<GameObject> { null, null };
             state = STATE.IDLE;
         }
 
@@ -230,40 +237,46 @@ namespace Entities.Player
 
         public void EquipWeapon(GameObject weaponGameObj)
         {
-            currentWeapon = weaponGameObj;
             IWeapon weapon = weaponGameObj.GetComponent<IWeapon>();
-            if (currentWeapon != null && weapon.WeaponType != WeaponType.Shield)
+            if (weapon.WeaponType != WeaponType.Shield) //left
             {
-                currentWeapon.transform.SetParent(rightHand);
-                currentWeapon.transform.localPosition = Vector3.zero;
-                currentWeapon.transform.localPosition = new Vector3(0, 0.02f, 0);
-                currentWeapon.transform.localRotation = Quaternion.identity;
+                DestroyLeftHandWeapon();
+                currentWeapon[(int)Hands.Left] = weaponGameObj;
+                currentWeapon[(int)Hands.Left].transform.SetParent(rightHand);
+                currentWeapon[(int)Hands.Left].transform.localPosition = Vector3.zero;
+                currentWeapon[(int)Hands.Left].transform.localPosition = new Vector3(0, 0.02f, 0);
+                currentWeapon[(int)Hands.Left].transform.localRotation = Quaternion.identity;
             }
-
-            if (currentWeapon != null && weapon.WeaponType == WeaponType.Shield)
+            
+            if(weapon.WeaponType == WeaponType.Shield) //right
             {
-                currentWeapon.transform.SetParent(leftHand);
-                currentWeapon.transform.localPosition = Vector3.zero;
-                currentWeapon.transform.localPosition = new Vector3(0, 0.02f, 0);
-                currentWeapon.transform.localRotation = Quaternion.Euler(new Vector3(-120, 0, -120));
+                DestroyRightHandWeapon();
+                currentWeapon[(int)Hands.Right] = weaponGameObj;
+                currentWeapon[(int)Hands.Right].transform.SetParent(leftHand);
+                currentWeapon[(int)Hands.Right].transform.localPosition = Vector3.zero;
+                currentWeapon[(int)Hands.Right].transform.localPosition = new Vector3(0, 0.02f, 0);
+                currentWeapon[(int)Hands.Right].transform.localRotation = Quaternion.Euler(new Vector3(-120, 0, -120));
             }
         }
 
-        public void DestroyCurrentWeapon()
+        public void DestroyLeftHandWeapon()
         {
-            if (currentWeapon != null)
-            {
-                Destroy(currentWeapon.gameObject);
-                currentWeapon = null;
-            }
+            if(currentWeapon[(int)Hands.Left] != null)
+                Destroy(currentWeapon[(int)Hands.Left]);
+        }
+
+        public void DestroyRightHandWeapon()
+        {
+            if (currentWeapon[(int)Hands.Right] != null)
+                Destroy(currentWeapon[(int)Hands.Right]);
         }
 
         public void Attack(bool _isAttack)
         {
-            if(_isAttack && currentWeapon != null)
+            if(_isAttack && currentWeapon[(int)Hands.Left] != null)
             {
                 Debug.Log("PlayerController Attack");
-                IWeapon weapon = currentWeapon.GetComponent<IWeapon>();
+                IWeapon weapon = currentWeapon[0].GetComponent<IWeapon>();
                 if (state == STATE.ATTACK || currentWeapon == null)
                     return;
 
