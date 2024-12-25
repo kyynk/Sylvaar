@@ -228,7 +228,6 @@ namespace Entities.Player
             }
         }
 
-        // EquipWeapon方法，將武器裝備到玩家的左右手
         public void EquipWeapon(GameObject weaponGameObj)
         {
             currentWeapon = weaponGameObj;
