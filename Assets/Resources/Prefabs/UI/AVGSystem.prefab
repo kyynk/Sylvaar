@@ -223,10 +223,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2380790022491204462}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05f2cb27420c62b4ba9ac0335446151a, type: 3}
+  m_Script: {fileID: 11500000, guid: be9f5e6a30c1d7c4987b2c26b4a72272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  opacityDelta: 0.03
+  opacityDelta: 0.04
 --- !u!1 &3247315883220278417
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +371,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3247315883220278417}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 138312a185f592041afc2ff8860588eb, type: 3}
+  m_Script: {fileID: 11500000, guid: c99d13f437a2c0f4da2a9cff226689ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6630531829242008242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e32f22cc57d59f43bdbf0c8e0be8992, type: 3}
+  m_Script: {fileID: 11500000, guid: a83c15b42ae37a640a9dc829d2473531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogPanel: {fileID: 6630531829242008242}
@@ -694,10 +694,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7529491436601935933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05f2cb27420c62b4ba9ac0335446151a, type: 3}
+  m_Script: {fileID: 11500000, guid: be9f5e6a30c1d7c4987b2c26b4a72272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  opacityDelta: 0.03
+  opacityDelta: 0.04
 --- !u!1 &7826707047301684945
 GameObject:
   m_ObjectHideFlags: 0
