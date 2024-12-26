@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Weapons;
 
 namespace Entities.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        private enum Hands
+        {
+            Left,
+            Right
+        }
         public enum STATE
         {
             IDLE,
@@ -30,12 +36,15 @@ namespace Entities.Player
         [SerializeField]
         private bool isRunning = false;
         private bool triggerEnter = false;
-        private IWeapon currentWeapon;
+        private List<GameObject> currentWeapon;
+        [SerializeField] private Transform rightHand;  
+        [SerializeField] private Transform leftHand;   
 
         private void Awake()
         {
             anim = model.GetComponentInChildren<Animator>();
             rigid = GetComponent<Rigidbody>();
+            currentWeapon = new List<GameObject> { null, null };
             state = STATE.IDLE;
         }
 
@@ -226,16 +235,55 @@ namespace Entities.Player
             }
         }
 
-        public void Attack()
+        public void EquipWeapon(GameObject weaponGameObj)
         {
-            if (state == STATE.ATTACK || currentWeapon == null)
-                return;
-
-            if (currentWeapon.CanAttack())
+            IWeapon weapon = weaponGameObj.GetComponent<IWeapon>();
+            if (weapon.WeaponType != WeaponType.Shield) //left
             {
-                GoToState(STATE.ATTACK);
-                anim.CrossFadeInFixedTime("attack", 0.1f);
-                currentWeapon.Attack();
+                DestroyLeftHandWeapon();
+                currentWeapon[(int)Hands.Left] = weaponGameObj;
+                currentWeapon[(int)Hands.Left].transform.SetParent(rightHand);
+                currentWeapon[(int)Hands.Left].transform.localPosition = Vector3.zero;
+                currentWeapon[(int)Hands.Left].transform.localPosition = new Vector3(0, 0.02f, 0);
+                currentWeapon[(int)Hands.Left].transform.localRotation = Quaternion.identity;
+            }
+            
+            if(weapon.WeaponType == WeaponType.Shield) //right
+            {
+                DestroyRightHandWeapon();
+                currentWeapon[(int)Hands.Right] = weaponGameObj;
+                currentWeapon[(int)Hands.Right].transform.SetParent(leftHand);
+                currentWeapon[(int)Hands.Right].transform.localPosition = Vector3.zero;
+                currentWeapon[(int)Hands.Right].transform.localPosition = new Vector3(0, 0.02f, 0);
+                currentWeapon[(int)Hands.Right].transform.localRotation = Quaternion.Euler(new Vector3(-120, 0, -120));
+            }
+        }
+
+        public void DestroyLeftHandWeapon()
+        {
+            if(currentWeapon[(int)Hands.Left] != null)
+                Destroy(currentWeapon[(int)Hands.Left]);
+        }
+
+        public void DestroyRightHandWeapon()
+        {
+            if (currentWeapon[(int)Hands.Right] != null)
+                Destroy(currentWeapon[(int)Hands.Right]);
+        }
+
+        public void Attack(bool _isAttack)
+        {
+            if(_isAttack && currentWeapon[(int)Hands.Left] != null)
+            {
+                Debug.Log("PlayerController Attack");
+                IWeapon weapon = currentWeapon[0].GetComponent<IWeapon>();
+                if (state == STATE.ATTACK || currentWeapon == null)
+                    return;
+
+                if (weapon.CanAttack())
+                {
+                    weapon.Attack();
+                }
             }
         }
 
