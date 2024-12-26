@@ -49,6 +49,9 @@ namespace Weapons
             // bomo explode after 5s
             Destroy(bombInstance, 5.1f);
             Invoke(nameof(Explode), 5f);
+
+            // destory handheld bomb 
+            Destroy(gameObject);
         }
 
         private void Explode()
@@ -63,8 +66,6 @@ namespace Weapons
                     damageable.TakeDamage(Damage);
                 }
             }
-
-            Destroy(gameObject);
         }
 
         public bool CanAttack()

@@ -63,7 +63,11 @@ namespace Weapons
         {
             if (!isAttacking) return;
 
-            if (other.tag == "Enemy")
+            if (other.tag == "Weapon")
+            {
+                Debug.Log($"Sword hits {other.name}");
+            }
+            else if (other.tag == "Enemy")
             {
                 Debug.Log($"Sword hits {other.name}");
                 if (other.TryGetComponent<IDamageable>(out var damageable))
