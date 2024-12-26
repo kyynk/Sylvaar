@@ -11,8 +11,8 @@ namespace Weapons
         public float Range => 5f;
         public float CooldownTime => 2f;
 
-        public float ThrowForce = 10f;
-        public float ThrowAngle = 45f;
+        public float ThrowForce = 5f;
+        public float ThrowAngle = 60f;
         public float AfterThrowDestroyTime = 2.1f;
 
         private float lastAttackTime;
@@ -37,19 +37,38 @@ namespace Weapons
             // create bomb
             GameObject bombInstance = Instantiate(gameObject, transform.position, Quaternion.identity);
 
-            // delete coiped bomb script, avoid reapet excute Attack
+            // remove Bomb script，avoid reapet execute Attack
             Destroy(bombInstance.GetComponent<Bomb>());
+            bombInstance.transform.localScale = new Vector3(1, 1, 1);
 
-            // add rigibody by bomb
-            Rigidbody bombRigidbody = bombInstance.AddComponent<Rigidbody>();
+            // add Rigidbody compoment and Collider
+            Rigidbody rb = bombInstance.AddComponent<Rigidbody>();
+            SphereCollider collider = bombInstance.AddComponent<SphereCollider>();
 
-            // calculate throw direction
-            Vector3 throwDirection = CalculateThrowDirection();
-            bombRigidbody.AddForce(throwDirection * ThrowForce, ForceMode.VelocityChange);
+            // 取得角色的前方方向 (朝向方向)
+            Vector3 direction = transform.forward;  // 假設角色朝向是 Z 軸正方向
 
-            // past 2 second Bomb explode
-            Destroy(bombInstance, AfterThrowDestroyTime); // add a little time, make sure have been deleted after explode
-            Invoke(nameof(Explode), 1f);
+            // 定義旋轉角度（以弧度為單位）
+            float xRotation = Mathf.Deg2Rad * 45;  // 旋轉 45 度繞 X 軸
+            float yRotation = Mathf.Deg2Rad * 30;  // 旋轉 30 度繞 Y 軸
+            float zRotation = Mathf.Deg2Rad * 60;  // 旋轉 60 度繞 Z 軸
+
+            // 創建分別繞 X, Y, Z 軸的旋轉四元數
+            Quaternion rotX = Quaternion.AngleAxis(xRotation * Mathf.Rad2Deg, Vector3.right);
+            Quaternion rotY = Quaternion.AngleAxis(yRotation * Mathf.Rad2Deg, Vector3.up);
+            Quaternion rotZ = Quaternion.AngleAxis(zRotation * Mathf.Rad2Deg, Vector3.forward);
+
+            // 合併三個旋轉四元數
+            Quaternion totalRotation = rotZ * rotY * rotX;  // 注意旋轉順序
+            
+            Vector3 throwDirection = (totalRotation * direction).normalized;
+
+            // 設置拋出力量，並將其施加到剛體上
+            rb.AddForce(throwDirection * ThrowForce, ForceMode.Impulse);
+
+            // bomo explode after 5s
+            Destroy(bombInstance, 5.1f);
+            Invoke(nameof(Explode), 5f);
         }
 
         private Vector3 CalculateThrowDirection()
