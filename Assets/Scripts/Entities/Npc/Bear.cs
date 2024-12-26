@@ -12,7 +12,7 @@ namespace Interactable
             Debug.Log("I just found a beautiful stone that might help you. But I'm really hungry right now.");
 
             ShowOptions(
-                "Sure!", "Thank you so much, I’ll leave this to you!",
+                "Sure!", "Thank you so much, I'll leave this to you!",
                 "No!", "Alright then, I'll see if someone else can help me."
             );
         }
