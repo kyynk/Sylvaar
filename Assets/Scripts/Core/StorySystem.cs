@@ -2,69 +2,72 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StoryManager : MonoBehaviour
-{
-    // track the status of each quest
-    private Dictionary<string, bool> questStatus = new Dictionary<string, bool>();
+namespace Core
+{ 
+    public class StoryManager : MonoBehaviour
+    {
+        // track the status of each quest
+        private Dictionary<string, bool> questStatus = new Dictionary<string, bool>();
 
     
-    private void Start()
-    {
-        InitializeQuests();
-    }
-
-    private void InitializeQuests()
-    {
-        questStatus["RaccoonTask"] = false; 
-        questStatus["BearTask"] = false;   
-        questStatus["RabbitTask"] = false; 
-        questStatus["MonkeyTask"] = false; 
-    }
-
-    // update the status of a quest
-    public void UpdateQuestStatus(string questName, bool status)
-    {
-        if (questStatus.ContainsKey(questName))
+        private void Start()
         {
-            questStatus[questName] = status;
-            Debug.Log($"Quest '{questName}' updated to: {status}");
-            CheckStoryProgress();
+            InitializeQuests();
         }
-        else
+
+        private void InitializeQuests()
         {
-            Debug.LogWarning($"Quest '{questName}' does not exist.");
+            questStatus["RaccoonTask"] = false; 
+            questStatus["BearTask"] = false;   
+            questStatus["RabbitTask"] = false; 
+            questStatus["MonkeyTask"] = false; 
         }
-    }
 
-    // Check if all quests are completed
-    private void CheckStoryProgress()
-    {
-        if (AllQuestsCompleted())
+        // update the status of a quest
+        public void UpdateQuestStatus(string questName, bool status)
         {
-            Debug.Log("All quests are completed! The player can now access the Acorn Relic.");
-            TriggerFinalEvent();
+            if (questStatus.ContainsKey(questName))
+            {
+                questStatus[questName] = status;
+                Debug.Log($"Quest '{questName}' updated to: {status}");
+                CheckStoryProgress();
+            }
+            else
+            {
+                Debug.LogWarning($"Quest '{questName}' does not exist.");
+            }
         }
-    }
 
-    private bool AllQuestsCompleted()
-    {
-        foreach (var status in questStatus.Values)
+        // Check if all quests are completed
+        private void CheckStoryProgress()
         {
-            if (!status) return false;
+            if (AllQuestsCompleted())
+            {
+                Debug.Log("All quests are completed! The player can now access the Acorn Relic.");
+                TriggerFinalEvent();
+            }
         }
-        return true;
-    }
 
-    private void TriggerFinalEvent()
-    {
-        // example: open the hidden cave
-        Debug.Log("The hidden cave is now accessible!");
-        // here to trigger the final event
-    }
+        private bool AllQuestsCompleted()
+        {
+            foreach (var status in questStatus.Values)
+            {
+                if (!status) return false;
+            }
+            return true;
+        }
 
-    // quest status getter
-    public bool IsQuestCompleted(string questName)
-    {
-        return questStatus.ContainsKey(questName) && questStatus[questName];
+        private void TriggerFinalEvent()
+        {
+            // example: open the hidden cave
+            Debug.Log("The hidden cave is now accessible!");
+            // here to trigger the final event
+        }
+
+        // quest status getter
+        public bool IsQuestCompleted(string questName)
+        {
+            return questStatus.ContainsKey(questName) && questStatus[questName];
+        }
     }
 }
