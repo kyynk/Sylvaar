@@ -8,11 +8,13 @@ namespace Core
     {
         // track the status of each quest
         private Dictionary<string, bool> questStatus = new Dictionary<string, bool>();
+        private int correctKeysCollected = 0;
+        private int wrongKeysCollected = 0;
 
-    
         private void Start()
         {
             InitializeQuests();
+            Debug.Log("森林探索開始！與 NPC 互動並完成任務。");
         }
 
         private void InitializeQuests()
