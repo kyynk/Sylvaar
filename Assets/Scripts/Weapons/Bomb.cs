@@ -19,7 +19,7 @@ namespace Weapons
             Debug.Log($"{WeaponName} is thrown!");
             lastAttackTime = Time.time;
 
-            Destroy(gameObject);
+            Destroy(this.gameObject);
             ThrowBomb();
         }
 

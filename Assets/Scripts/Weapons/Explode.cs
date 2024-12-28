@@ -31,7 +31,7 @@ namespace Weapons
             }
         }
 
-        Destroy(gameObject); // Destroy bomb object after explosion
+        Destroy(this.gameObject); // Destroy bomb object after explosion
     }
     }
 }
