@@ -25,7 +25,7 @@ namespace Weapons
 
         private void ThrowBomb()
         {
-            GameObject bombInstance = Instantiate(gameObject, transform.position, Camera.main.transform.rotation);
+            GameObject bombInstance = Instantiate(this.gameObject, this.transform.position, Camera.main.transform.rotation);
 
             bombInstance.transform.localScale = new Vector3(1, 1, 1);
 
