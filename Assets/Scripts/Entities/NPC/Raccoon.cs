@@ -1,7 +1,5 @@
-using Interactable;
 using Core;
-using System.Collections;
-using System.Collections.Generic;
+using Interactable;
 using UnityEngine;
 
 namespace Entities.NPC
@@ -18,6 +16,7 @@ namespace Entities.NPC
         public override void Interact()
         {
             triggerZoneWithInteract.TriggerAVG();
+            StoryManager.Instance.TriggerQuest("Raccoon");
         }
     }
 }

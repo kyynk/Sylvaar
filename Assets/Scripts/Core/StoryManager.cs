@@ -22,6 +22,18 @@ namespace Core
             }
         }
 
+        public void TriggerQuest(string quest)
+        {
+            if (GetQuestStatus(quest) == QuestStatus.Completed)
+            {
+                Debug.Log($"Quest {quest} is completed");
+            }
+            else
+            {
+                UpdateQuestStatus(quest, QuestStatus.Completed);
+            }
+        }
+
         public void RegisterNPC(string npcID)
         {
             if (!questStatuses.ContainsKey(npcID))
