@@ -9,9 +9,6 @@ namespace Weapons
         public WeaponType WeaponType => WeaponType.Bomb;
         public float Damage => 100f;
         public float Range => 5f;
-        public float CooldownTime => 2f;
-        public float ThrowForce => 7f;
-        // public bool _isReadyToThorw = true;
         private float lastAttackTime;
 
         public void Attack()
