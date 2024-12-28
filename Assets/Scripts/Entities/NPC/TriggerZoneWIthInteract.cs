@@ -1,21 +1,20 @@
 using AVG;
 using UnityEngine;
 
-namespace Entities.Player
+namespace Entities.NPC
 {
-    public class TriggerZone : MonoBehaviour
+    public class TriggerZoneWithInteract : MonoBehaviour
     {
         [SerializeField] protected string scriptPath;
         [SerializeField] private bool isRetriggerable = false;
         private bool hasTriggered = false;
 
-        private void OnTriggerEnter(Collider other)
+        public void TriggerAVG()
         {
-            if (other.CompareTag("Player")
-                && AVGMachine.Instance.IsFinished()
-                && (!hasTriggered || isRetriggerable))
+            if (AVGMachine.Instance.IsFinished() && (!hasTriggered || isRetriggerable))
             {
                 hasTriggered = true;
+                Debug.Log("Trigger AVG");
                 AVGMachine.Instance.LoadFromCSV(scriptPath);
                 AVGMachine.Instance.Play();
             }

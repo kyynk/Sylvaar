@@ -8,6 +8,7 @@ namespace Entities.NPC
 {
     public class BearNPC : NPCInteractable
     {
+        [SerializeField] private TriggerZoneWithInteract triggerZoneWithInteract;
 
         private void Start()
         {
@@ -16,13 +17,7 @@ namespace Entities.NPC
 
         public override void Interact()
         {
-        }
-
-        private void ShowOptions(string optionA, string responseA, string optionB, string responseB)
-        {
-            // TODO: Implement UI for showing options and capturing player's choice.
-            Debug.Log($"Option A: {optionA}");
-            Debug.Log($"Option B: {optionB}");
+            triggerZoneWithInteract.TriggerAVG();
         }
     }
 }

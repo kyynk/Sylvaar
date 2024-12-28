@@ -9,10 +9,15 @@ namespace Tests
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.J))
+            if (Input.GetKeyDown(KeyCode.G))
             {
                 itemGenerator.DestroyItems();
                 itemGenerator.SpawnItems();
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                itemGenerator.DestroyItems();
             }
         }
     }
