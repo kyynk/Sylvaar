@@ -17,10 +17,10 @@ namespace Entities.Item
 
         private void Start()
         {
-            SpwanItems();
+            SpawnItems();
         }
 
-        private void SpwanItems()
+        public void SpawnItems()
         {
             for (float x = negativePosition.x; x < positivePosition.x; x += distanceBetweenObjects)
             {
@@ -38,7 +38,7 @@ namespace Entities.Item
             }
         }
 
-        private void DestroyItems()
+        public void DestroyItems()
         {
             foreach (Transform child in transform)
             {
