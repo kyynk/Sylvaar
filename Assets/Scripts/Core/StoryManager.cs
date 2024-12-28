@@ -3,73 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core
-{ 
+{
     public class StoryManager : MonoBehaviour
     {
-        // track the status of each quest
-        private Dictionary<string, bool> questStatus = new Dictionary<string, bool>();
-        private int correctKeysCollected = 0;
-        private int wrongKeysCollected = 0;
+        public static StoryManager Instance;
 
-        private void Start()
-        {
-            InitializeQuests();
-            Debug.Log("森林探索開始！與 NPC 互動並完成任務。");
-        }
+        private Dictionary<string, QuestStatus> questStatuses = new Dictionary<string, QuestStatus>();
 
-        private void InitializeQuests()
+        private void Awake()
         {
-            questStatus["RaccoonTask"] = false; 
-            questStatus["BearTask"] = false;   
-            questStatus["RabbitTask"] = false; 
-            questStatus["MonkeyTask"] = false; 
-        }
-
-        // update the status of a quest
-        public void UpdateQuestStatus(string questName, bool status)
-        {
-            if (questStatus.ContainsKey(questName))
+            if (Instance == null)
             {
-                questStatus[questName] = status;
-                Debug.Log($"Quest '{questName}' updated to: {status}");
-                CheckStoryProgress();
+                Instance = this;
             }
             else
             {
-                Debug.LogWarning($"Quest '{questName}' does not exist.");
+                Destroy(gameObject);
             }
         }
 
-        // Check if all quests are completed
-        private void CheckStoryProgress()
+        public void RegisterNPC(string npcID)
         {
-            if (AllQuestsCompleted())
+            if (!questStatuses.ContainsKey(npcID))
             {
-                Debug.Log("All quests are completed! The player can now access the Acorn Relic.");
-                TriggerFinalEvent();
+                questStatuses[npcID] = QuestStatus.NotStarted;
+                Debug.Log($"NPC Successful Registered : {npcID}");
             }
         }
 
-        private bool AllQuestsCompleted()
+        public void UpdateQuestStatus(string npcID, QuestStatus newStatus)
         {
-            foreach (var status in questStatus.Values)
+            if (questStatuses.ContainsKey(npcID))
             {
-                if (!status) return false;
+                questStatuses[npcID] = newStatus;
+                Debug.Log($"quest status update: {npcID} - {newStatus}");
             }
-            return true;
+            else
+            {
+                Debug.LogWarning($"fail of update quest，cant find  NPC: {npcID}");
+            }
         }
 
-        private void TriggerFinalEvent()
+        public QuestStatus GetQuestStatus(string npcID)
         {
-            // example: open the hidden cave
-            Debug.Log("The hidden cave is now accessible!");
-            // here to trigger the final event
+            return questStatuses.TryGetValue(npcID, out var status) ? status : QuestStatus.Unknown;
         }
 
-        // quest status getter
-        public bool IsQuestCompleted(string questName)
-        {
-            return questStatus.ContainsKey(questName) && questStatus[questName];
-        }
+    }
+
+    public enum QuestStatus
+    {
+        Unknown,
+        NotStarted,
+        InProgress,
+        Completed
     }
 }

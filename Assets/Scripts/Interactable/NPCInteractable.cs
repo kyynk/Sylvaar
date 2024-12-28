@@ -1,10 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Interactable
 {
     public class NPCInteractable : MonoBehaviour, IInteractable
     {
-        [SerializeField] private string interactText;
+        [SerializeField] protected string npcID;
+        [SerializeField] protected List<string> interactText;
+        public int dialogIndex { get; set; }
 
         public virtual void Interact()
         {
@@ -13,7 +16,7 @@ namespace Interactable
 
         public string GetInteractText()
         {
-            return interactText;
+            return interactText[dialogIndex];
         }
 
         public Transform GetTransform()

@@ -1,4 +1,5 @@
 using Interactable;
+using Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,14 @@ namespace Entities.NPC
 {
     public class RabbitNPC : NPCInteractable
     {
+
+        private void Start()
+        {
+            npcID = "Rabbit";
+            dialogIndex = 0;
+            StoryManager.Instance.RegisterNPC("Rabbit");
+        }
+
         public override void Interact()
         {
             Debug.Log("Hey, squirrel! Want to hear a secret?");
