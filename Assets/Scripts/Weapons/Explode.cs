@@ -19,13 +19,15 @@ namespace Weapons
         this.weaponName = weaponName;
         this.damage = damage;
         this.range = range;
+        // Load Particle to bomb
         if (FireExplosionParticlePrefab == null)
         {
             Debug.Log($"Load Explode VFX");
             FireExplosionParticlePrefab = Resources.Load<GameObject>("Prefabs/Particles/FireExplosionParticlePrefab");
             GameObject explodeInstance = Instantiate(FireExplosionParticlePrefab);
             explosionEffect = explodeInstance.GetComponent<ParticleSystem>();
-            explosionEffect.Stop();
+            explosionEffect.transform.localScale = new Vector3(this.range, this.range, this.range);
+            explosionEffect.Stop(); // avoid play the particle when create the bomb
         }
         Invoke(nameof(Explosion), 5f);
     }
@@ -35,11 +37,7 @@ namespace Weapons
         Debug.Log($"{weaponName} exploded, dealing {damage} damage!");
 
         explosionEffect.transform.position = transform.position;
-
         explosionEffect.Play();
-
-        // GameObject explode = Instantiate(FireExplosionParticlePrefab, this.transform.position, Quaternion.identity);
-        // Destroy(explode.gameObject,2f);
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
         foreach (var hit in hitColliders)
@@ -53,4 +51,5 @@ namespace Weapons
         Destroy(this.gameObject); // Destroy bomb object after explosion
     }
     }
+
 }
