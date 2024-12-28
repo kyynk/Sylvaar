@@ -1,6 +1,0 @@
-id,character_name,character_image,character_position,event_image,sound_effect,dialog_text,choices,next_scene_id,animation,voice_clip,display_type
-1001,hikari,normal,center,,,Scene2 starts.,,,,voice_1001,normal
-1002,hikari,normal,right,,laugh,Make choice…,[YES|NO],1003|1005,shake,voice_1002,choice
-1003,hikari,normal,,event_02,glass,Drink coffee with friend.,,,fade,,event
-1004,hikari,normal,,,footstep,Happy End.,,0,,,normal
-1005,hikari,normal,left,,door,Bad End,,0,,voice_1005,normal
