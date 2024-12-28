@@ -5,10 +5,9 @@ namespace Interactable
 {
     public class NPCInteractable : MonoBehaviour, IInteractable
     {
-        [SerializeField] protected string npcID;
-        [SerializeField] protected List<string> interactText;
-        public int dialogIndex { get; set; }
-
+        [SerializeField] private string npcID;
+        [SerializeField] private string interactText;
+        
         public virtual void Interact()
         {
             Debug.Log("NPC interact");
@@ -16,7 +15,7 @@ namespace Interactable
 
         public string GetInteractText()
         {
-            return interactText[dialogIndex];
+            return interactText;
         }
 
         public Transform GetTransform()
