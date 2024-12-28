@@ -8,6 +8,7 @@ namespace Weapons
         public string WeaponName => "Bomb";
         public WeaponType WeaponType => WeaponType.Bomb;
         public float Damage => 100f;
+        public float CooldownTime => 1f;
         public float Range => 5f;
         private float lastAttackTime;
 
