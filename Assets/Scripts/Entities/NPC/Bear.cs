@@ -11,8 +11,6 @@ namespace Entities.NPC
 
         private void Start()
         {
-            npcID = "Bear";
-            dialogIndex = 0;
             StoryManager.Instance.RegisterNPC("Bear");
         }
 

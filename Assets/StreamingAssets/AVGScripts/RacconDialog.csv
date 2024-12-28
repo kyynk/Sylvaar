@@ -2,4 +2,4 @@ id,character_name,character_image,character_position,event_image,sound_effect,di
 1001,Monkey,,right,,,Hey squirrel! Are you looking for the Acorn Relic?,,,,,normal
 1002,Monkey,,right,,,I have a key fragment that can unlock it. but I need your help to wash something.,[Sure!][No!],1003|1004,,,choice
 1003,Monkey,,right,,,"That's great! I have so many things to wash, and I can't finish it all. Thank you so much!",,,,,normal
-1004,Monkey,,right,,,QQ alright then…,,,,,normal
+1004,Monkey,,right,,,QQ alright then,,,,,normal
