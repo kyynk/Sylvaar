@@ -1,0 +1,11 @@
+id,character_name,character_expression,character_position,event_image,sound_effect,dialog_text,choices,next_scene_id,animation,voice_clip,display_type
+1001,hikari,normal,center,,,Scene1 1st Line,[],,,voice_1001,normal
+1002,hikari,normal,center,,,Scene1 2nd Line,[],,,voice_1001,normal
+1003,akane,normal,left,,,Scene1 3rd Line,[],,,voice_1001,normal
+1004,akane,normal,left,,laugh,Choices,[OK|No good],1005|1009,shake,voice_1002,choice
+1005,akane,normal,center,,,YES,[],,,voice_1001,normal
+1006,akane,normal,center,,,Scene1 3rd Line,[],,,voice_1001,normal
+1007,akane,normal,left,event_01,glass,Event,[],,fade,,event
+1008,,,,,,Happy End,,0,,,narration
+1009,hikari,normal,left,,footstep,Monologue,[],,,,narration
+1010,hikari,normal,center,,door,Bad End,[],0,,voice_1005,normal
