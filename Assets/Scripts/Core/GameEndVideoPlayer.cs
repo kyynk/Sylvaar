@@ -12,6 +12,7 @@ namespace Core
         {
             // Get the VideoPlayer component attached to the GameObject
             videoPlayer = GetComponent<VideoPlayer>();
+            videoPlayer.targetCamera = UnityEngine.Camera.main; // Fix the namespace issue
 
             if (videoPlayer == null)
             {
@@ -23,13 +24,14 @@ namespace Core
         public void Play(bool isGoodEnd)
         {
             // Load the video clip based on the 'isGoodEnd' parameter
-            string videoPath = isGoodEnd ? "Video/GoodEnding" : "Video/BadEnding";
+            string videoPath = isGoodEnd ? "Video/GoodEnding_v2" : "Video/BadEnding_v2";
 
             // Load the video clip from Resources
             VideoClip videoClip = Resources.Load<VideoClip>(videoPath);
 
             if (videoClip != null)
             {
+                Debug.Log($"Playing video clip: {videoClip.name}");
                 // Assign the video clip to the VideoPlayer and play the video
                 videoPlayer.clip = videoClip;
                 videoPlayer.Play(); // Play the video

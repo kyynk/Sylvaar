@@ -2,6 +2,7 @@
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 using Weapons;
 
 namespace Core
@@ -20,8 +21,7 @@ namespace Core
         public static GameManager Instance { get; private set; } 
 
         [SerializeField] private WeaponFactory weaponFactory;
-        [SerializeField] private GameEndVideoPlayer gameEndVideoPlayer;
-
+        [SerializeField] private VideoPlayer gameEndVideoPlayer;
         private GameObject currentWeapon; 
 
         private void Awake()
@@ -70,12 +70,13 @@ namespace Core
 
                 case GameState.GoodEnd:
                     SceneManager.LoadScene("GameEndScene");
-                    //Play the video of the good end, the path us resources/GoodEnd.mp4
-                    //gameEndVideoPlayer.Play(true);
+                    GameEndVideoPlayer goodEndVideoPlayer = gameEndVideoPlayer.GetComponent<GameEndVideoPlayer>();
+                    goodEndVideoPlayer.Play(true);
                     break;
                 case GameState.BadEnd:
                     SceneManager.LoadScene("GameEndScene");
-                    //gameEndVideoPlayer.Play(false);
+                    GameEndVideoPlayer badEndVideoPlayer = gameEndVideoPlayer.GetComponent<GameEndVideoPlayer>();
+                    badEndVideoPlayer.Play(false);
                     break;
                 default:
                     Debug.LogError("Unknown GameState: " + gameState);
