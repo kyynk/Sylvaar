@@ -1,3 +1,4 @@
+using AVG;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,12 +20,12 @@ namespace KeyboardInput
         protected abstract void PostProcessDpadAxis();
         protected abstract void CalculateInteract();
         // this func for trigger AVG dialog
-        // protected abstract void MuteCharacterMove(bool _isMute);
+        protected abstract void MuteCharacterMove(bool _isMute);
 
         private void Update()
         {
             // wait for AVG
-            // MuteCharacterMove(!AVGMachine.Instance.IsFinished());
+            MuteCharacterMove(!AVGMachine.Instance.IsFinished());
             CalculateInteract();
             CalculateDpadAxis();
             CalculateJump();

@@ -77,7 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6d188eda0269d46bd2f12535c0372a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactText: 
+  interactText: Talk With Raccoon
+  triggerZoneWithInteract: {fileID: 0}
 --- !u!1001 &6649062036188628827
 PrefabInstance:
   m_ObjectHideFlags: 0

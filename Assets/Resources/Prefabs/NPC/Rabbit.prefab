@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08331a2077b8d14198bebdcc443c5bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactText: 
+  interactText: Talk With Rabbit
+  triggerZoneWithInteract: {fileID: 0}
 --- !u!1 &7510223227647350582
 GameObject:
   m_ObjectHideFlags: 0
