@@ -8,56 +8,49 @@ namespace Weapons
         public string WeaponName => "Bomb";
         public WeaponType WeaponType => WeaponType.Bomb;
         public float Damage => 100f;
+        public float CooldownTime => 1f;
         public float Range => 5f;
-        public float CooldownTime => 2f;
-
         private float lastAttackTime;
 
         public void Attack()
         {
-            if (CanAttack())
-            {
-                Debug.Log($"{WeaponName} is thrown!");
-                lastAttackTime = Time.time;
+            Debug.Log($"{WeaponName} is thrown!");
+            lastAttackTime = Time.time;
 
-                ThrowBomb();
-            }
-            else
-            {
-                Debug.Log($"{WeaponName} is cooling down.");
-            }
+            Destroy(this.gameObject);
+            ThrowBomb();
         }
 
         private void ThrowBomb()
         {
-            Invoke(nameof(Explode), 1f);
-        }
+            GameObject bombInstance = Instantiate(this.gameObject, this.transform.position, Camera.main.transform.rotation);
 
-        private void Explode()
-        {
-            Debug.Log($"{WeaponName} exploded, dealing {Damage} damage!");
+            bombInstance.transform.localScale = new Vector3(1, 1, 1);
 
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, Range);
-            foreach (var hit in hitColliders)
-            {
-                if (hit.CompareTag("Enemy") && hit.TryGetComponent<IDamageable>(out var damageable))
-                {
-                    damageable.TakeDamage(Damage);
-                }
-            }
+            Rigidbody rb = bombInstance.AddComponent<Rigidbody>();
+            SphereCollider collider = bombInstance.AddComponent<SphereCollider>();
 
-            Destroy(gameObject);
+            //Setup throw direstion to main camera
+            Vector3 throwDirection = Camera.main.transform.forward;
+            Vector3 forceToAdd = throwDirection * 5f + Camera.main.transform.up * 7f;
+
+            rb.AddForce(forceToAdd, ForceMode.Impulse);
+
+            Explode bombScript = bombInstance.AddComponent<Explode>();
+            bombScript.Initialize(WeaponName, Damage, Range);
+
+            // bomo explode after 5s
+            Destroy(bombInstance, 5.1f);
         }
 
         public bool CanAttack()
         {
-            return Time.time >= lastAttackTime + CooldownTime;
+            return true;
         }
 
         public void ResetWeapon()
         {
-            lastAttackTime = 0;
-            Debug.Log($"{WeaponName} is reset.");
+
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Weapons
         {
             if (CanAttack())
             {
-                Debug.Log($"{WeaponName} attacks with {Damage} damage!");
+                Debug.Log($"Sweap {WeaponName} attack!");
                 lastAttackTime = Time.time;
                 isAttacking = true;
 
@@ -27,8 +27,10 @@ namespace Weapons
                 if (weaponCollider != null)
                 {
                     weaponCollider.enabled = true;
+                    // Force update of physics collision
+                    Physics.SyncTransforms();
                 }
-
+                
                 Invoke(nameof(StopAttack), 0.2f);
             }
             else
@@ -63,7 +65,11 @@ namespace Weapons
         {
             if (!isAttacking) return;
 
-            if (other.tag == "Enemy")
+            if (other.tag == "Weapon" && other.name == "Shield")
+            {
+                Debug.Log($"Sword has been blocked");
+            }
+            else if (other.tag == "Enemy")
             {
                 Debug.Log($"Sword hits {other.name}");
                 if (other.TryGetComponent<IDamageable>(out var damageable))
