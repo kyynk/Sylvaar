@@ -10,10 +10,17 @@ namespace Weapons
         public float Damage => 50f;
         public float Range => 2f;
         public float CooldownTime => 1f;
+        public int MaxDurability => 100; // 最大耐久度
+        private int durability;
 
         private float lastAttackTime;
 
         private bool isAttacking = false;
+
+        private void Start()
+        {
+            durability = MaxDurability; // 初始化耐久度
+        }
 
         public void Attack()
         {
@@ -58,6 +65,7 @@ namespace Weapons
         public void ResetWeapon()
         {
             lastAttackTime = 0;
+            durability = MaxDurability;
             Debug.Log($"{WeaponName} is reset.");
         }
 
@@ -68,6 +76,11 @@ namespace Weapons
             if (other.tag == "Weapon" && other.name == "Shield")
             {
                 Debug.Log($"Sword has been blocked");
+                if (other.TryGetComponent<IDamageable>(out var shield))
+                {
+                    shield.TakeDamage(10);
+                }
+                ReduceDurability(10);
             }
             else if (other.tag == "Enemy")
             {
@@ -78,6 +91,23 @@ namespace Weapons
                     damageable.TakeDamage(Damage);
                 }
             }
+        }
+
+        private void ReduceDurability(int amount)
+        {
+            durability -= amount;
+            Debug.Log($"Sword durability reduced by {amount}. Remaining durability: {durability}");
+
+            if (durability <= 0)
+            {
+                DestroyWeapon();
+            }
+        }
+
+        private void DestroyWeapon()
+        {
+            Debug.Log($"{WeaponName} has been destroyed due to zero durability.");
+            Destroy(gameObject);
         }
     }
 }
