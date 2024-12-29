@@ -4,15 +4,17 @@ using Core;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameStartInputManager : MonoBehaviour
+namespace KeyboardInput
 {
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+    public class GameStartInputManager : MonoBehaviour
         {
-            Debug.Log("Game Started");
-            GameManager.Instance.GameStateChange(GameManager.GameState.InGame);
-        }       
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Debug.Log("Game Started");
+                GameManager.Instance.GameStateChange(GameManager.GameState.InGame);
+            }
+        }
     }
 }

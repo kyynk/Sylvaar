@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using Core;
 using UnityEngine;
 
-public class InGaneInputManager : MonoBehaviour
+namespace KeyboardInput
 {
-
-    // Update is called once per frame
-    void Update()
+    public class InGaneInputManager : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.G))
+
+        // Update is called once per frame
+        void Update()
         {
-            Debug.Log("Good End, Game Over");
-            GameManager.Instance.GameStateChange(GameManager.GameState.GoodEnd);
-        }
-        else if(Input.GetKeyDown(KeyCode.B))
-        {
-            Debug.Log("Bad End, Game Over");
-            GameManager.Instance.GameStateChange(GameManager.GameState.BadEnd);
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                Debug.Log("Good End, Game Over");
+                GameManager.Instance.GameStateChange(GameManager.GameState.GoodEnd);
+            }
+            else if (Input.GetKeyDown(KeyCode.B))
+            {
+                Debug.Log("Bad End, Game Over");
+                GameManager.Instance.GameStateChange(GameManager.GameState.BadEnd);
+            }
         }
     }
 }

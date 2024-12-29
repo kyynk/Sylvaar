@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using Core;
 using UnityEngine;
 
-public class GameEndInputManager : MonoBehaviour
+namespace KeyboardInput
 {
-
-    // Update is called once per frame
-    void Update()
+    public class GameEndInputManager : MonoBehaviour
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+
+        // Update is called once per frame
+        void Update()
         {
-            Debug.Log("Game Restarted");
-            GameManager.Instance.GameStateChange(GameManager.GameState.MainMenu);
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Debug.Log("Game Restarted");
+                GameManager.Instance.GameStateChange(GameManager.GameState.MainMenu);
+            }
         }
     }
 }
