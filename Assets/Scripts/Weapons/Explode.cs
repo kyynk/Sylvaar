@@ -36,7 +36,7 @@ namespace Weapons
     {
         Debug.Log($"{weaponName} exploded, dealing {damage} damage!");
 
-        explosionEffect.transform.position = transform.position;
+        explosionEffect.transform.position = transform.position - new Vector3 (0,1,0);
         explosionEffect.Play();
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
