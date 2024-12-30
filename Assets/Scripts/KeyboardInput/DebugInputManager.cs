@@ -6,7 +6,6 @@ namespace KeyboardInput
     public class DebugInputManager : MonoBehaviour
     {
         public UnityEvent<string> evtEquipWeapon;
-
         // Update is called once per frame
         private void Update()
         {
@@ -22,6 +21,7 @@ namespace KeyboardInput
             {
                 evtEquipWeapon?.Invoke("Bomb");
             }
+
         }
     }
 

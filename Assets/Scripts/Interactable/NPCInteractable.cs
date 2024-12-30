@@ -1,12 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Interactable
 {
     public class NPCInteractable : MonoBehaviour, IInteractable
     {
+        [SerializeField] private string npcID;
         [SerializeField] private string interactText;
-
-        public void Interact()
+        
+        public virtual void Interact()
         {
             Debug.Log("NPC interact");
         }

@@ -6,13 +6,16 @@ namespace KeyboardInput
     public class KeyboardInputManager : InputManager
     {
         [SerializeField] private PlayerInteract playerInteract;
+        [SerializeField] private Transform cameraTransform;
+
         private Vector3 axis;
         private bool jump;
         private bool run;
         private bool dialogClick;
+        private bool attack;
         // wait AVG
-        // private bool isMute;
-    
+        private bool isMute;
+
         protected override void CalculateDpadAxis()
         {
             axis = Vector3.zero;
@@ -32,36 +35,38 @@ namespace KeyboardInput
             {
                 axis.x = -1.0f;
             }
-            evtDpadAxis?.Invoke(axis);
+            // need to move to other position
+            if (cameraTransform != null)
+            {
+                Vector3 forward = cameraTransform.forward;
+                Vector3 right = cameraTransform.right;
+
+                forward.y = 0;
+                right.y = 0;
+                forward.Normalize();
+                right.Normalize();
+
+                axis = (forward * axis.z + right * axis.x).normalized;
+            }
+            // evtDpadAxis?.Invoke(axis);
             // wait AVG
-            // evtDpadAxis?.Invoke(isMute ? Vector2.zero : axis);
+            evtDpadAxis?.Invoke(isMute ? Vector2.zero : axis);
         }
 
         protected override void CalculateJump()
         {
             jump = Input.GetKeyDown("space");
-            evtJump?.Invoke(jump);
+            // evtJump?.Invoke(jump);
             // wait AVG
-            // evtJump?.Invoke(isMute ? false: jump);
+            evtJump?.Invoke(isMute ? false: jump);
         }
 
         protected override void CalculateRun()
         {
             run = Input.GetKey("right shift");
-            evtRun?.Invoke(run);
+            // evtRun?.Invoke(run);
             // wait AVG
-            // evtRun?.Invoke(isMute ? false: run);
-        }
-
-        protected override void CalculateDialogClick()
-        {
-            dialogClick = Input.GetKeyDown("mouse 0");
-            evtDialogClick?.Invoke(dialogClick);
-        }
-
-        protected override void PostProcessDpadAxis()
-        {
-        
+            evtRun?.Invoke(isMute ? false: run);
         }
 
         protected override void CalculateInteract()
@@ -75,14 +80,28 @@ namespace KeyboardInput
                 }
             }
         }
+        protected override void CalculateDialogClick()
+        {
+            dialogClick = Input.GetKeyDown("mouse 0");
+            evtDialogClick?.Invoke(dialogClick);
+         }
+
+        protected override void CalculateAttack()
+        {
+            attack = Input.GetKeyDown("mouse 0");
+            // evtAttack?.Invoke(attack);
+            evtAttack?.Invoke(isMute ? false: attack);
+        }
+
+        protected override void PostProcessDpadAxis()
+        {
+
+        }
 
         // wait AVG
-        // protected override void MuteCharacterMove(bool _isMute)
-        // {
-        //     isMute = _isMute;
-        // }
-
-
-
+        protected override void MuteCharacterMove(bool _isMute)
+        {
+            isMute = _isMute;
+        }
     }
 }
