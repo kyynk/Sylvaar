@@ -76,3 +76,6 @@ crashlytics-build.properties
 
 # TMP
 Assets/TextMesh Pro/
+
+# vsode
+.vscode

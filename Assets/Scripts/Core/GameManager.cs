@@ -1,5 +1,8 @@
 ﻿using Entities.Player;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 using Weapons;
 
 namespace Core
@@ -11,15 +14,14 @@ namespace Core
         {
             MainMenu,
             InGame,
-            Cutscene,
-            Paused,
-            GameOver
+            GoodEnd,
+            BadEnd
         }
 
         public static GameManager Instance { get; private set; } 
 
-        [SerializeField] private WeaponFactory weaponFactory; 
-
+        [SerializeField] private WeaponFactory weaponFactory;
+        [SerializeField] private VideoPlayer gameEndVideoPlayer;
         private GameObject currentWeapon; 
 
         private void Awake()
@@ -35,6 +37,7 @@ namespace Core
 
         private void Start()
         {
+            LoadSceneBasedOnState(GameState.MainMenu);
         }
 
         private void Update()
@@ -48,5 +51,37 @@ namespace Core
             PlayerHandler.GetComponent<PlayerController>().EquipWeapon(currentWeapon);
         }
 
+        public void GameStateChange(GameState gameState)
+        {
+            LoadSceneBasedOnState(gameState);
+        }
+
+        private void LoadSceneBasedOnState(GameState gameState)
+        {
+            switch (gameState)
+            {
+                case GameState.MainMenu:
+                    SceneManager.LoadScene("GameStartScene");
+                    break;
+
+                case GameState.InGame:
+                    SceneManager.LoadScene("InGameScene");
+                    break;
+
+                case GameState.GoodEnd:
+                    SceneManager.LoadScene("GameEndScene");
+                    GameEndVideoPlayer goodEndVideoPlayer = gameEndVideoPlayer.GetComponent<GameEndVideoPlayer>();
+                    goodEndVideoPlayer.Play(true);
+                    break;
+                case GameState.BadEnd:
+                    SceneManager.LoadScene("GameEndScene");
+                    GameEndVideoPlayer badEndVideoPlayer = gameEndVideoPlayer.GetComponent<GameEndVideoPlayer>();
+                    badEndVideoPlayer.Play(false);
+                    break;
+                default:
+                    Debug.LogError("Unknown GameState: " + gameState);
+                    break;
+            }
+        }
     }
 }
