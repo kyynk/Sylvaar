@@ -29,6 +29,17 @@ namespace AVG
             inputManager.evtDialogClick.AddListener(OnDialogClicked);
         }
 
+        public void RecoverSettings()
+        {
+            currentID = 0;
+            GoToState(STATE.FINISHED);
+            if (inputManager == null)
+            {
+                inputManager = FindAnyObjectByType<InputManager>();
+                inputManager.evtDialogClick.AddListener(OnDialogClicked);
+            }
+        }
+
         private void OnDialogClicked(bool pressed)
         {
             if (state == STATE.RUNNING)

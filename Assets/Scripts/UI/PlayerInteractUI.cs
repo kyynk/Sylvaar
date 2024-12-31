@@ -1,3 +1,4 @@
+using AVG;
 using Interactable;
 using UnityEngine;
 using TMPro;
@@ -12,7 +13,7 @@ namespace UI
 
         private void Update()
         {
-            if (playerInteract.GetInteractableObject() != null)
+            if (playerInteract.GetInteractableObject() != null && AVGMachine.Instance.IsFinished())
             {
                 Show(playerInteract.GetInteractableObject());
             }

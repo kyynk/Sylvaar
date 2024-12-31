@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8127621311891847610}
   - component: {fileID: 811263575504642705}
   - component: {fileID: 5983610389807940622}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sword
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 2, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1685122536705965516}
@@ -54,10 +54,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.05
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!114 &811263575504642705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1685122536705965516}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,6 +137,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1685122536705965516}
     m_Modifications:
+    - target: {fileID: -8943995943230124091, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: -507.05054
+      objectReference: {fileID: 0}
+    - target: {fileID: -8943995943230124091, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.57
+      objectReference: {fileID: 0}
+    - target: {fileID: -8943995943230124091, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.000000036181
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f75afd10d7a371346aec331476f433e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -177,9 +189,69 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8481519735331316277, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.43
+      objectReference: {fileID: 0}
+    - target: {fileID: -8122609340925026495, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -7623468522290961895, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -6046503664920540437, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -4777904132360443520, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -1755238608500840091, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -1425107025136195194, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -760886951469535132, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 591220062868073652, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f75afd10d7a371346aec331476f433e1, type: 3}
       propertyPath: m_Name
       value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2267463017842001029, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2389763379563860557, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7527826396556000065, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256270294727930835, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557104925757150561, guid: f75afd10d7a371346aec331476f433e1, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
