@@ -56,6 +56,11 @@ namespace Core
             LoadSceneBasedOnState(gameState);
         }
 
+        public void LoadPlayerHandler(GameObject playerHandler)
+        {
+            PlayerHandler = playerHandler;
+        }
+
         private void LoadSceneBasedOnState(GameState gameState)
         {
             switch (gameState)
@@ -66,6 +71,7 @@ namespace Core
 
                 case GameState.InGame:
                     SceneManager.LoadScene("InGameScene");
+                    Debug.Log("InGameScene loaded");
                     break;
 
                 case GameState.GoodEnd:

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core;
 using UnityEngine;
 using Weapons;
 
@@ -42,6 +43,7 @@ namespace Entities.Player
 
         private void Awake()
         {
+            GameManager.Instance.LoadPlayerHandler(gameObject);
             anim = model.GetComponentInChildren<Animator>();
             rigid = GetComponent<Rigidbody>();
             currentWeapon = new List<GameObject> { null, null };
