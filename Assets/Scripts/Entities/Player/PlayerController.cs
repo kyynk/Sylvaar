@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core;
 using UnityEngine;
 using Weapons;
 
@@ -42,6 +43,7 @@ namespace Entities.Player
 
         private void Awake()
         {
+            GameManager.Instance.LoadPlayerHandler(gameObject);
             anim = model.GetComponentInChildren<Animator>();
             rigid = GetComponent<Rigidbody>();
             currentWeapon = new List<GameObject> { null, null };
@@ -244,7 +246,7 @@ namespace Entities.Player
                 currentWeapon[(int)Hands.Left] = weaponGameObj;
                 currentWeapon[(int)Hands.Left].transform.SetParent(rightHand);
                 currentWeapon[(int)Hands.Left].transform.localPosition = Vector3.zero;
-                currentWeapon[(int)Hands.Left].transform.localPosition = new Vector3(0, 0.02f, 0);
+                currentWeapon[(int)Hands.Left].transform.localPosition = new Vector3(0, 0, 0);
                 currentWeapon[(int)Hands.Left].transform.localRotation = Quaternion.identity;
             }
             
@@ -254,8 +256,8 @@ namespace Entities.Player
                 currentWeapon[(int)Hands.Right] = weaponGameObj;
                 currentWeapon[(int)Hands.Right].transform.SetParent(leftHand);
                 currentWeapon[(int)Hands.Right].transform.localPosition = Vector3.zero;
-                currentWeapon[(int)Hands.Right].transform.localPosition = new Vector3(0, 0.02f, 0);
-                currentWeapon[(int)Hands.Right].transform.localRotation = Quaternion.Euler(new Vector3(-120, 0, -120));
+                currentWeapon[(int)Hands.Right].transform.localPosition = new Vector3(0, 0, 0);
+                currentWeapon[(int)Hands.Right].transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
             }
         }
 

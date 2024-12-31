@@ -10,7 +10,17 @@ namespace AVG
         protected override void Init()
         {
             panel = FindObjectOfType<AVGUIPanel>();
+            panel.gameObject.SetActive(false);
             choicePrefab = Resources.Load<GameObject>("Prefabs/UI/ChoiceButton");
+        }
+
+        public void RecoverPanel()
+        {
+            if (panel == null)
+            {
+                panel = FindObjectOfType<AVGUIPanel>();
+                panel.gameObject.SetActive(false);
+            }
         }
 
         public void AVGUIShow()
@@ -20,7 +30,10 @@ namespace AVG
 
         public void AVGUIHide()
         {
-            panel.gameObject.SetActive(false);
+            if (panel != null)
+            {
+                panel.gameObject.SetActive(false);
+            }
         }
 
         public void AVGUILoadDialog(DialogData dialog)

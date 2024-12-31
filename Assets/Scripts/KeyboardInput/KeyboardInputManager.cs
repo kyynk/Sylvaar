@@ -71,7 +71,7 @@ namespace KeyboardInput
 
         protected override void CalculateInteract()
         {
-            if (Input.GetKeyDown("f"))
+            if (Input.GetKeyDown("f") && !isMute)
             {
                 IInteractable interactable = playerInteract.GetInteractableObject();
                 if (interactable != null)
