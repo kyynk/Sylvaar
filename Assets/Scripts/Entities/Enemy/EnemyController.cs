@@ -23,7 +23,7 @@ namespace Entities.Enemy
         {
             if (!enemy.IsAlive) return;
 
-            //MoveRandomly();
+            MoveRandomly();
 
             if (playerTarget != null && Vector3.Distance(transform.position, playerTarget.position) <= attackRange)
             {
