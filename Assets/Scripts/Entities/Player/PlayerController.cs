@@ -97,7 +97,7 @@ namespace Entities.Player
                         break;
                     }
                     // wait animation
-                    // anim.SetFloat("speed", isRunning ? 3.0f : 1.0f);
+                     anim.SetFloat("speed", isRunning ? 3.0f : 1.0f);
                     newVelocity = movingVec * (velocity * (isRunning ? 3.0f : 1.0f));
                     model.transform.forward = Vector3.Slerp(
                         model.transform.forward, movingVec, 0.1f);
@@ -149,9 +149,20 @@ namespace Entities.Player
                         GoToState(STATE.IDLE);
                     }
                     break;
-                case STATE.ATTACK:// the state after attack is idle
+                case STATE.ATTACK:
                     stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-                    if (stateInfo.IsName("attack") && stateInfo.normalizedTime >= 1f)
+                    bool checkAttack = stateInfo.IsName("Sword") || stateInfo.IsName("Bomb");
+                    //allow move while attacking
+                    //if (movingVec.magnitude > 0.1f)
+                    //{
+                    //    newVelocity = movingVec * (velocity * (isRunning ? 3.0f : 1.0f));
+                    //    model.transform.forward = Vector3.Slerp(model.transform.forward, movingVec, 0.1f);
+                    //}
+                    //else
+                    //{
+                    //    newVelocity = Vector3.zero;
+                    //}
+                    if (checkAttack && stateInfo.normalizedTime >= 1f)
                     {
                         GoToState(STATE.IDLE);
                     }
@@ -246,7 +257,6 @@ namespace Entities.Player
                 currentWeapon[(int)Hands.Left] = weaponGameObj;
                 currentWeapon[(int)Hands.Left].transform.SetParent(rightHand);
                 currentWeapon[(int)Hands.Left].transform.localPosition = Vector3.zero;
-                currentWeapon[(int)Hands.Left].transform.localPosition = new Vector3(0, 0, 0);
                 currentWeapon[(int)Hands.Left].transform.localRotation = Quaternion.identity;
             }
             
@@ -256,8 +266,7 @@ namespace Entities.Player
                 currentWeapon[(int)Hands.Right] = weaponGameObj;
                 currentWeapon[(int)Hands.Right].transform.SetParent(leftHand);
                 currentWeapon[(int)Hands.Right].transform.localPosition = Vector3.zero;
-                currentWeapon[(int)Hands.Right].transform.localPosition = new Vector3(0, 0, 0);
-                currentWeapon[(int)Hands.Right].transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                currentWeapon[(int)Hands.Right].transform.localRotation = Quaternion.identity;
             }
         }
 
@@ -284,6 +293,8 @@ namespace Entities.Player
 
                 if (weapon.CanAttack())
                 {
+                    state = STATE.ATTACK;
+                    anim.CrossFadeInFixedTime(weapon.WeaponName, 0.1f);
                     weapon.Attack();
                 }
             }
