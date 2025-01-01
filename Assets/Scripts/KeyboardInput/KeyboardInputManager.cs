@@ -13,6 +13,7 @@ namespace KeyboardInput
         private bool run;
         private bool dialogClick;
         private bool attack;
+        private bool block;
         // wait AVG
         private bool isMute;
 
@@ -93,6 +94,11 @@ namespace KeyboardInput
             evtAttack?.Invoke(isMute ? false: attack);
         }
 
+        protected override void CalculateBlock()
+        {
+            block = Input.GetKey("mouse 1");
+            evtBlock?.Invoke(isMute ? false : block);
+        }
         protected override void PostProcessDpadAxis()
         {
 
