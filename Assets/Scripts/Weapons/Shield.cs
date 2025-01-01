@@ -64,10 +64,6 @@ namespace Weapons
 
         public void TakeDamage(float damage)
         {
-            if (isBlocking && other.CompareTag("Enemy"))
-            {
-                Debug.Log($"{WeaponName} blocked an attack from {other.name}!");
-            }
             durability -= Mathf.RoundToInt(damage); // 扣除耐久度
             Debug.Log($"{WeaponName} durability reduced by {damage}. Remaining durability: {durability}");
 
@@ -91,7 +87,5 @@ namespace Weapons
         //        Debug.Log($"{WeaponName} is actively blocking for {Time.time - blockStartTime:F2} seconds.");
         //    }
         //}
-
-        
     }
 }
