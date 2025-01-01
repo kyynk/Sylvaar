@@ -19,6 +19,7 @@ namespace Weapons
         {
             durability = MaxDurability;
         }
+        private float lastBlockTime; 
 
         public void Attack()
         {
@@ -26,6 +27,11 @@ namespace Weapons
         }
 
         public bool CanAttack() => false;
+
+        public bool CanBlock()
+        {
+            return Time.time >= lastBlockTime + CooldownTime;
+        }
 
         public void ResetWeapon()
         {
@@ -35,18 +41,33 @@ namespace Weapons
 
         public void Block()
         {
-            isBlocking = true;
-            Debug.Log($"{WeaponName} is blocking!");
+            if (CanBlock())
+            {
+                isBlocking = true;
+                lastBlockTime = Time.time;
+                Debug.Log($"{WeaponName} is blocking!");
+            }
+            else
+            {
+                Debug.Log($"{WeaponName} is on cooldown. Wait {CooldownTime - (Time.time - lastBlockTime):F2} seconds.");
+            }
         }
 
         public void StopBlock()
         {
-            isBlocking = false;
-            Debug.Log($"{WeaponName} stopped blocking.");
+            if (isBlocking)
+            {
+                isBlocking = false;
+                Debug.Log($"{WeaponName} stopped blocking.");
+            }
         }
 
         public void TakeDamage(float damage)
         {
+            if (isBlocking && other.CompareTag("Enemy"))
+            {
+                Debug.Log($"{WeaponName} blocked an attack from {other.name}!");
+            }
             durability -= Mathf.RoundToInt(damage); // 扣除耐久度
             Debug.Log($"{WeaponName} durability reduced by {damage}. Remaining durability: {durability}");
 
@@ -61,5 +82,16 @@ namespace Weapons
             Debug.Log($"{WeaponName} has been destroyed due to zero durability.");
             Destroy(gameObject);
         }
+
+        //private void Update()
+        //{
+        //    if (isBlocking)
+        //    {
+        //        // limit other actions while blocking, like slow moving ...
+        //        Debug.Log($"{WeaponName} is actively blocking for {Time.time - blockStartTime:F2} seconds.");
+        //    }
+        //}
+
+        
     }
 }
