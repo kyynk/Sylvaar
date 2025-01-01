@@ -43,7 +43,7 @@ namespace Entities.Player
 
         private void Awake()
         {
-            GameManager.Instance.LoadPlayerHandler(gameObject);
+            // GameManager.Instance.LoadPlayerHandler(gameObject);
             anim = model.GetComponentInChildren<Animator>();
             rigid = GetComponent<Rigidbody>();
             currentWeapon = new List<GameObject> { null, null };
