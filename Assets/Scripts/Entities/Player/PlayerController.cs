@@ -287,7 +287,7 @@ namespace Entities.Player
             if(_isAttack && currentWeapon[(int)Hands.Left] != null)
             {
                 Debug.Log("PlayerController Attack");
-                IWeapon weapon = currentWeapon[0].GetComponent<IWeapon>();
+                IWeapon weapon = currentWeapon[(int)Hands.Left].GetComponent<IWeapon>();
                 if (state == STATE.ATTACK || currentWeapon == null)
                     return;
 
@@ -299,6 +299,40 @@ namespace Entities.Player
                 }
             }
         }
+
+        public void Block(bool _isBlock)
+        {
+            if (_isBlock && currentWeapon[(int)Hands.Right] != null)
+            {
+                Debug.Log("PlayerController Block");
+                Shield weapon = currentWeapon[(int)Hands.Right].GetComponent<Shield>();
+
+                // ensure not attack，and have shield
+                if (state == STATE.ATTACK || currentWeapon == null)
+                    return;
+
+                if (weapon.CanBlock())
+                {
+                    state = STATE.ATTACK;
+                    currentWeapon[(int)Hands.Right].transform.localPosition = new Vector3(0, 0, 0.02f);
+                    currentWeapon[(int)Hands.Right].transform.localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
+                    anim.CrossFadeInFixedTime(weapon.WeaponName, 0.1f);
+                    weapon.Block();
+                }
+            }
+            else
+            {
+                if (state == STATE.ATTACK)
+                {
+                    state = STATE.IDLE;
+                    Shield weapon = currentWeapon[(int)Hands.Right]?.GetComponent<Shield>();
+                    currentWeapon[(int)Hands.Right].transform.localPosition = new Vector3(0, 0, 0);
+                    currentWeapon[(int)Hands.Right].transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                    weapon?.StopBlock();
+                }
+            }
+        }
+
 
     }
 }
