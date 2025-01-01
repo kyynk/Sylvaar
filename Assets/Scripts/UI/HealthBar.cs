@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Slider slider;
+    [SerializeField] private GameObject healthBarImage;
     public void UpdateHealthBar(float currentValue, float maxVale)
     {
-        slider.value = currentValue / maxVale;
+        healthBarImage.transform.localScale = new Vector3(currentValue/maxVale ,1 ,1);
     }
     void Update()
     {
