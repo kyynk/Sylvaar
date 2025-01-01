@@ -13,8 +13,11 @@ namespace Entities.Enemy
 
         [SerializeField] HealthBar healthBar;
 
+        // private Rigidbody rb;
+
         private void Awake() 
         {
+            // rb = GetComponentInChildren<Rigidbody>();
             healthBar = GetComponentInChildren<HealthBar>();
         }
 
