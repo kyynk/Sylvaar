@@ -22,6 +22,7 @@ namespace Entities.Enemy
         {
             foxAnimator = GetComponent<Animator>();
             enemy = GetComponent<Enemy>();
+            SetTarget();
         }
 
         private void Update()
@@ -104,9 +105,16 @@ namespace Entities.Enemy
             }
         }
 
-        public void SetTarget(Transform target)
+        public void SetTarget()
         {
-            playerTarget = target;
+            if (playerTarget == null)
+            {
+                GameObject player = GameObject.FindWithTag("Player");
+                if (player != null)
+                {
+                    playerTarget = player.transform;
+                }
+            }
         }
 
         private void CheckAnimation()
