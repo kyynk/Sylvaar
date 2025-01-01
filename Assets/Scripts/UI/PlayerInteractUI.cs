@@ -13,14 +13,14 @@ namespace UI
 
         private void Update()
         {
-            if (playerInteract.GetInteractableObject() != null && AVGMachine.Instance.IsFinished())
-            {
-                Show(playerInteract.GetInteractableObject());
-            }
-            else
-            {
-                Hide();
-            }
+            //if (playerInteract.GetInteractableObject() != null && AVGMachine.Instance.IsFinished())
+            //{
+            //    Show(playerInteract.GetInteractableObject());
+            //}
+            //else
+            //{
+            //    Hide();
+            //}
         }
 
         private void Show(IInteractable interactable)
