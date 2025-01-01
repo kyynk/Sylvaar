@@ -15,32 +15,27 @@ namespace Entities.Enemy
         private Enemy enemy;
         private Vector3 moveDirection;
         private float nextDirectionChangeTime;
-        private Animator foxAnimator;
-        private string currentAnimation = "";
 
         private void Awake()
         {
-            foxAnimator = GetComponent<Animator>();
             enemy = GetComponent<Enemy>();
-            SetTarget();
+            playerTarget = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
-        private void Update()
+        public void Update()
         {
             if (!enemy.IsAlive) return;
 
-            float playerDistance = Vector3.Distance(transform.position, playerTarget.position);
+            float playerDistance = Vector3.Distance(enemy.transform.position, playerTarget.position);
             if (playerTarget != null && playerDistance <= detectRange)
             {
                 if(playerDistance <= attackRange)
                 {
-                    // ChangeAnimation("FoxAttackAnimation");
                     AttackPlayer();
                 }
                 else
                 {
-                    // ChangeAnimation("FoxWalk");
-                    moveDirection = (playerTarget.position - transform.position).normalized;
+                    moveDirection = (playerTarget.position - enemy.transform.position).normalized;
                     MoveForward(moveDirection);
                 }
             }
@@ -48,7 +43,6 @@ namespace Entities.Enemy
             {
                 HandleIdleOrRandomMove();
             }
-            // CheckAnimation();
         }
 
         private void HandleIdleOrRandomMove()
@@ -57,7 +51,6 @@ namespace Entities.Enemy
             {
                 if (Random.value < idleProbability)
                 {
-                    // ChangeAnimation("FoxIdle");
                     Debug.Log($"{gameObject.name} is idling.");
                     moveDirection = Vector3.zero;
                     nextDirectionChangeTime = Time.time + changeDirectionInterval;
@@ -69,7 +62,6 @@ namespace Entities.Enemy
                     moveDirection = new Vector3(Mathf.Cos(randomAngle), 0, Mathf.Sin(randomAngle)).normalized;
                     nextDirectionChangeTime = Time.time + changeDirectionInterval;
 
-                    // ChangeAnimation("FoxWalk");
                 }
             }
 
@@ -80,16 +72,16 @@ namespace Entities.Enemy
             }
         }
 
-        private void MoveForward(Vector3 direction)
+        public void MoveForward(Vector3 direction)
         {
             // move
-            transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
+            enemy.transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
 
             // adjust rotation
             if (direction != Vector3.zero)
             {
                 Debug.Log($"{gameObject.name} move forward!");
-                transform.forward = direction;
+                enemy.transform.forward = direction;
             }
         }
 
@@ -103,34 +95,5 @@ namespace Entities.Enemy
                 damageable.TakeDamage(enemy.Damage);
             }
         }
-
-        public void SetTarget()
-        {
-            if (playerTarget == null)
-            {
-                GameObject player = GameObject.FindWithTag("Player");
-                if (player != null)
-                {
-                    playerTarget = player.transform;
-                }
-            }
-        }
-
-        // private void CheckAnimation()
-        // {
-        //     if(currentAnimation == "FoxAttackAnimation") return;
-        //     Debug.Log($"{gameObject.name} nothing to do!");
-        //     // ChangeAnimation("FoxIdle");
-        // }
-
-        // public void ChangeAnimation(string animation, float crossfade = 0.2f)
-        // {
-        //     Debug.Log($"Change Animation {animation}!");
-        //     if(currentAnimation != animation)
-        //     {
-        //         currentAnimation = animation;
-        //         foxAnimator.CrossFadeInFixedTime(animation, crossfade);
-        //     }
-        // }
     }
 }
