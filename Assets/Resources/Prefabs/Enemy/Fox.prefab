@@ -76,21 +76,15 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3420412575965434473}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: c20ff607f6b36da4b9b39f061a1b9eed, type: 3}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 75f834dcc681916429aeda4e346056df, type: 3}
   m_Controller: {fileID: 9100000, guid: e899dbc6acf5fec4da80be344792a1fe, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'forearm.R'\n\tTransform 'upper_arm.L'\n\tTransform
-    'spine'\n\tTransform 'spine.001'\n\tTransform 'upper_arm.R'\n\tTransform 'spine.004'\n\tTransform
-    'shin.L'\n\tTransform 'forearm.L'\n\tTransform 'spine.002'\n\tTransform 'thigh.R'\n\tand
-    more ...\n\tFrom animation clip 'FoxAttackAnimation'\n\tFrom animation clip 'FoxIsAttacked'\n\tFrom
-    animation clip 'FoxDied'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0

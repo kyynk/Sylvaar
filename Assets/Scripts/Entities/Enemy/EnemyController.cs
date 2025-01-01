@@ -34,12 +34,12 @@ namespace Entities.Enemy
             {
                 if(playerDistance <= attackRange)
                 {
-                    ChangeAnimation("FoxAttackAnimation");
+                    // ChangeAnimation("FoxAttackAnimation");
                     AttackPlayer();
                 }
                 else
                 {
-                    ChangeAnimation("FoxWalk");
+                    // ChangeAnimation("FoxWalk");
                     moveDirection = (playerTarget.position - transform.position).normalized;
                     MoveForward(moveDirection);
                 }
@@ -48,7 +48,7 @@ namespace Entities.Enemy
             {
                 HandleIdleOrRandomMove();
             }
-            CheckAnimation();
+            // CheckAnimation();
         }
 
         private void HandleIdleOrRandomMove()
@@ -57,7 +57,7 @@ namespace Entities.Enemy
             {
                 if (Random.value < idleProbability)
                 {
-                    ChangeAnimation("FoxIdle");
+                    // ChangeAnimation("FoxIdle");
                     Debug.Log($"{gameObject.name} is idling.");
                     moveDirection = Vector3.zero;
                     nextDirectionChangeTime = Time.time + changeDirectionInterval;
@@ -69,8 +69,7 @@ namespace Entities.Enemy
                     moveDirection = new Vector3(Mathf.Cos(randomAngle), 0, Mathf.Sin(randomAngle)).normalized;
                     nextDirectionChangeTime = Time.time + changeDirectionInterval;
 
-                    ChangeAnimation("FoxWalk");
-                    Debug.Log($"{gameObject.name} now is walking in direction: {moveDirection}!");
+                    // ChangeAnimation("FoxWalk");
                 }
             }
 
@@ -117,21 +116,21 @@ namespace Entities.Enemy
             }
         }
 
-        private void CheckAnimation()
-        {
-            if(currentAnimation == "FoxAttackAnimation") return;
-            Debug.Log($"{gameObject.name} nothing to do!");
-            ChangeAnimation("FoxIdle");
-        }
+        // private void CheckAnimation()
+        // {
+        //     if(currentAnimation == "FoxAttackAnimation") return;
+        //     Debug.Log($"{gameObject.name} nothing to do!");
+        //     // ChangeAnimation("FoxIdle");
+        // }
 
-        public void ChangeAnimation(string animation, float crossfade = 0.2f)
-        {
-            Debug.Log($"Change Animation {animation}!");
-            if(currentAnimation != animation)
-            {
-                currentAnimation = animation;
-                foxAnimator.CrossFade(animation, crossfade);
-            }
-        }
+        // public void ChangeAnimation(string animation, float crossfade = 0.2f)
+        // {
+        //     Debug.Log($"Change Animation {animation}!");
+        //     if(currentAnimation != animation)
+        //     {
+        //         currentAnimation = animation;
+        //         foxAnimator.CrossFadeInFixedTime(animation, crossfade);
+        //     }
+        // }
     }
 }

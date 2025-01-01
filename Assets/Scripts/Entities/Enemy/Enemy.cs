@@ -18,14 +18,6 @@ namespace Entities.Enemy
         private void Awake() 
         {
             // rb = GetComponentInChildren<Rigidbody>();
-            healthBar = GetComponentInChildren<HealthBar>();
-        }
-
-        private void Start() 
-        {
-            Health = MaxHealth;
-            healthBar.UpdateHealthBar(Health,MaxHealth);
-            // target = GameObject.Find("Player").transform;
         }
 
         public void TakeDamage(float damage)
