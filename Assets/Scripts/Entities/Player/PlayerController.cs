@@ -291,6 +291,11 @@ namespace Entities.Player
                 if (state == STATE.ATTACK || currentWeapon == null)
                     return;
 
+                if(currentWeapon[(int)Hands.Left] == null)
+                {
+                    return;
+                }
+
                 if (weapon.CanAttack())
                 {
                     state = STATE.ATTACK;
@@ -320,7 +325,7 @@ namespace Entities.Player
                     weapon.Block();
                 }
             }
-            else
+            else if(!_isBlock && currentWeapon[(int)Hands.Right] != null)
             {
                 if (state == STATE.ATTACK)
                 {
@@ -328,6 +333,7 @@ namespace Entities.Player
                     Shield weapon = currentWeapon[(int)Hands.Right]?.GetComponent<Shield>();
                     currentWeapon[(int)Hands.Right].transform.localPosition = new Vector3(0, 0, 0);
                     currentWeapon[(int)Hands.Right].transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                    anim.CrossFadeInFixedTime("idle", 0.1f);
                     weapon?.StopBlock();
                 }
             }
