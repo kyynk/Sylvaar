@@ -89,16 +89,31 @@ namespace KeyboardInput
 
         protected override void CalculateAttack()
         {
-            attack = Input.GetKeyDown("mouse 0");
-            // evtAttack?.Invoke(attack);
-            evtAttack?.Invoke(isMute ? false: attack);
+            if (Input.GetKeyDown("mouse 0") && !isMute)
+            {
+                attack = true;
+                evtAttack?.Invoke(attack); 
+            }
+            else if (Input.GetKeyUp("mouse 0")) 
+            {
+                attack = false;
+            }
         }
 
         protected override void CalculateBlock()
         {
-            block = Input.GetKey("mouse 1");
-            evtBlock?.Invoke(isMute ? false : block);
+            if (Input.GetKey("mouse 1") && !isMute) 
+            {
+                block = true;
+                evtBlock?.Invoke(block);
+            }
+            else if (Input.GetKeyUp("mouse 1"))
+            {
+                block = false;
+                evtBlock?.Invoke(block);
+            }
         }
+
         protected override void PostProcessDpadAxis()
         {
 
