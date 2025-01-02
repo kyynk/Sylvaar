@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Entities.Item
@@ -5,7 +6,7 @@ namespace Entities.Item
     public class ItemGenerator : MonoBehaviour
     {
         [Header("Spawn settings")]
-        [SerializeField] private GameObject itemPrefab;
+        [SerializeField] private List<GameObject> itemPrefabList;
         [SerializeField] private float spawnChance;
         [Header("Raycast setup")]
         [SerializeField] private float distanceBetweenObjects;
@@ -17,6 +18,7 @@ namespace Entities.Item
 
         private void Start()
         {
+            Debug.Log(itemPrefabList);
             SpawnItems();
         }
 
@@ -27,6 +29,9 @@ namespace Entities.Item
                 for (float z = negativePosition.y; z < positivePosition.y; z += distanceBetweenObjects)
                 {
                     RaycastHit hit;
+                    
+                    GameObject itemPrefab = itemPrefabList[Random.Range(0, itemPrefabList.Count)];
+                    
                     if (Physics.Raycast(new Vector3(x, heightCheck, z), Vector3.down, out hit, rangeCheck, layerMask))
                     {
                         if (spawnChance > Random.Range(0f, 101f))
