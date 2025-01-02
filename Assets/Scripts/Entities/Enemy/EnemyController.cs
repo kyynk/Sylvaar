@@ -17,17 +17,31 @@ namespace Entities.Enemy
         private float nextDirectionChangeTime;
         private Animator animator;
         private float playerDistance;
+        private Rigidbody rb;
 
         private void Awake()
         {
             enemy = GetComponent<Enemy>();
             playerTarget = GameObject.FindGameObjectWithTag("Player").transform;
             animator = GetComponent<Animator>();
+            rb = GetComponent<Rigidbody>();
+        }
+
+        void FixedUpdate()
+        {
+            RaycastHit hit;
+            Vector3 rayOrigin = enemy.transform.position + Vector3.up;
+            if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 10f))
+            {
+                Vector3 position = enemy.transform.position;
+                position.y = Mathf.Lerp(position.y, hit.point.y, 0.1f);
+                enemy.transform.position = position;
+            }
         }
 
         private void Update()
         {
-            AdjustToGround();
+            //AdjustToGround();
             Debug.Log($"Enemy Y position: {enemy.transform.position.y}");
             playerDistance = GetPlayerDistance();
             if(_isPlayerInRange(playerDistance, attackRange))
