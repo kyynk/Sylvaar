@@ -48,9 +48,12 @@ public class MiniMap : MonoBehaviour
         float normalizedZ = (worldPosition.z - terrain.transform.position.z) / terrainSize.z;
         float mapWidth = mapRect.rect.width;
         float mapHeight = mapRect.rect.height;
+
         float iconX = normalizedX * mapWidth;
         float iconY = normalizedZ * mapHeight;
-        icon.anchoredPosition = new Vector2(iconX, iconY);
+        Vector2 mapCenterOffset = new Vector2(mapRect.rect.width * mapRect.pivot.x, mapRect.rect.height * mapRect.pivot.y);
+
+        icon.anchoredPosition = new Vector2(iconX - mapCenterOffset.x, iconY - mapCenterOffset.y + 12f);
 
         float iconScale = Mathf.Min(mapWidth / terrainSize.x, mapHeight / terrainSize.z);
         icon.localScale = new Vector3(iconScale, iconScale, 1);
