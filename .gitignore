@@ -79,3 +79,46 @@ Assets/TextMesh Pro/
 
 # vsode
 .vscode
+
+# map files
+Assets/World/
+Assets/World.meta
+# World should contain below data (not contain map (scene))
+# Abandoned World/
+# Abandoned World.meta
+# Blue Polygon/
+# Blue Polygon.meta
+# door.fbx
+# door.fbx.meta
+# fire/
+# fire.meta
+# fruit/
+# fruit.meta
+# Handpainted_Grass_and_Ground_Textures/
+# Handpainted_Grass_and_Ground_Textures.meta
+# IL3DN/
+# IL3DN.meta
+# material/
+# material.meta
+# New Terrain.asset
+# New Terrain.asset.meta
+# New Terrain 1.asset
+# New Terrain 1.asset.meta
+# Proxy Games/
+# Proxy Games.meta
+# rock/
+# rock.meta
+# roots-and-vines/
+# roots-and-vines.meta
+# TerrainData_088b1541-82ca-422e-aa39-a5ea255c0a02.asset
+# TerrainData_088b1541-82ca-422e-aa39-a5ea255c0a02.asset.meta
+# ThreeBox/
+# ThreeBox.meta
+# VegetationSpawner/
+# VegetationSpawner.meta
+# WoodsLifestyle/
+# WoodsLifestyle.meta
+
+# map (scene)
+Assets/Scenes/TriForge Assets/
+Assets/Scenes/TriForge Assets.meta

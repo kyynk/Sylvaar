@@ -1,45 +1,49 @@
+using System.IO;
 using UnityEngine;
 
 namespace Interactable
 {
     public class ItemInteractable : MonoBehaviour, IInteractable
     {
-        [SerializeField] private MeshRenderer sphereMeshRenderer;
-        [SerializeField] private Material whiteMaterial;
-        [SerializeField] private Material grayMaterial;
-        private bool isColorWhite = true;
+        [SerializeField] private string itemName;
+        [SerializeField] private string interactText;
+        [SerializeField] private int itemQuantity;
 
-        private void SetColorWhite()
+        private void GainItem()
         {
-            sphereMeshRenderer.material = whiteMaterial;
-        }
-
-        private void SetColorGray()
-        {
-            sphereMeshRenderer.material = grayMaterial;
-        }
-
-        private void ToggleColor()
-        {
-            isColorWhite = !isColorWhite;
-            if (isColorWhite)
+            try
             {
-                SetColorGray();
+                var path = Path.Combine(Application.streamingAssetsPath, "PlayerItems/items.csv");
+                var lines = File.ReadAllLines(path);
+                var headers = lines[0].Split(',');
+                var itemsQuantity = lines[1].Split(',');
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    if (headers[i] == itemName)
+                    {
+                        itemsQuantity[i] = (int.Parse(itemsQuantity[i]) + itemQuantity).ToString();
+                        break;
+                    }
+                }
+
+                lines[1] = string.Join(",", itemsQuantity);
+                File.WriteAllLines(path, lines);
             }
-            else
+            catch (IOException e)
             {
-                SetColorWhite();
+                Debug.LogError(e.Message);
             }
         }
 
         public void Interact()
         {
-            ToggleColor();
+            GainItem();
+            gameObject.SetActive(false);
         }
 
         public string GetInteractText()
         {
-            return "Change color";
+            return interactText;
         }
 
         public Transform GetTransform()
