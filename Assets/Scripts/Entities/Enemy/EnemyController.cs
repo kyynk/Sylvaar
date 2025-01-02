@@ -7,7 +7,7 @@ namespace Entities.Enemy
     {
         [SerializeField] private float moveSpeed = 2f;
         [SerializeField] private float changeDirectionInterval = 3f;
-        [SerializeField] private float idleProbability = 0.2f; // 停留的機率
+        [SerializeField] private float idleProbability = 0.2f;
         [SerializeField] private float attackRange = 2f;
         [SerializeField] private float detectRange = 10f;
         [SerializeField] private Transform playerTarget;
@@ -25,7 +25,7 @@ namespace Entities.Enemy
             animator = GetComponent<Animator>();
         }
 
-        public void Update()
+        private void Update()
         {
             playerDistance = GetPlayerDistance();
             if(_isPlayerInRange(playerDistance, attackRange))
@@ -59,7 +59,10 @@ namespace Entities.Enemy
 
         public void EnemyChasePlayer()
         {
-            moveDirection = (playerTarget.position - enemy.transform.position).normalized;
+            Vector3 targetPosition = playerTarget.position;
+            targetPosition.y = enemy.transform.position.y;
+            Vector3 moveDirection = (targetPosition - enemy.transform.position).normalized;
+
             MoveForward(moveDirection);
         }
 

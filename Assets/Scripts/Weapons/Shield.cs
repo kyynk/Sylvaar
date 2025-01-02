@@ -10,7 +10,7 @@ namespace Weapons
         public float Damage => 0f;
         public float Range => 0f;
         public float CooldownTime => 1f;
-        public int MaxDurability => 100; // 最大耐久度
+        public int MaxDurability => 100;
         private int durability;
 
         private bool isBlocking = false;
@@ -64,7 +64,7 @@ namespace Weapons
 
         public void TakeDamage(float damage)
         {
-            durability -= Mathf.RoundToInt(damage); // 扣除耐久度
+            durability -= Mathf.RoundToInt(damage);
             Debug.Log($"{WeaponName} durability reduced by {damage}. Remaining durability: {durability}");
 
             if (durability <= 0)

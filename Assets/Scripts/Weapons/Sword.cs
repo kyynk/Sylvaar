@@ -10,7 +10,7 @@ namespace Weapons
         public float Damage => 50f;
         public float Range => 2f;
         public float CooldownTime => 1f;
-        public int MaxDurability => 100; // 最大耐久度
+        public int MaxDurability => 100;
         private int durability;
 
         private float lastAttackTime;
@@ -19,7 +19,7 @@ namespace Weapons
 
         private void Start()
         {
-            durability = MaxDurability; // 初始化耐久度
+            durability = MaxDurability;
         }
 
         public void Attack()
