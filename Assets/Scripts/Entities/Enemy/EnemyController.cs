@@ -15,37 +15,55 @@ namespace Entities.Enemy
         private Enemy enemy;
         private Vector3 moveDirection;
         private float nextDirectionChangeTime;
+        private Animator animator;
+        private float playerDistance;
 
         private void Awake()
         {
             enemy = GetComponent<Enemy>();
             playerTarget = GameObject.FindGameObjectWithTag("Player").transform;
+            animator = GetComponent<Animator>();
         }
 
         public void Update()
         {
-            if (!enemy.IsAlive) return;
-
-            float playerDistance = Vector3.Distance(enemy.transform.position, playerTarget.position);
-            if (playerTarget != null && playerDistance <= detectRange)
+            playerDistance = GetPlayerDistance();
+            if(_isPlayerInRange(playerDistance, attackRange))
             {
-                if(playerDistance <= attackRange)
-                {
-                    AttackPlayer();
-                }
-                else
-                {
-                    moveDirection = (playerTarget.position - enemy.transform.position).normalized;
-                    MoveForward(moveDirection);
-                }
+                animator.SetTrigger("FoxAttack");
+                AttackPlayer();
+            }
+            else if (_isPlayerInRange(playerDistance, detectRange))
+            {
+                animator.ResetTrigger("FoxAttack");
+                EnemyChasePlayer();
             }
             else
-            {
+            {   
+                animator.ResetTrigger("FoxAttack");
                 HandleIdleOrRandomMove();
             }
         }
 
-        private void HandleIdleOrRandomMove()
+        public float GetPlayerDistance()
+        {
+            float playerDistance = Vector3.Distance(enemy.transform.position, playerTarget.position);
+            return playerDistance;
+        }
+
+        public bool _isPlayerInRange(float distance, float range)
+        {
+            if(distance <= range){ return true;}
+            else return false;
+        }
+
+        public void EnemyChasePlayer()
+        {
+            moveDirection = (playerTarget.position - enemy.transform.position).normalized;
+            MoveForward(moveDirection);
+        }
+
+        public void HandleIdleOrRandomMove()
         {  
             if (Time.time >= nextDirectionChangeTime)
             {
@@ -61,10 +79,8 @@ namespace Entities.Enemy
                     float randomAngle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
                     moveDirection = new Vector3(Mathf.Cos(randomAngle), 0, Mathf.Sin(randomAngle)).normalized;
                     nextDirectionChangeTime = Time.time + changeDirectionInterval;
-
                 }
             }
-
             // Ensure movement occurs
             if (moveDirection != Vector3.zero)
             {
@@ -76,7 +92,6 @@ namespace Entities.Enemy
         {
             // move
             enemy.transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
-
             // adjust rotation
             if (direction != Vector3.zero)
             {
