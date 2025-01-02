@@ -52,12 +52,12 @@ namespace UI
                 if (selectedSlot != null)
                 {
                     // Reset the previously selected slot's highlight
-                    selectedSlot.GetComponent<Image>().color = Color.white;
+                    selectedSlot.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                 }
 
                 // Highlight the first slot
                 selectedSlot = firstSlot;
-                selectedSlot.GetComponent<Image>().color = Color.yellow;
+                selectedSlot.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
             }
         }
     
@@ -98,7 +98,11 @@ namespace UI
             for (int i = 0; i < gridSize; i++)
             {
                 GameObject newSlot = Instantiate(itemSlotPrefab, backpackGrid.transform);
+                Image slotImage = newSlot.GetComponent<Image>();
                 newSlot.GetComponent<Button>().onClick.AddListener(() => OnItemSlotClicked(newSlot));
+
+                // Make the slot initially invisible
+                slotImage.color = new Color(0, 0, 0, 0);
             }
         }
 
@@ -108,12 +112,12 @@ namespace UI
             if (selectedSlot != null)
             {
                 // Reset previous slot's highlight
-                selectedSlot.GetComponent<Image>().color = Color.white;
+                selectedSlot.GetComponent<Image>().color = new Color(0, 0, 0, 0);
             }
 
             // Highlight the selected slot
             selectedSlot = slot;
-            selectedSlot.GetComponent<Image>().color = Color.yellow;
+            selectedSlot.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
         }
     }
 }
