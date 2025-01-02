@@ -27,6 +27,7 @@ namespace Entities.Enemy
 
         private void Update()
         {
+            AdjustToGround();
             Debug.Log($"Enemy Y position: {enemy.transform.position.y}");
             playerDistance = GetPlayerDistance();
             if(_isPlayerInRange(playerDistance, attackRange))
@@ -60,10 +61,7 @@ namespace Entities.Enemy
 
         public void EnemyChasePlayer()
         {
-            Vector3 targetPosition = playerTarget.position;
-            targetPosition.y = enemy.transform.position.y;
-            Vector3 moveDirection = (targetPosition - enemy.transform.position).normalized;
-
+            Vector3 moveDirection = (playerTarget.position - enemy.transform.position).normalized;
             MoveForward(moveDirection);
         }
 
@@ -96,7 +94,6 @@ namespace Entities.Enemy
         {
             // move
             enemy.transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
-            AdjustToGround();
             // adjust rotation
             if (direction != Vector3.zero)
             {
