@@ -1,16 +1,24 @@
 using UnityEngine;
+using Core;
 
 namespace Weapons
 {
-    public class Shield : MonoBehaviour, IWeapon
+    public class Shield : MonoBehaviour, IWeapon, IDamageable
     {
         public string WeaponName => "Shield";
         public WeaponType WeaponType => WeaponType.Shield;
         public float Damage => 0f;
         public float Range => 0f;
-        public float CooldownTime => 1f; 
+        public float CooldownTime => 1f;
+        public int MaxDurability => 100;
+        private int durability;
 
         private bool isBlocking = false;
+
+        private void Start()
+        {
+            durability = MaxDurability;
+        }
         private float lastBlockTime; 
 
         public void Attack()
@@ -54,12 +62,21 @@ namespace Weapons
             }
         }
 
-        private void OnTriggerEnter(Collider other)
+        public void TakeDamage(float damage)
         {
-            if (isBlocking && other.CompareTag("Enemy"))
+            durability -= Mathf.RoundToInt(damage);
+            Debug.Log($"{WeaponName} durability reduced by {damage}. Remaining durability: {durability}");
+
+            if (durability <= 0)
             {
-                Debug.Log($"{WeaponName} blocked an attack from {other.name}!");
+                DestroyWeapon();
             }
+        }
+
+        private void DestroyWeapon()
+        {
+            Debug.Log($"{WeaponName} has been destroyed due to zero durability.");
+            Destroy(gameObject);
         }
 
         //private void Update()
@@ -70,6 +87,5 @@ namespace Weapons
         //        Debug.Log($"{WeaponName} is actively blocking for {Time.time - blockStartTime:F2} seconds.");
         //    }
         //}
-
     }
 }
