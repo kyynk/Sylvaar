@@ -37,7 +37,7 @@ namespace Core
 
         private void Start()
         {
-            // LoadSceneBasedOnState(GameState.MainMenu);
+            LoadSceneBasedOnState(GameState.MainMenu);
         }
 
         private void Update()
