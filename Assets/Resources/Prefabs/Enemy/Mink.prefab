@@ -65,10 +65,10 @@ MonoBehaviour:
   changeDirectionInterval: 3
   player: {fileID: 0}
   attackRange: 2
-  detectionRange: 10
   accelerateSpeed: 0
   chaseSpeed: 0
   waitTime: 2
+  currentAnimation: 
 --- !u!114 &5581332355354881152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,11 +90,11 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3420412575965434473}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 1
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: dade2c169a45dfc439f0019063ab4bfd, type: 3}
+  m_Controller: {fileID: 9100000, guid: 415122f72084c364983cefeb4c0cfea4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0

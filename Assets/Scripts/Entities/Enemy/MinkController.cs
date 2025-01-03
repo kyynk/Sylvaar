@@ -13,69 +13,116 @@ namespace Entities.Enemy
         public float accelerateSpeed;
         public float chaseSpeed;
         public float waitTime = 2f;
+        public string currentAnimation = "";
         private Vector3 moveDirection;
         private float nextDirectionChangeTime;
-        private bool isRunAway = false;
         private Mink mink;
-        private EnemyController enemyController;
         private Animator animator;
         private Rigidbody rb;
+        public enum EnemyState
+        {
+            Idle,
+            Chase,
+            Attack,
+            RunAway
+        }
+        private EnemyState currentState = EnemyState.Idle;
 
         private void Awake()
         {
             mink = GetComponent<Mink>();
             player = GameObject.FindGameObjectWithTag("Player").transform;
-            enemyController = GetComponent<EnemyController>();
             chaseSpeed = mink.MoveSpeed;
-            // animator = GetComponent<Animator>();
+            animator = GetComponent<Animator>();
             // rb = GetComponent<Rigidbody>();
         }
 
         void Update()
         {
-            float distanceToPlayer = Vector3.Distance(mink.transform.position, player.position);
             Vector3 directionToPlayer = (player.position - mink.transform.position).normalized;
             Debug.DrawLine(mink.transform.position, mink.transform.position + directionToPlayer * 5, Color.red);
             Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + Camera.main.transform.forward * 5, Color.green);
             //Debug.Log($"{distanceToPlayer} distance detween player!");
 
-            if(isRunAway)
+            switch (currentState)
             {
-                EnemyRunAwayPlayer();
-                if (distanceToPlayer >= detectionRange * 0.8) 
-                { 
-                    isRunAway = false;
-                    mink.transform.forward = directionToPlayer;
-                }
+                case EnemyState.Idle:
+                    HandleIdleState();
+                    break;
+                case EnemyState.Chase:
+                    HandleChaseState();
+                    break;
+                case EnemyState.Attack:
+                    HandleAttackState();
+                    break;
+                case EnemyState.RunAway:
+                    HandleRunAwayState();
+                    break;
             }
-            else if (distanceToPlayer <= attackRange)
+        }
+
+        private void HandleIdleState()
+        {
+            //SetAnimatorState("Idle");
+            mink.SetMoveSpeed(3f);
+            RandomMove();
+            DetectRangeChangeState();
+        }
+
+        private void HandleChaseState()
+        {
+            DetectRangeChangeState();
+            float distanceToPlayer = Vector3.Distance(mink.transform.position, player.position);
+            if (!IsCameraLookingAtMe())
             {
-                AttackPlayer();
-                isRunAway = true;
+                //SetAnimatorState("Idle");
+                accelerateSpeed = Mathf.Lerp(1, 10, Mathf.InverseLerp(detectionRange, attackRange, distanceToPlayer));
+                float targetSpeed = chaseSpeed * (12 - accelerateSpeed);
+                mink.SetMoveSpeed(Mathf.Max(targetSpeed, 1f));
+                EnemyChasePlayer();
+            }
+        }
+
+        private void HandleAttackState()
+        {
+            // SetAnimatorState("Attack");
+            AttackPlayer();
+            animator.CrossFade("MinkAttackAnimation", 0f);
+            StartCoroutine(WaitForAnimation("Attack"),EnemyState.RunAway);
+            Debug.Log($"Finish Attack Animation!");
+            // currentState = EnemyState.RunAway;
+        }
+
+        private void HandleRunAwayState()
+        {
+            EnemyRunAwayPlayer();
+            mink.transform.forward = -(player.position - mink.transform.position).normalized;
+            float distanceToPlayer = Vector3.Distance(mink.transform.position, player.position);
+            if (distanceToPlayer >= detectionRange * 0.8f)
+            {
+                currentState = EnemyState.Idle;
+            }
+        }
+
+        private void DetectRangeChangeState()
+        {
+            float distanceToPlayer = Vector3.Distance(mink.transform.position, player.position);
+            if (distanceToPlayer <= attackRange)
+            {
+                currentState = EnemyState.Attack;
             }
             else if (distanceToPlayer <= detectionRange)
             {
-                if (!IsCameraLookingAtMe())
-                {
-                    accelerateSpeed = Mathf.Lerp(1, 10, Mathf.InverseLerp(detectionRange, attackRange, distanceToPlayer));
-                    float targetSpeed = chaseSpeed * (12 - accelerateSpeed);
-                    mink.SetMoveSpeed(Mathf.Max(targetSpeed, 1f));
-                    EnemyChasePlayer();
-                } 
-                Debug.Log($"I'm stuck");
+                currentState = EnemyState.Chase;
             }
             else
             {
-                isRunAway = false;
-                mink.SetMoveSpeed(3f);
-                RandomMove();
+                currentState = EnemyState.Idle;
             }
         }
 
         private void AttackPlayer()
         {
-            Debug.Log($"{gameObject.name} attacks the player!");
-
             // Example: Apply damage to the player
             if (player.TryGetComponent<IDamageable>(out var damageable))
             {
@@ -129,6 +176,22 @@ namespace Entities.Enemy
                 return false;
             }
             return dotProduct > 0.8f;
+        }
+
+        // private void SetAnimatorState(string animationName)
+        // {
+        //     animator.SetTrigger(animationName);
+        // }
+
+        private IEnumerator WaitForAnimation(string animationName, EnemyState changeState)
+        {
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            while (stateInfo.IsName(animationName) && stateInfo.normalizedTime < 1f)
+            {
+                yield return null;
+                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            }
+            currentState = changeState;
         }
     }
 }
