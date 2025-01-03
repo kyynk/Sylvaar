@@ -42,7 +42,7 @@ namespace Entities.Enemy
         private void Update()
         {
             //AdjustToGround();
-            Debug.Log($"Enemy Y position: {enemy.transform.position.y}");
+            ////Debug.Log($"Enemy Y position: {enemy.transform.position.y}");
             playerDistance = GetPlayerDistance();
             if(_isPlayerInRange(playerDistance, attackRange))
             {
@@ -85,7 +85,7 @@ namespace Entities.Enemy
             {
                 if (Random.value < idleProbability)
                 {
-                    Debug.Log($"{gameObject.name} is idling.");
+                    ////Debug.Log($"{gameObject.name} is idling.");
                     moveDirection = Vector3.zero;
                     nextDirectionChangeTime = Time.time + changeDirectionInterval;
                 }
@@ -106,19 +106,20 @@ namespace Entities.Enemy
 
         public void MoveForward(Vector3 direction)
         {
+            direction.y = 0;
             // move
             enemy.transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
             // adjust rotation
             if (direction != Vector3.zero)
             {
-                Debug.Log($"{gameObject.name} move forward!");
+                ////Debug.Log($"{gameObject.name} move forward!");
                 enemy.transform.forward = direction;
             }
         }
 
         private void AttackPlayer()
         {
-            Debug.Log($"{gameObject.name} attacks the player!");
+            //Debug.Log($"{gameObject.name} attacks the player!");
 
             // Example: Apply damage to the player
             if (playerTarget.TryGetComponent<IDamageable>(out var damageable))
