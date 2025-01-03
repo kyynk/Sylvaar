@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using KeyboardInput;
 using UnityEngine;
 
@@ -94,6 +95,35 @@ namespace AVG
             triggerEnter = true;
         }
 
+        private List<string> ParseCsvLine(string line)
+        {
+            var values = new List<string>();
+            var currentValue = new StringBuilder();
+            bool insideQuotes = false;
+            foreach (char c in line)
+            {
+                if (c == '"' && (currentValue.Length == 0 || currentValue[currentValue.Length - 1] != '\\'))
+                {
+                    insideQuotes = !insideQuotes;
+                }
+                else if (c == ',' && !insideQuotes)
+                {
+                    values.Add(currentValue.ToString());
+                    currentValue.Clear();
+                }
+                else
+                {
+                    currentValue.Append(c);
+                }
+            }
+            values.Add(currentValue.ToString());
+            for (int i = 0; i < values.Count; i++)
+            {
+                values[i] = values[i].Trim('"');
+            }
+            return values;
+        }
+
         public void LoadFromCSV(string filePath)
         {
             dialogs = new List<DialogData>();
@@ -101,7 +131,8 @@ namespace AVG
             var lines = File.ReadAllLines(path).Skip(1); // Skip header
             foreach (var line in lines)
             {
-                var values = line.Split(',');
+                // var values = line.Split(',');
+                var values = ParseCsvLine(line);
                 var data = new DialogData
                 {
                     id = int.Parse(values[0]),
@@ -160,6 +191,7 @@ namespace AVG
 
         private List<int> ParseNextSceneIds(string nextSceneIDsStr, string currentSceneID)
         {
+            Debug.Log(nextSceneIDsStr + " " + currentSceneID);
             if (string.IsNullOrEmpty(nextSceneIDsStr))
             {
                 return new List<int>() { int.Parse(currentSceneID) + 1 };
