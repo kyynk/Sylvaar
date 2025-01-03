@@ -12,10 +12,9 @@ namespace Entities.Enemy
         public float detectionRange { get; private set; } = 30f;
         public float accelerateSpeed;
         public float chaseSpeed;
-        public float waitTime = 2f;
-        public string currentAnimation = "";
         private Vector3 moveDirection;
         private float nextDirectionChangeTime;
+        private float waitAnimationTime = 0f;
         private Mink mink;
         private Animator animator;
         private Rigidbody rb;
@@ -24,7 +23,8 @@ namespace Entities.Enemy
             Idle,
             Chase,
             Attack,
-            RunAway
+            RunAway,
+            Die
         }
         private EnemyState currentState = EnemyState.Idle;
 
@@ -34,7 +34,19 @@ namespace Entities.Enemy
             player = GameObject.FindGameObjectWithTag("Player").transform;
             chaseSpeed = mink.MoveSpeed;
             animator = GetComponent<Animator>();
-            // rb = GetComponent<Rigidbody>();
+            rb = GetComponent<Rigidbody>();
+        }
+
+        void FixedUpdate()
+        {
+            RaycastHit hit;
+            Vector3 rayOrigin = mink.transform.position + Vector3.up;
+            if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 10f))
+            {
+                Vector3 position = mink.transform.position;
+                position.y = Mathf.Lerp(position.y, hit.point.y, 0.1f);
+                mink.transform.position = position;
+            }
         }
 
         void Update()
@@ -42,8 +54,8 @@ namespace Entities.Enemy
             Vector3 directionToPlayer = (player.position - mink.transform.position).normalized;
             Debug.DrawLine(mink.transform.position, mink.transform.position + directionToPlayer * 5, Color.red);
             Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + Camera.main.transform.forward * 5, Color.green);
-            //Debug.Log($"{distanceToPlayer} distance detween player!");
 
+            if(mink.Health <= 0){ currentState = EnemyState.Die; }
             switch (currentState)
             {
                 case EnemyState.Idle:
@@ -58,12 +70,18 @@ namespace Entities.Enemy
                 case EnemyState.RunAway:
                     HandleRunAwayState();
                     break;
+                case EnemyState.Die:
+                    HandleDieState();
+                    break;
             }
         }
-
+        private void HandleDieState()
+        {
+            PlayDieAnimation();
+        }
         private void HandleIdleState()
         {
-            //SetAnimatorState("Idle");
+            animator.CrossFade("Walk", 0.1f);
             mink.SetMoveSpeed(3f);
             RandomMove();
             DetectRangeChangeState();
@@ -75,7 +93,7 @@ namespace Entities.Enemy
             float distanceToPlayer = Vector3.Distance(mink.transform.position, player.position);
             if (!IsCameraLookingAtMe())
             {
-                //SetAnimatorState("Idle");
+                animator.CrossFade("Idle", 0.1f);
                 accelerateSpeed = Mathf.Lerp(1, 10, Mathf.InverseLerp(detectionRange, attackRange, distanceToPlayer));
                 float targetSpeed = chaseSpeed * (12 - accelerateSpeed);
                 mink.SetMoveSpeed(Mathf.Max(targetSpeed, 1f));
@@ -85,16 +103,13 @@ namespace Entities.Enemy
 
         private void HandleAttackState()
         {
-            // SetAnimatorState("Attack");
             AttackPlayer();
-            animator.CrossFade("MinkAttackAnimation", 0f);
-            StartCoroutine(WaitForAnimation("Attack"),EnemyState.RunAway);
-            Debug.Log($"Finish Attack Animation!");
-            // currentState = EnemyState.RunAway;
+            PlayAttackAnimation();
         }
 
         private void HandleRunAwayState()
         {
+            animator.CrossFade("Walk", 0.1f);
             EnemyRunAwayPlayer();
             mink.transform.forward = -(player.position - mink.transform.position).normalized;
             float distanceToPlayer = Vector3.Distance(mink.transform.position, player.position);
@@ -171,27 +186,35 @@ namespace Entities.Enemy
             Vector3 directionToMink = (mink.transform.position - Camera.main.transform.position).normalized;
             float dotProduct = Vector3.Dot(Camera.main.transform.forward, directionToMink);
             float distanceToCamera = Vector3.Distance(mink.transform.position, Camera.main.transform.position);
-             if (distanceToCamera < 5f)
+             if (distanceToCamera < 3f)
             {
                 return false;
             }
             return dotProduct > 0.8f;
         }
 
-        // private void SetAnimatorState(string animationName)
-        // {
-        //     animator.SetTrigger(animationName);
-        // }
-
-        private IEnumerator WaitForAnimation(string animationName, EnemyState changeState)
+        private void PlayAttackAnimation()
         {
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            while (stateInfo.IsName(animationName) && stateInfo.normalizedTime < 1f)
+            animator.Play("MinkAttackAnimation");
+            waitAnimationTime += Time.deltaTime;
+            if(waitAnimationTime >= animator.GetCurrentAnimatorStateInfo(0).length)
             {
-                yield return null;
-                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                waitAnimationTime = 0f;
+                Debug.Log("Animation Play done");
+                currentState = EnemyState.RunAway;
             }
-            currentState = changeState;
+        }
+
+        private void PlayDieAnimation()
+        {
+            animator.Play("MinkDied");
+            waitAnimationTime += Time.deltaTime;
+            if(waitAnimationTime >= animator.GetCurrentAnimatorStateInfo(0).length)
+            {
+                waitAnimationTime = 0f;
+                Debug.Log("Mink is death");
+                mink.Die();
+            }
         }
     }
 }

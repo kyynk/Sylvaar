@@ -46,7 +46,6 @@ namespace Entities.Enemy
         private void Die()
         {
             animator.SetTrigger("FoxDie");
-            //Debug.Log($"{gameObject.name} has died!");
             StartCoroutine(WaitForAnimationAndDestroy());
         }
 
