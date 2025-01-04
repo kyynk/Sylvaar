@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.IO;
+using Entities.Player;
 
 namespace UI
 {
@@ -13,9 +16,15 @@ namespace UI
         public GameObject itemSlotPrefab;  // Prefab for the item slot
         public int gridSize = 15;       // Number of slots in the grid
         private GameObject selectedSlot; // Currently selected slot
+        [SerializeField] GameObject playerBag;
 
         void Start()
         {
+            if (playerBag == null)
+            {
+                playerBag = GameObject.FindWithTag("Player"); // Assuming the PlayerBag GameObject is tagged as "Player"
+            }
+
             backpackGrid.SetActive(false);
             backpackUI.SetActive(false);
             backpackButton.onClick.AddListener(ToggleBackpack);
@@ -27,6 +36,7 @@ namespace UI
         void ToggleBackpack()
         {
             bool isBackpackActive = backpackUI.activeSelf;
+            UpdateBackpack();
 
             backpackGrid.SetActive(!isBackpackActive);
             backpackUI.SetActive(!isBackpackActive);
@@ -51,13 +61,13 @@ namespace UI
 
                 if (selectedSlot != null)
                 {
-                    // Reset the previously selected slot's highlight
-                    selectedSlot.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                    // Reset the previously selected slot's highlight (keep its content intact)
+                    selectedSlot.GetComponent<Image>().color = Color.white;
                 }
 
                 // Highlight the first slot
                 selectedSlot = firstSlot;
-                selectedSlot.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
+                selectedSlot.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f); // Highlight color
             }
         }
     
@@ -109,15 +119,79 @@ namespace UI
         // Handles item slot click
         void OnItemSlotClicked(GameObject slot)
         {
+            // Check if the slot is empty
+            if (slot.GetComponent<Image>().sprite == null)
+            {
+                return; // Do nothing if the slot is empty
+            }
             if (selectedSlot != null)
             {
-                // Reset previous slot's highlight
-                selectedSlot.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                // Reset the previous slot's highlight (keep its content intact)
+                selectedSlot.GetComponent<Image>().color = Color.white;
             }
 
             // Highlight the selected slot
             selectedSlot = slot;
-            selectedSlot.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
+            selectedSlot.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f); // Highlight color
+        }
+
+        public void UpdateBackpack()
+        {
+            Dictionary<string, int> itemCounts = playerBag.GetComponent<PlayerBag>().GetItemCount();
+            // Clear all slot visuals
+            foreach (Transform child in backpackGrid.transform)
+            {
+                Image slotImage = child.GetComponent<Image>();
+                slotImage.sprite = null;
+                slotImage.color = new Color(0, 0, 0, 0); // Make the slot invisible
+                TMPro.TextMeshProUGUI quantityText = child.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+                if (quantityText != null) quantityText.text = ""; // Clear quantity text
+            }
+
+            // Populate slots with items
+            int slotIndex = 0;
+            foreach (var item in itemCounts)
+            {
+                string itemName = item.Key;
+                int itemQuantity = item.Value;
+
+                // Skip items with zero quantity
+                if (itemQuantity <= 0) continue;
+
+                // Iterate over item quantities in stack sizes
+                while (itemQuantity > 0 && slotIndex < backpackGrid.transform.childCount)
+                {
+                    GameObject slot = backpackGrid.transform.GetChild(slotIndex).gameObject;
+                    Image slotImage = slot.GetComponent<Image>();
+                    TMPro.TextMeshProUGUI quantityText = slot.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+                    // Assign item sprite and make slot visible
+                    slotImage.sprite = GetItemSprite(itemName);
+                    slotImage.color = Color.white;
+
+                    // Display the stack size in the slot
+                    int stackSize = Mathf.Min(playerBag.GetComponent<PlayerBag>().GetStackLimit(itemName), itemQuantity);
+                    if (quantityText != null)
+                    {
+                        quantityText.text = stackSize.ToString();
+                    }
+
+                    itemQuantity -= stackSize; // Decrease remaining item quantity
+                    slotIndex++; // Move to the next slot
+                }
+
+                // Stop if we run out of slots
+                if (slotIndex >= backpackGrid.transform.childCount)
+                {
+                    Debug.LogWarning("Not enough slots to display all items.");
+                    break;
+                }
+            }
+        }
+
+
+        public Sprite GetItemSprite(string itemName){
+            return Resources.Load<Sprite>("Image/ItemIcon/" + itemName);
         }
     }
 }

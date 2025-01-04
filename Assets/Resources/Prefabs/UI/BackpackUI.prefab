@@ -455,6 +455,7 @@ MonoBehaviour:
   closeIcon: {fileID: 21300000, guid: 2852062ecd63a1e41957be171fe59ec5, type: 3}
   itemSlotPrefab: {fileID: 8390433076931752298}
   gridSize: 15
+  playerBag: {fileID: 0}
 --- !u!1 &7499430325211313916
 GameObject:
   m_ObjectHideFlags: 0
