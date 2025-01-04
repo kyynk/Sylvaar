@@ -53,6 +53,8 @@ MonoBehaviour:
   distanceBetweenObjects: 1
   heightCheck: 10
   rangeCheck: 30
+  generateHeight: 3
+  generateWaitSecond: 0.5
   layerMask:
     serializedVersion: 2
     m_Bits: 1
