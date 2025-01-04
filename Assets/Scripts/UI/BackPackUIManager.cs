@@ -5,27 +5,41 @@ namespace UI
 {
     public class BackpackUIManager : MonoBehaviour
     {
+        public GameObject backpackUI;       // Reference to the backpack UI image
         public GameObject backpackGrid;  // Reference to the backpack grid panel
         public Button backpackButton;   // Reference to the backpack button
+        public Sprite backpackIcon;        // Backpack button image
+        public Sprite closeIcon;           // X button image
         public GameObject itemSlotPrefab;  // Prefab for the item slot
-        public int gridSize = 16;       // Number of slots in the grid
+        public int gridSize = 15;       // Number of slots in the grid
         private GameObject selectedSlot; // Currently selected slot
 
         void Start()
         {
             backpackGrid.SetActive(false);
+            backpackUI.SetActive(false);
             backpackButton.onClick.AddListener(ToggleBackpack);
             InitializeBackpack();
+            InitializeBackpackGrid();
         }
 
         // Toggles the visibility of the backpack grid
         void ToggleBackpack()
         {
-            backpackGrid.SetActive(!backpackGrid.activeSelf);
+            bool isBackpackActive = backpackUI.activeSelf;
 
-            if (backpackGrid.activeSelf) // If the backpack is now active
+            backpackGrid.SetActive(!isBackpackActive);
+            backpackUI.SetActive(!isBackpackActive);
+            backpackButton.image.sprite = isBackpackActive ? backpackIcon : closeIcon;
+
+            if (!isBackpackActive) // If opening backpack
             {
+                backpackButton.image.sprite = closeIcon; // Change to X button
                 SelectFirstSlot();
+            }
+            else // If closing backpack
+            {
+                backpackButton.image.sprite = backpackIcon; // Change to backpack icon
             }
         }
 
@@ -38,15 +52,28 @@ namespace UI
                 if (selectedSlot != null)
                 {
                     // Reset the previously selected slot's highlight
-                    selectedSlot.GetComponent<Image>().color = Color.white;
+                    selectedSlot.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                 }
 
                 // Highlight the first slot
                 selectedSlot = firstSlot;
-                selectedSlot.GetComponent<Image>().color = Color.yellow;
+                selectedSlot.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
             }
         }
     
+        void InitializeBackpackGrid()
+        {
+            GridLayoutGroup gridLayout = backpackGrid.GetComponent<GridLayoutGroup>();
+
+            if (gridLayout != null)
+            {
+                // Set grid layout properties
+                gridLayout.cellSize = new Vector2(180, 180);   // Slot size
+                gridLayout.spacing = new Vector2(46, 46);   // Horizontal and vertical spacing
+                gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+                gridLayout.constraintCount = 5;            // 5 columns for a 5x3 grid
+            }
+        }
 
         // Initializes the backpack grid with item slots
         void InitializeBackpack()
@@ -71,7 +98,11 @@ namespace UI
             for (int i = 0; i < gridSize; i++)
             {
                 GameObject newSlot = Instantiate(itemSlotPrefab, backpackGrid.transform);
+                Image slotImage = newSlot.GetComponent<Image>();
                 newSlot.GetComponent<Button>().onClick.AddListener(() => OnItemSlotClicked(newSlot));
+
+                // Make the slot initially invisible
+                slotImage.color = new Color(0, 0, 0, 0);
             }
         }
 
@@ -81,12 +112,12 @@ namespace UI
             if (selectedSlot != null)
             {
                 // Reset previous slot's highlight
-                selectedSlot.GetComponent<Image>().color = Color.white;
+                selectedSlot.GetComponent<Image>().color = new Color(0, 0, 0, 0);
             }
 
             // Highlight the selected slot
             selectedSlot = slot;
-            selectedSlot.GetComponent<Image>().color = Color.yellow;
+            selectedSlot.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
         }
     }
 }
