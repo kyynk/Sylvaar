@@ -77,7 +77,10 @@ namespace Entities.Enemy
         }
         private void HandleDieState()
         {
-            PlayDieAnimation();
+            if (WaitUntilAnimationPlayDone("MinkDied"))
+            {
+                mink.Die();
+            }
         }
         private void HandleIdleState()
         {
@@ -104,7 +107,10 @@ namespace Entities.Enemy
         private void HandleAttackState()
         {
             AttackPlayer();
-            PlayAttackAnimation();
+            if (WaitUntilAnimationPlayDone("MinkAttackAnimation"))
+            {
+                currentState = EnemyState.RunAway;
+            }
         }
 
         private void HandleRunAwayState()
@@ -186,35 +192,23 @@ namespace Entities.Enemy
             Vector3 directionToMink = (mink.transform.position - Camera.main.transform.position).normalized;
             float dotProduct = Vector3.Dot(Camera.main.transform.forward, directionToMink);
             float distanceToCamera = Vector3.Distance(mink.transform.position, Camera.main.transform.position);
-             if (distanceToCamera < 3f)
+             if (distanceToCamera < 5f)
             {
                 return false;
             }
             return dotProduct > 0.8f;
         }
 
-        private void PlayAttackAnimation()
+        private bool WaitUntilAnimationPlayDone(string animationName)
         {
-            animator.Play("MinkAttackAnimation");
+            animator.Play(animationName);
             waitAnimationTime += Time.deltaTime;
             if(waitAnimationTime >= animator.GetCurrentAnimatorStateInfo(0).length)
             {
                 waitAnimationTime = 0f;
-                Debug.Log("Animation Play done");
-                currentState = EnemyState.RunAway;
+                return true;
             }
-        }
-
-        private void PlayDieAnimation()
-        {
-            animator.Play("MinkDied");
-            waitAnimationTime += Time.deltaTime;
-            if(waitAnimationTime >= animator.GetCurrentAnimatorStateInfo(0).length)
-            {
-                waitAnimationTime = 0f;
-                Debug.Log("Mink is death");
-                mink.Die();
-            }
+            return false;
         }
     }
 }
