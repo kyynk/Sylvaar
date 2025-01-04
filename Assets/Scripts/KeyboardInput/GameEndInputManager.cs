@@ -2,20 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using Core;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace KeyboardInput
 {
     public class GameEndInputManager : MonoBehaviour
     {
+        private Button restartButton;
 
-        // Update is called once per frame
-        void Update()
+        void Start()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            restartButton = GameObject.Find("RestartButton").GetComponent<Button>();
+            
+            if (restartButton != null)
             {
-                Debug.Log("Game Restarted");
-                GameManager.Instance.GameStateChange(GameManager.GameState.MainMenu);
+                restartButton.onClick.AddListener(OnRestartButtonClicked);
+            }
+            else
+            {
+                Debug.LogError("RestartButton not found!");
             }
         }
+
+        private void OnRestartButtonClicked()
+        {
+            Debug.Log("Restart button clicked. Changing game state to InGame.");
+            GameManager.Instance.GameStateChange(GameManager.GameState.MainMenu);
+        }
+
     }
 }
