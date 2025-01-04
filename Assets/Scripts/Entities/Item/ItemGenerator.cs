@@ -38,13 +38,26 @@ namespace Entities.Item
                     {
                         if (spawnChance > Random.Range(0f, 101f))
                         {
-                            Quaternion normalRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-                            // Quaternion randomYRotation = Quaternion.Euler(new Vector3(0, Random.Range(0, 360), 0));
-                            Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0f, 360f), hit.normal);
-                            Quaternion finalRotation = normalRotation * randomRotation;
-                            // rotation = rotation * randomYRotation;
+                            // original
                             // Instantiate(itemPrefab, hit.point, Quaternion.Euler(new Vector3(0, Random.Range(0, 360), 0)), transform);
-                            Instantiate(itemPrefab, hit.point, finalRotation, transform);
+                            // v1 spawn directly
+                            // Quaternion normalRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                            // Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0f, 360f), hit.normal); // need optimize
+                            // Quaternion finalRotation = normalRotation * randomRotation;
+                            // Instantiate(itemPrefab, hit.point, finalRotation, transform);
+                            // v2 drop
+                            GameObject item = Instantiate(itemPrefab, hit.point + Vector3.up * 0.5f, Quaternion.Euler(new Vector3(0, Random.Range(0, 360), 0)), transform);
+
+                            // ensure item has Rigidbody
+                            Rigidbody rb = item.GetComponent<Rigidbody>();
+                            if (rb == null)
+                            {
+                                rb = item.AddComponent<Rigidbody>();
+                            }
+                            rb.mass = 1f;
+                            rb.useGravity = true;
+                            rb.isKinematic = false;
+                            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
                         }
                     }
                 }

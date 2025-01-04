@@ -356,6 +356,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6314295194630266022, guid: 2fbb062516b537048b1bf861d580fc7f, type: 3}
+      propertyPath: rangeCheck
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6314295194630266022, guid: 2fbb062516b537048b1bf861d580fc7f, type: 3}
       propertyPath: generateHeight
       value: 1
       objectReference: {fileID: 0}
