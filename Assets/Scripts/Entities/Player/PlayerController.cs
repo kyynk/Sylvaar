@@ -39,11 +39,11 @@ namespace Entities.Player
         private bool triggerEnter = false;
         private List<GameObject> currentWeapon;
         [SerializeField] private Transform rightHand;  
-        [SerializeField] private Transform leftHand;   
+        [SerializeField] private Transform leftHand;
 
         private void Awake()
         {
-            // GameManager.Instance.LoadPlayerHandler(gameObject);
+             GameManager.Instance.LoadPlayerHandler(gameObject);
             anim = model.GetComponentInChildren<Animator>();
             rigid = GetComponent<Rigidbody>();
             currentWeapon = new List<GameObject> { null, null };
@@ -292,14 +292,14 @@ namespace Entities.Player
 
         public void Attack(bool _isAttack)
         {
-            if(_isAttack && currentWeapon[(int)Hands.Left] != null)
+            if (_isAttack && currentWeapon[(int)Hands.Left] != null)
             {
                 //Debug.Log("PlayerController Attack");
                 IWeapon weapon = currentWeapon[(int)Hands.Left].GetComponent<IWeapon>();
                 if (state == STATE.ATTACK || currentWeapon == null)
                     return;
 
-                if(currentWeapon[(int)Hands.Left] == null)
+                if (currentWeapon[(int)Hands.Left] == null)
                 {
                     return;
                 }
@@ -346,7 +346,6 @@ namespace Entities.Player
                 }
             }
         }
-
 
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.IO;
+using UI;
 
 public class PlayerBag : MonoBehaviour
 {
@@ -21,22 +22,30 @@ public class PlayerBag : MonoBehaviour
         // Initialize dictionaries
         stackLimit = new Dictionary<string, int>
         {
-            { "stick", 10 },
-            { "wood", 10 },
-            { "stone", 10 },
-            { "shield", 1 },
-            { "sword", 1 },
-            { "bomb", 5 }
+            //{ "Stick", 10 },
+            { "Wood", 10 },
+            { "Stone", 10 },
+            { "Shield", 1 },
+            { "Sword", 1 },
+            { "Bomb", 5 },
+            { "Yellow key(L)", 1 },
+            { "Yellow key(R)", 1 },
+            { "Purple key(L)", 1 },
+            { "Purple key(R)", 1 },
         };
 
         itemCount = new Dictionary<string, int>
         {
-            { "stick", 0 },
-            { "wood", 0 },
-            { "stone", 0 },
-            { "shield", 0 },
-            { "sword", 0 },
-            { "bomb", 0 }
+            //{ "Stick", 0 },
+            { "Wood", 0 },
+            { "Stone", 0 },
+            { "Shield", 0 },
+            { "Sword", 0 },
+            { "Bomb", 0 },
+            { "YellowKey(L)", 0 },
+            { "YellowKey(R)", 0 },
+            { "PurpleKey(L)", 0 },
+            { "PurpleKey(R)", 0 },
         };
 
         // Set file path
@@ -98,7 +107,6 @@ public class PlayerBag : MonoBehaviour
         }
 
         Debug.Log("Item counts saved to CSV.");
-        Debug.Log(itemCount["wood"]);
     }
 
     // Adds an item to the inventory
@@ -143,5 +151,15 @@ public class PlayerBag : MonoBehaviour
         itemCount[item] -= amount;
         SaveItemCounts();
         return true;
+    }
+
+    public void ToggleCraft(bool isOpen)
+    {
+        craftUIManager.SetActive(isOpen);
+    }
+
+    public void ToggleBackPack(bool isOpen)
+    {
+        backpackUIManager.SetActive(isOpen);
     }
 }

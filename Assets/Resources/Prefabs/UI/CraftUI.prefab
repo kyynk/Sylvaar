@@ -502,7 +502,7 @@ MonoBehaviour:
   backpackGrid: {fileID: 379808465121701518}
   synthesisButton: {fileID: 3949151005647305123}
   craftButton: {fileID: 4935851926437129973}
-  craftIcon: {fileID: 0}
+  craftIcon: {fileID: 21300000, guid: 2756925d7f3dcbb46a3fcf97fd2a0a0c, type: 3}
   closeIcon: {fileID: 21300000, guid: 2852062ecd63a1e41957be171fe59ec5, type: 3}
   itemSlotPrefab: {fileID: 3791302169559445260}
   gridSize: 15
@@ -1180,8 +1180,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 2756925d7f3dcbb46a3fcf97fd2a0a0c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

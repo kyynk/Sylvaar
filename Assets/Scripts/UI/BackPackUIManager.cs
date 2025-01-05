@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.IO;
 using Entities.Player;
+using Core;
+using KeyboardInput;
 
 namespace UI
 {
@@ -24,7 +26,7 @@ namespace UI
             {
                 playerBag = GameObject.FindWithTag("Player"); // Assuming the PlayerBag GameObject is tagged as "Player"
             }
-
+            backpackIcon = Resources.Load<Sprite>("Image/ItemIcon/Bag");
             backpackGrid.SetActive(false);
             backpackUI.SetActive(false);
             backpackButton.onClick.AddListener(ToggleBackpack);
@@ -36,12 +38,13 @@ namespace UI
         void ToggleBackpack()
         {
             bool isBackpackActive = backpackUI.activeSelf;
+            playerBag.GetComponent<PlayerBag>().ToggleCraft(isBackpackActive);
             UpdateBackpack();
 
             backpackGrid.SetActive(!isBackpackActive);
             backpackUI.SetActive(!isBackpackActive);
             backpackButton.image.sprite = isBackpackActive ? backpackIcon : closeIcon;
-
+            GameObject.Find("InputManager").GetComponent<KeyboardInputManager>().SetBackpackActive(!isBackpackActive);
             if (!isBackpackActive) // If opening backpack
             {
                 backpackButton.image.sprite = closeIcon; // Change to X button
@@ -119,10 +122,15 @@ namespace UI
         // Handles item slot click
         void OnItemSlotClicked(GameObject slot)
         {
+            if (slot.GetComponent<BagSlot>().itemName == null)
+            {
+                return;
+            }
             // Check if the slot is empty
             if (slot.GetComponent<Image>().sprite == null)
             {
-                return; // Do nothing if the slot is empty
+                Debug.Log("item inside slot dont have image.");
+                return;
             }
             if (selectedSlot != null)
             {
@@ -133,6 +141,12 @@ namespace UI
             // Highlight the selected slot
             selectedSlot = slot;
             selectedSlot.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f); // Highlight color
+            string itemName = slot.GetComponent<BagSlot>().itemName;
+            if (itemName == "Sword" || itemName == "Shield" || itemName == "Bomb")
+            {
+                Debug.Log("Equipping " + itemName);
+                GameManager.Instance.EquipWeapon(itemName);
+            }
         }
 
         public void UpdateBackpack()
@@ -168,6 +182,8 @@ namespace UI
                     // Assign item sprite and make slot visible
                     slotImage.sprite = GetItemSprite(itemName);
                     slotImage.color = Color.white;
+                    
+                    slot.GetComponent<BagSlot>().itemName = itemName;
 
                     // Display the stack size in the slot
                     int stackSize = Mathf.Min(playerBag.GetComponent<PlayerBag>().GetStackLimit(itemName), itemQuantity);

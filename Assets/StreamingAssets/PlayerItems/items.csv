@@ -1,2 +1,2 @@
-stick,wood,stone,shield,sword,bomb
-0,5,0,1,2,0
+Wood,Stone,Shield,Sword,Bomb,YellowKey(L),YellowKey(R),PurpleKey(L),PurpleKey(R)
+5,5,1,1,0,0,0,0,0

@@ -100,7 +100,9 @@ namespace Weapons
 
             if (durability <= 0)
             {
+                PlayerBag playerBag = GameObject.Find("PlayerBag").GetComponent<PlayerBag>();
                 DestroyWeapon();
+                playerBag.RemoveItem(WeaponName);
             }
         }
 
