@@ -254,6 +254,14 @@ namespace Entities.Player
             if (weapon.WeaponType != WeaponType.Shield) //left
             {
                 DestroyLeftHandWeapon();
+                if (weapon.WeaponType == WeaponType.Bomb)
+                {
+                    rightHand.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                }
+                else
+                {
+                    rightHand.localScale = new Vector3(0.1f, 0.2f, 0.1f);
+                }
                 currentWeapon[(int)Hands.Left] = weaponGameObj;
                 currentWeapon[(int)Hands.Left].transform.SetParent(rightHand);
                 currentWeapon[(int)Hands.Left].transform.localPosition = Vector3.zero;
