@@ -1,6 +1,6 @@
 id,character_name,character_image,character_position,event_image,sound_effect,dialog_text,choices,next_scene_id,animation,voice_clip,display_type
 1001,monkey,normal,right,,,Hey there little one! I heard you're looking for some relic. right?,,,,,normal
 1002,monkey,normal,right,,,It just so happens that I have a key land in my hand,,,,,normal
-1003,monkey,normal,right,,,Well... I don't have time to give it to you now. You have to find some bananas for me first.I'm so hungry that I can't stand it!,[Sure!|No!],1004|1005,,,choice
-1004,monkey,normal,right,,,Great let's get moving!,,0,,,normal
+1003,monkey,normal,right,,,Well... I don't have time to give it to you now. You have to find some stones for me first.,[Sure!|No!],1004|1005,,,choice
+1004,monkey,normal,right,,,Great!,,0,,,normal
 1005,monkey,normal,right,,,Hmph! You'll regret this.,,0,,,normal

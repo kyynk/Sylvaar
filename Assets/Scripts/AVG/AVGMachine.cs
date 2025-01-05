@@ -21,10 +21,14 @@ namespace AVG
         private int currentID;
         private InputManager inputManager;
         [SerializeField] private List<DialogData> dialogs;
+        private int finalID;
+        private string finalNPC;
 
         protected override void Init()
         {
             currentID = 0;
+            finalID = 0;
+            finalNPC = "";
             GoToState(STATE.FINISHED);
             inputManager = FindAnyObjectByType<InputManager>();
             inputManager.evtDialogClick.AddListener(OnDialogClicked);
@@ -33,6 +37,8 @@ namespace AVG
         public void RecoverSettings()
         {
             currentID = 0;
+            finalID = 0;
+            finalNPC = "";
             GoToState(STATE.FINISHED);
             if (inputManager == null)
             {
@@ -91,6 +97,11 @@ namespace AVG
 
         private void GoToState(STATE targetState)
         {
+            if (targetState == STATE.FINISHED)
+            {
+                finalID = currentID;
+                Debug.Log(finalID);
+            }
             state = targetState;
             triggerEnter = true;
         }
@@ -124,8 +135,9 @@ namespace AVG
             return values;
         }
 
-        public void LoadFromCSV(string filePath)
+        public void LoadFromCSV(string filePath, string npc)
         {
+            finalNPC = npc;
             dialogs = new List<DialogData>();
             var path = Path.Combine(Application.streamingAssetsPath, filePath);
             var lines = File.ReadAllLines(path).Skip(1); // Skip header
@@ -191,12 +203,12 @@ namespace AVG
 
         private List<int> ParseNextSceneIds(string nextSceneIDsStr, string currentSceneID)
         {
-            ////Debug.Log(nextSceneIDsStr + " " + currentSceneID);
+            // Debug.Log(nextSceneIDsStr + " " + currentSceneID);
             if (string.IsNullOrEmpty(nextSceneIDsStr))
             {
                 return new List<int>() { int.Parse(currentSceneID) + 1 };
             }
-            print(nextSceneIDsStr);
+            // print(nextSceneIDsStr);
             return nextSceneIDsStr.Split('|').Select(int.Parse).ToList();
         }
 
@@ -238,6 +250,22 @@ namespace AVG
         public bool IsFinished()
         {
             return (state == STATE.FINISHED);
+        }
+
+        public int GetFinalID()
+        {
+            return finalID;
+        }
+
+        public string GetFinalNPC()
+        {
+            return finalNPC;
+        }
+
+        public void ResetFinal()
+        {
+            finalID = 0;
+            finalNPC = "";
         }
     }
 }

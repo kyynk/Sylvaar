@@ -14,8 +14,8 @@ namespace Tests
         {
             if (Input.GetKeyDown("1"))
             {
-                AVGMachine.Instance.LoadFromCSV("AVGScripts/scene1.csv");
-                AVGMachine.Instance.Play();
+                // AVGMachine.Instance.LoadFromCSV("AVGScripts/scene1.csv");
+                // AVGMachine.Instance.Play();
             }
         }
     }

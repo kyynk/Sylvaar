@@ -1,5 +1,5 @@
 id,character_name,character_image,character_position,event_image,sound_effect,dialog_text,choices,next_scene_id,animation,voice_clip,display_type
 1001,raccoon,normal,right,,,Hey squirrel! Are you looking for the Acorn Relic?,,,,,normal
-1002,raccoon,normal,right,,,I have a key fragment that can unlock it. but I need your help to wash something.,[Sure!|No!],1003|1004,,,choice
-1003,raccoon,normal,right,,,"That's great! I have so many things to wash, and I can't finish it all. Thank you so much!",,0,,,normal
-1004,raccoon,normal,right,,,QQ alright then,,0,,,normal
+1002,raccoon,normal,right,,,I have a key fragment that can unlock it. but I need your help to get something.,[Sure!|No!],1003|1004,,,choice
+1003,raccoon,normal,right,,,"That's great! I need 6 woods, but I can't find so much. Thank you so much!",,0,,,normal
+1004,raccoon,normal,right,,,QQ alright...,,0,,,normal

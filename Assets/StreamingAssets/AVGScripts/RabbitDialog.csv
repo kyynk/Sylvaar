@@ -1,6 +1,6 @@
 id,character_name,character_image,character_position,event_image,sound_effect,dialog_text,choices,next_scene_id,animation,voice_clip,display_type
-1001,rabbit,normal,right,,,Hey squirrel! Want to hear a secret?,,,,,normal
-1002,rabbit,normal,right,,,There's a golden acorn deep in the forest. and I know how to find it!,,,,,normal
-1003,rabbit,normal,right,,,But now I need help moving some nuts and I will tell you the route. Help me move it quickly... otherwise I won't wait for you.,[Sure!|No!],1004|1005,,,choice
+1001,rabbit,normal,right,,,Hey squirrel! Want know a secret?,,,,,normal
+1002,rabbit,normal,right,,,There's a golden acorn deep in the forest. and I have a key!,,,,,normal
+1003,rabbit,normal,right,,,"But now I need 3 stones and 5 woods, then I will give you the key. Help me get it quickly... otherwise I won't wait for you.",[Sure!|No!],1004|1005,,,choice
 1004,rabbit,normal,right,,,Hehe... great! Be quick!,,0,,,normal
 1005,rabbit,normal,right,,,"Hmph! Fine, don't help then.",,0,,,normal

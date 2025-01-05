@@ -1,0 +1,2 @@
+id,character_name,character_image,character_position,event_image,sound_effect,dialog_text,choices,next_scene_id,animation,voice_clip,display_type
+2001,bear,normal,right,,,"Hey, little squirrel! I need 3 stones, and 2 woods.",[],,,,normal

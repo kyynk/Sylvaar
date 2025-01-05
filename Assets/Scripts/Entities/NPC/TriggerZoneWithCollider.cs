@@ -7,6 +7,7 @@ namespace Entities.NPC
     {
         [SerializeField] protected string scriptPath;
         [SerializeField] private bool isRetriggerable = false;
+        [SerializeField] private string npc;
         private bool hasTriggered = false;
 
         // This is Trigger On Collider
@@ -17,7 +18,7 @@ namespace Entities.NPC
                 && (!hasTriggered || isRetriggerable))
             {
                 hasTriggered = true;
-                AVGMachine.Instance.LoadFromCSV(scriptPath);
+                AVGMachine.Instance.LoadFromCSV(scriptPath, npc);
                 AVGMachine.Instance.Play();
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using AVG;
 using UnityEngine;
 
 namespace Core
@@ -22,16 +23,14 @@ namespace Core
             }
         }
 
-        public void TriggerQuest(string quest)
+        public void TriggerQuest(string quest, QuestStatus status)
         {
             if (GetQuestStatus(quest) == QuestStatus.Completed)
             {
                 //Debug.Log($"Quest {quest} is completed");
             }
-            else
-            {
-                UpdateQuestStatus(quest, QuestStatus.Completed);
-            }
+            UpdateQuestStatus(quest, status);
+            Debug.Log($"Quest {quest} is " + GetQuestStatus(quest));
         }
 
         public void RegisterNPC(string npcID)
@@ -68,6 +67,7 @@ namespace Core
         Unknown,
         NotStarted,
         InProgress,
+        Failed,
         Completed
     }
 }

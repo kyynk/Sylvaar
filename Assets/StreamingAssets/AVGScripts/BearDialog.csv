@@ -1,5 +1,5 @@
 id,character_name,character_image,character_position,event_image,sound_effect,dialog_text,choices,next_scene_id,animation,voice_clip,display_type
 1001,bear,normal,right,,,"Hey, little squirrel! Are you looking for something special?",[],,,,normal
 1002,bear,normal,right,,,I just found a beautiful stone that might help you. But I'm really hungry right now. Can you help me find some apples?,[Sure!|No!],1003|1004,,,choice
-1003,bear,normal,right,,,Thank you so much. I'll leave this to you!,,0,,,normal
+1003,bear,normal,right,,,Thank you so much.,,0,,,normal
 1004,bear,normal,right,,,Alright then.. I'll see if someone else can help me.,,0,,,normal

@@ -1,0 +1,2 @@
+id,character_name,character_image,character_position,event_image,sound_effect,dialog_text,choices,next_scene_id,animation,voice_clip,display_type
+3001,raccoon,normal,right,,,Thank you so much! Here is the key fragment!,[],,,,normal
