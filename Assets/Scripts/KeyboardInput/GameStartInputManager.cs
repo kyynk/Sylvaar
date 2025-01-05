@@ -20,13 +20,13 @@ namespace KeyboardInput
             }
             else
             {
-                Debug.LogError("StartButton not found!");
+                //Debug.LogError("StartButton not found!");
             }
         }
 
         private void OnStartButtonClicked()
         {
-            Debug.Log("Start button clicked. Changing game state to InGame.");
+            //Debug.Log("Start button clicked. Changing game state to InGame.");
             GameManager.Instance.GameStateChange(GameManager.GameState.InGame);
         }
     }

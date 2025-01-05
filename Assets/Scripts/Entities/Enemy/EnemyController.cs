@@ -41,8 +41,6 @@ namespace Entities.Enemy
 
         private void Update()
         {
-            //AdjustToGround();
-            //Debug.Log($"Enemy Y position: {enemy.transform.position.y}");
             playerDistance = GetPlayerDistance();
             if(_isPlayerInRange(playerDistance, attackRange))
             {
@@ -85,7 +83,7 @@ namespace Entities.Enemy
             {
                 if (Random.value < idleProbability)
                 {
-                    //Debug.Log($"{gameObject.name} is idling.");
+                    //////Debug.Log($"{gameObject.name} is idling.");
                     moveDirection = Vector3.zero;
                     nextDirectionChangeTime = Time.time + changeDirectionInterval;
                 }
@@ -106,36 +104,19 @@ namespace Entities.Enemy
 
         public void MoveForward(Vector3 direction)
         {
-            // move
+            direction.y = 0;
             enemy.transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
-            // adjust rotation
             if (direction != Vector3.zero)
             {
-                //Debug.Log($"{gameObject.name} move forward!");
                 enemy.transform.forward = direction;
             }
         }
 
         private void AttackPlayer()
         {
-            //Debug.Log($"{gameObject.name} attacks the player!");
-
-            // Example: Apply damage to the player
             if (playerTarget.TryGetComponent<IDamageable>(out var damageable))
             {
                 damageable.TakeDamage(enemy.Damage);
-            }
-        }
-
-        private void AdjustToGround()
-        {
-            RaycastHit hit;
-            Vector3 rayOrigin = enemy.transform.position + Vector3.up;
-            if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 2f))
-            {
-                Vector3 position = enemy.transform.position;
-                position.y = Mathf.Lerp(position.y, hit.point.y, 0.1f);
-                enemy.transform.position = position;
             }
         }
     }

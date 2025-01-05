@@ -31,7 +31,7 @@ namespace Interactable
             }
             catch (IOException e)
             {
-                Debug.LogError(e.Message);
+                //Debug.LogError(e.Message);
             }
         }
 

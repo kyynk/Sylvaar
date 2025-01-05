@@ -18,7 +18,7 @@ namespace Entities.Item
 
         private void Start()
         {
-            Debug.Log(itemPrefabList);
+            //Debug.Log(itemPrefabList);
             SpawnItems();
         }
 

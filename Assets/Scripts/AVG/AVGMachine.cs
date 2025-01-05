@@ -191,7 +191,7 @@ namespace AVG
 
         private List<int> ParseNextSceneIds(string nextSceneIDsStr, string currentSceneID)
         {
-            Debug.Log(nextSceneIDsStr + " " + currentSceneID);
+            ////Debug.Log(nextSceneIDsStr + " " + currentSceneID);
             if (string.IsNullOrEmpty(nextSceneIDsStr))
             {
                 return new List<int>() { int.Parse(currentSceneID) + 1 };

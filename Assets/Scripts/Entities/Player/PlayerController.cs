@@ -254,6 +254,14 @@ namespace Entities.Player
             if (weapon.WeaponType != WeaponType.Shield) //left
             {
                 DestroyLeftHandWeapon();
+                if (weapon.WeaponType == WeaponType.Bomb)
+                {
+                    rightHand.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                }
+                else
+                {
+                    rightHand.localScale = new Vector3(0.1f, 0.2f, 0.1f);
+                }
                 currentWeapon[(int)Hands.Left] = weaponGameObj;
                 currentWeapon[(int)Hands.Left].transform.SetParent(rightHand);
                 currentWeapon[(int)Hands.Left].transform.localPosition = Vector3.zero;
@@ -286,7 +294,7 @@ namespace Entities.Player
         {
             if(_isAttack && currentWeapon[(int)Hands.Left] != null)
             {
-                Debug.Log("PlayerController Attack");
+                //Debug.Log("PlayerController Attack");
                 IWeapon weapon = currentWeapon[(int)Hands.Left].GetComponent<IWeapon>();
                 if (state == STATE.ATTACK || currentWeapon == null)
                     return;
@@ -309,7 +317,7 @@ namespace Entities.Player
         {
             if (_isBlock && currentWeapon[(int)Hands.Right] != null)
             {
-                Debug.Log("PlayerController Block");
+                //Debug.Log("PlayerController Block");
                 Shield weapon = currentWeapon[(int)Hands.Right].GetComponent<Shield>();
 
                 // ensure not attack，and have shield

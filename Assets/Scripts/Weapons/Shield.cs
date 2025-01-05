@@ -23,7 +23,7 @@ namespace Weapons
 
         public void Attack()
         {
-            Debug.Log("Shield cannot attack.");
+            //Debug.Log("Shield cannot attack.");
         }
 
         public bool CanAttack() => false;
@@ -36,7 +36,7 @@ namespace Weapons
         public void ResetWeapon()
         {
             isBlocking = false;
-            Debug.Log($"{WeaponName} is reset.");
+            //Debug.Log($"{WeaponName} is reset.");
         }
 
         public void Block()
@@ -45,11 +45,11 @@ namespace Weapons
             {
                 isBlocking = true;
                 lastBlockTime = Time.time;
-                Debug.Log($"{WeaponName} is blocking!");
+                //Debug.Log($"{WeaponName} is blocking!");
             }
             else
             {
-                Debug.Log($"{WeaponName} is on cooldown. Wait {CooldownTime - (Time.time - lastBlockTime):F2} seconds.");
+                //Debug.Log($"{WeaponName} is on cooldown. Wait {CooldownTime - (Time.time - lastBlockTime):F2} seconds.");
             }
         }
 
@@ -58,14 +58,14 @@ namespace Weapons
             if (isBlocking)
             {
                 isBlocking = false;
-                Debug.Log($"{WeaponName} stopped blocking.");
+                //Debug.Log($"{WeaponName} stopped blocking.");
             }
         }
 
         public void TakeDamage(float damage)
         {
             durability -= Mathf.RoundToInt(damage);
-            Debug.Log($"{WeaponName} durability reduced by {damage}. Remaining durability: {durability}");
+            //Debug.Log($"{WeaponName} durability reduced by {damage}. Remaining durability: {durability}");
 
             if (durability <= 0)
             {
@@ -75,7 +75,7 @@ namespace Weapons
 
         private void DestroyWeapon()
         {
-            Debug.Log($"{WeaponName} has been destroyed due to zero durability.");
+            //Debug.Log($"{WeaponName} has been destroyed due to zero durability.");
             Destroy(gameObject);
         }
 
@@ -84,7 +84,7 @@ namespace Weapons
         //    if (isBlocking)
         //    {
         //        // limit other actions while blocking, like slow moving ...
-        //        Debug.Log($"{WeaponName} is actively blocking for {Time.time - blockStartTime:F2} seconds.");
+        //        //Debug.Log($"{WeaponName} is actively blocking for {Time.time - blockStartTime:F2} seconds.");
         //    }
         //}
     }

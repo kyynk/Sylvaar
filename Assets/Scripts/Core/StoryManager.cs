@@ -26,7 +26,7 @@ namespace Core
         {
             if (GetQuestStatus(quest) == QuestStatus.Completed)
             {
-                Debug.Log($"Quest {quest} is completed");
+                //Debug.Log($"Quest {quest} is completed");
             }
             else
             {
@@ -39,7 +39,7 @@ namespace Core
             if (!questStatuses.ContainsKey(npcID))
             {
                 questStatuses[npcID] = QuestStatus.NotStarted;
-                Debug.Log($"NPC Successful Registered : {npcID}");
+                //Debug.Log($"NPC Successful Registered : {npcID}");
             }
         }
 
@@ -48,11 +48,11 @@ namespace Core
             if (questStatuses.ContainsKey(npcID))
             {
                 questStatuses[npcID] = newStatus;
-                Debug.Log($"quest status update: {npcID} - {newStatus}");
+                //Debug.Log($"quest status update: {npcID} - {newStatus}");
             }
             else
             {
-                Debug.LogWarning($"fail of update quest，cant find  NPC: {npcID}");
+                //Debug.LogWarning($"fail of update quest，cant find  NPC: {npcID}");
             }
         }
 

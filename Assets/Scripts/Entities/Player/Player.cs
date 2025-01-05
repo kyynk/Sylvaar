@@ -32,7 +32,7 @@ namespace Entities.Player
 
         private void Die()
         {
-            Debug.Log("Player has died!");
+            //Debug.Log("Player has died!");
             // Handle death logic here
         }
     }

@@ -26,7 +26,7 @@ namespace UI
             }
             else
             {
-                Debug.LogError("Terrain not found! Make sure your scene has a Terrain component.");
+                //Debug.LogError("Terrain not found! Make sure your scene has a Terrain component.");
             }
         }
 

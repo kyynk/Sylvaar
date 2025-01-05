@@ -22,7 +22,7 @@ namespace Weapons
         // Load Particle to bomb
         if (FireExplosionParticlePrefab == null)
         {
-            Debug.Log($"Load Explode VFX");
+            //Debug.Log($"Load Explode VFX");
             FireExplosionParticlePrefab = Resources.Load<GameObject>("Prefabs/Particles/FireExplosionParticlePrefab");
             GameObject explodeInstance = Instantiate(FireExplosionParticlePrefab);
             explosionEffect = explodeInstance.GetComponent<ParticleSystem>();
@@ -34,7 +34,7 @@ namespace Weapons
 
     private void Explosion()
     {
-        Debug.Log($"{weaponName} exploded, dealing {damage} damage!");
+        //Debug.Log($"{weaponName} exploded, dealing {damage} damage!");
 
         explosionEffect.transform.position = transform.position - new Vector3 (0,1,0);
         explosionEffect.Play();

@@ -21,7 +21,7 @@ namespace UI
            
             if (videoPlayer == null)
             {
-                Debug.LogError("No VideoPlayer component found on this GameObject.");
+                //Debug.LogError("No VideoPlayer component found on this GameObject.");
                 return;
             }
 
@@ -45,13 +45,13 @@ namespace UI
 
             if (videoClip != null)
             {
-                Debug.Log($"Playing video clip: {videoClip.name}");
+                //Debug.Log($"Playing video clip: {videoClip.name}");
                 videoPlayer.clip = videoClip;
                 videoPlayer.Play();
             }
             else
             {
-                Debug.LogError($"Video clip not found at Resources/{videoPath}");
+                //Debug.LogError($"Video clip not found at Resources/{videoPath}");
             }
         }
 
@@ -69,7 +69,7 @@ namespace UI
                 badEndUI.SetActive(true);
             }
 
-            Debug.Log("Video has ended. Displaying the ending UI.");
+            //Debug.Log("Video has ended. Displaying the ending UI.");
         }
 
         private void OnDestroy()

@@ -20,13 +20,13 @@ namespace KeyboardInput
             }
             else
             {
-                Debug.LogError("RestartButton not found!");
+                //Debug.LogError("RestartButton not found!");
             }
         }
 
         private void OnRestartButtonClicked()
         {
-            Debug.Log("Restart button clicked. Changing game state to InGame.");
+            //Debug.Log("Restart button clicked. Changing game state to InGame.");
             GameManager.Instance.GameStateChange(GameManager.GameState.MainMenu);
         }
 
