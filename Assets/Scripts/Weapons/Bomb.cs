@@ -14,7 +14,7 @@ namespace Weapons
 
         public void Attack()
         {
-            Debug.Log($"{WeaponName} is thrown!");
+            //Debug.Log($"{WeaponName} is thrown!");
             lastAttackTime = Time.time;
 
             Destroy(this.gameObject);

@@ -13,12 +13,12 @@ namespace KeyboardInput
         {
             if (Input.GetKeyDown(KeyCode.G))
             {
-                Debug.Log("Good End, Game Over");
+                //Debug.Log("Good End, Game Over");
                 GameManager.Instance.GameStateChange(GameManager.GameState.GoodEnd);
             }
             else if (Input.GetKeyDown(KeyCode.B))
             {
-                Debug.Log("Bad End, Game Over");
+                //Debug.Log("Bad End, Game Over");
                 GameManager.Instance.GameStateChange(GameManager.GameState.BadEnd);
             }
         }

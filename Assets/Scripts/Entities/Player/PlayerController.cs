@@ -294,7 +294,7 @@ namespace Entities.Player
         {
             if(_isAttack && currentWeapon[(int)Hands.Left] != null)
             {
-                Debug.Log("PlayerController Attack");
+                //Debug.Log("PlayerController Attack");
                 IWeapon weapon = currentWeapon[(int)Hands.Left].GetComponent<IWeapon>();
                 if (state == STATE.ATTACK || currentWeapon == null)
                     return;
@@ -317,7 +317,7 @@ namespace Entities.Player
         {
             if (_isBlock && currentWeapon[(int)Hands.Right] != null)
             {
-                Debug.Log("PlayerController Block");
+                //Debug.Log("PlayerController Block");
                 Shield weapon = currentWeapon[(int)Hands.Right].GetComponent<Shield>();
 
                 // ensure not attack，and have shield

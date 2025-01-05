@@ -14,7 +14,7 @@ namespace Weapons
 
             if (weaponPrefab == null)
             {
-                Debug.LogError($"Weapon '{weaponName}' not found in the factory!");
+                //Debug.LogError($"Weapon '{weaponName}' not found in the factory!");
                 return null;
             }
 

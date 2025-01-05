@@ -83,7 +83,7 @@ namespace Entities.Enemy
             {
                 if (Random.value < idleProbability)
                 {
-                    ////Debug.Log($"{gameObject.name} is idling.");
+                    //////Debug.Log($"{gameObject.name} is idling.");
                     moveDirection = Vector3.zero;
                     nextDirectionChangeTime = Time.time + changeDirectionInterval;
                 }

@@ -10,7 +10,7 @@ namespace Interactable
         
         public virtual void Interact()
         {
-            Debug.Log("NPC interact");
+            //Debug.Log("NPC interact");
         }
 
         public string GetInteractText()

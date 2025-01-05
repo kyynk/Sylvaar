@@ -35,7 +35,7 @@ namespace Entities.Enemy
 
         public void Die()
         {
-            Debug.Log($"{gameObject.name} has died!");
+            //Debug.Log($"{gameObject.name} has died!");
             Destroy(gameObject);
         }
         

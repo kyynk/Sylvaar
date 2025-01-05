@@ -71,7 +71,7 @@ namespace Core
 
                 case GameState.InGame:
                     SceneManager.LoadScene("InGameScene");
-                    Debug.Log("InGameScene loaded");
+                    //Debug.Log("InGameScene loaded");
                     break;
 
                 case GameState.GoodEnd:
@@ -83,7 +83,7 @@ namespace Core
                     SceneManager.LoadScene("GameEndScene");
                     break;
                 default:
-                    Debug.LogError("Unknown GameState: " + gameState);
+                    //Debug.LogError("Unknown GameState: " + gameState);
                     break;
             }
         }

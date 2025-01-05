@@ -23,8 +23,8 @@ namespace Entities.Enemy
         public void TakeDamage(float damage)
         {
             if (!IsAlive) return;
-            //Debug.Log("Enemy takes damage!"); 
-            //Debug.Log("Enemy takes damage!"); 
+            ////Debug.Log("Enemy takes damage!"); 
+            ////Debug.Log("Enemy takes damage!"); 
             animator.SetTrigger("FoxIsAttacked");
             Health -= damage;
             Health = Mathf.Clamp(Health, 0, MaxHealth);

@@ -26,7 +26,7 @@ namespace Weapons
         {
             if (CanAttack())
             {
-                Debug.Log($"Sweap {WeaponName} attack!");
+                //Debug.Log($"Sweap {WeaponName} attack!");
                 lastAttackTime = Time.time;
                 isAttacking = true;
 
@@ -42,7 +42,7 @@ namespace Weapons
             }
             else
             {
-                Debug.Log($"{WeaponName} is cooling down.");
+                //Debug.Log($"{WeaponName} is cooling down.");
             }
         }
 
@@ -66,7 +66,7 @@ namespace Weapons
         {
             lastAttackTime = 0;
             durability = MaxDurability;
-            Debug.Log($"{WeaponName} is reset.");
+            //Debug.Log($"{WeaponName} is reset.");
         }
 
         private void OnTriggerEnter(Collider other)
@@ -75,7 +75,7 @@ namespace Weapons
 
             if (other.tag == "Weapon" && other.name == "Shield")
             {
-                Debug.Log($"Sword has been blocked");
+                //Debug.Log($"Sword has been blocked");
                 if (other.TryGetComponent<IDamageable>(out var shield))
                 {
                     shield.TakeDamage(10);
@@ -84,10 +84,10 @@ namespace Weapons
             }
             else if (other.tag == "Enemy")
             {
-                Debug.Log($"Sword hits {other.name}");
+                //Debug.Log($"Sword hits {other.name}");
                 if (other.TryGetComponent<IDamageable>(out var damageable))
                 {
-                    Debug.Log($"Dealing {Damage} damage to {other.name}");
+                    //Debug.Log($"Dealing {Damage} damage to {other.name}");
                     damageable.TakeDamage(Damage);
                 }
             }
@@ -96,7 +96,7 @@ namespace Weapons
         private void ReduceDurability(int amount)
         {
             durability -= amount;
-            Debug.Log($"Sword durability reduced by {amount}. Remaining durability: {durability}");
+            //Debug.Log($"Sword durability reduced by {amount}. Remaining durability: {durability}");
 
             if (durability <= 0)
             {
@@ -106,7 +106,7 @@ namespace Weapons
 
         private void DestroyWeapon()
         {
-            Debug.Log($"{WeaponName} has been destroyed due to zero durability.");
+            //Debug.Log($"{WeaponName} has been destroyed due to zero durability.");
             Destroy(gameObject);
         }
     }

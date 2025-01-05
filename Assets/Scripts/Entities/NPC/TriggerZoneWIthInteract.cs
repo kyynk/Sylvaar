@@ -14,7 +14,7 @@ namespace Entities.NPC
             if (AVGMachine.Instance.IsFinished() && (!hasTriggered || isRetriggerable))
             {
                 hasTriggered = true;
-                Debug.Log("Trigger AVG");
+                //Debug.Log("Trigger AVG");
                 AVGMachine.Instance.LoadFromCSV(scriptPath);
                 AVGMachine.Instance.Play();
             }
