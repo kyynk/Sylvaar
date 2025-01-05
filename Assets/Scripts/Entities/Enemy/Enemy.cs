@@ -24,6 +24,7 @@ namespace Entities.Enemy
         {
             if (!IsAlive) return;
             //Debug.Log("Enemy takes damage!"); 
+            //Debug.Log("Enemy takes damage!"); 
             animator.SetTrigger("FoxIsAttacked");
             Health -= damage;
             Health = Mathf.Clamp(Health, 0, MaxHealth);

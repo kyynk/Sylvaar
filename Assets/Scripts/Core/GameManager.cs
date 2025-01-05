@@ -21,8 +21,8 @@ namespace Core
         public static GameManager Instance { get; private set; } 
 
         [SerializeField] private WeaponFactory weaponFactory;
-        [SerializeField] private VideoPlayer gameEndVideoPlayer;
-        private GameObject currentWeapon; 
+        private GameObject currentWeapon;
+        public bool isGoodEnd = false;
 
         private void Awake()
         {
@@ -75,14 +75,12 @@ namespace Core
                     break;
 
                 case GameState.GoodEnd:
+                    isGoodEnd = true;
                     SceneManager.LoadScene("GameEndScene");
-                    GameEndVideoPlayer goodEndVideoPlayer = gameEndVideoPlayer.GetComponent<GameEndVideoPlayer>();
-                    goodEndVideoPlayer.Play(true);
                     break;
                 case GameState.BadEnd:
+                    isGoodEnd = false;
                     SceneManager.LoadScene("GameEndScene");
-                    GameEndVideoPlayer badEndVideoPlayer = gameEndVideoPlayer.GetComponent<GameEndVideoPlayer>();
-                    badEndVideoPlayer.Play(false);
                     break;
                 default:
                     Debug.LogError("Unknown GameState: " + gameState);
