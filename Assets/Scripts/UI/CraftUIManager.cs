@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using KeyboardInput;
+using Player;
 
 namespace UI
 {

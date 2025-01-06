@@ -5,22 +5,24 @@ using UnityEngine;
 using System.IO;
 using UI;
 
-public class PlayerBag : MonoBehaviour
+namespace Player
 {
-    [SerializeField] GameObject backpackUIManager;
-    [SerializeField] GameObject craftUIManager;
-    Dictionary<string, int> stackLimit;
-    Dictionary<string, int> itemCount;
-
-
-
-    // Start is called before the first frame update
-    string filePath; // Path to the CSV file
-
-    void Start()
+    public class PlayerBag : MonoBehaviour
     {
-        // Initialize dictionaries
-        stackLimit = new Dictionary<string, int>
+        [SerializeField] GameObject backpackUIManager;
+        [SerializeField] GameObject craftUIManager;
+        Dictionary<string, int> stackLimit;
+        Dictionary<string, int> itemCount;
+
+
+
+        // Start is called before the first frame update
+        string filePath; // Path to the CSV file
+
+        void Start()
+        {
+            // Initialize dictionaries
+            stackLimit = new Dictionary<string, int>
         {
             //{ "Stick", 10 },
             { "Wood", 10 },
@@ -34,7 +36,7 @@ public class PlayerBag : MonoBehaviour
             { "Purple key(R)", 1 },
         };
 
-        itemCount = new Dictionary<string, int>
+            itemCount = new Dictionary<string, int>
         {
             //{ "Stick", 0 },
             { "Wood", 0 },
@@ -48,118 +50,122 @@ public class PlayerBag : MonoBehaviour
             { "PurpleKey(R)", 0 },
         };
 
-        // Set file path
-        filePath = Path.Combine(Application.streamingAssetsPath, "PlayerItems/items.csv");
+            // Set file path
+            filePath = Path.Combine(Application.streamingAssetsPath, "PlayerItems/items.csv");
 
-        // Load item counts from CSV
-        LoadItemCounts();
-    }
-
-    void Update(){
-        LoadItemCounts();
-    }
-
-    public Dictionary<string, int> GetItemCount(){
-        return itemCount;
-    }
-
-    public int GetStackLimit(string itemName){
-        return stackLimit[itemName];
-    }
-
-    // Loads item counts from the CSV file
-    void LoadItemCounts()
-    {
-        if (!File.Exists(filePath))
-        {
-            Debug.LogError($"CSV file not found at: {filePath}");
-            return;
+            // Load item counts from CSV
+            LoadItemCounts();
         }
 
-        string[] lines = File.ReadAllLines(filePath);
-        if (lines.Length < 2) return; // Ensure we have header and data rows
-
-        string[] items = lines[0].Split(','); // Header row (item names)
-        string[] counts = lines[1].Split(','); // Data row (item counts)
-
-        for (int i = 0; i < items.Length; i++)
+        void Update()
         {
-            if (itemCount.ContainsKey(items[i]))
+            LoadItemCounts();
+        }
+
+        public Dictionary<string, int> GetItemCount()
+        {
+            return itemCount;
+        }
+
+        public int GetStackLimit(string itemName)
+        {
+            return stackLimit[itemName];
+        }
+
+        // Loads item counts from the CSV file
+        void LoadItemCounts()
+        {
+            if (!File.Exists(filePath))
             {
-                itemCount[items[i]] = int.Parse(counts[i]);
+                Debug.LogError($"CSV file not found at: {filePath}");
+                return;
             }
+
+            string[] lines = File.ReadAllLines(filePath);
+            if (lines.Length < 2) return; // Ensure we have header and data rows
+
+            string[] items = lines[0].Split(','); // Header row (item names)
+            string[] counts = lines[1].Split(','); // Data row (item counts)
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (itemCount.ContainsKey(items[i]))
+                {
+                    itemCount[items[i]] = int.Parse(counts[i]);
+                }
+            }
+
+            // Debug.Log("Item counts loaded from CSV.");
+            // Debug.Log(itemCount["wood"]);
         }
 
-        // Debug.Log("Item counts loaded from CSV.");
-        // Debug.Log(itemCount["wood"]);
-    }
-
-    // Saves item counts to the CSV file
-    void SaveItemCounts()
-    {
-        using (StreamWriter writer = new StreamWriter(filePath))
+        // Saves item counts to the CSV file
+        void SaveItemCounts()
         {
-            // Write header row
-            writer.WriteLine(string.Join(",", itemCount.Keys));
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                // Write header row
+                writer.WriteLine(string.Join(",", itemCount.Keys));
 
-            // Write data row
-            writer.WriteLine(string.Join(",", itemCount.Values));
+                // Write data row
+                writer.WriteLine(string.Join(",", itemCount.Values));
+            }
+
+            Debug.Log("Item counts saved to CSV.");
         }
 
-        Debug.Log("Item counts saved to CSV.");
-    }
-
-    // Adds an item to the inventory
-    public bool AddItem(string item, int amount = 1)
-    {
-        if (!itemCount.ContainsKey(item))
+        // Adds an item to the inventory
+        public bool AddItem(string item, int amount = 1)
         {
-            Debug.LogError($"Item '{item}' does not exist in inventory.");
-            return false;
+            if (!itemCount.ContainsKey(item))
+            {
+                Debug.LogError($"Item '{item}' does not exist in inventory.");
+                return false;
+            }
+
+            int currentCount = itemCount[item];
+            int maxCount = stackLimit[item];
+
+            if (currentCount + amount > maxCount)
+            {
+                Debug.LogWarning($"Cannot add {amount} '{item}' - exceeds stack limit.");
+                return false;
+            }
+
+            itemCount[item] += amount;
+            SaveItemCounts();
+            return true;
         }
 
-        int currentCount = itemCount[item];
-        int maxCount = stackLimit[item];
-
-        if (currentCount + amount > maxCount)
+        // Removes an item from the inventory
+        public bool RemoveItem(string item, int amount = 1)
         {
-            Debug.LogWarning($"Cannot add {amount} '{item}' - exceeds stack limit.");
-            return false;
+            if (!itemCount.ContainsKey(item))
+            {
+                Debug.LogError($"Item '{item}' does not exist in inventory.");
+                return false;
+            }
+
+            int currentCount = itemCount[item];
+            if (currentCount < amount)
+            {
+                Debug.LogWarning($"Cannot remove {amount} '{item}' - not enough in inventory.");
+                return false;
+            }
+
+            itemCount[item] -= amount;
+            SaveItemCounts();
+            return true;
         }
 
-        itemCount[item] += amount;
-        SaveItemCounts();
-        return true;
-    }
-
-    // Removes an item from the inventory
-    public bool RemoveItem(string item, int amount = 1)
-    {
-        if (!itemCount.ContainsKey(item))
+        public void ToggleCraft(bool isOpen)
         {
-            Debug.LogError($"Item '{item}' does not exist in inventory.");
-            return false;
+            craftUIManager.SetActive(isOpen);
         }
 
-        int currentCount = itemCount[item];
-        if (currentCount < amount)
+        public void ToggleBackPack(bool isOpen)
         {
-            Debug.LogWarning($"Cannot remove {amount} '{item}' - not enough in inventory.");
-            return false;
+            backpackUIManager.SetActive(isOpen);
         }
-
-        itemCount[item] -= amount;
-        SaveItemCounts();
-        return true;
-    }
-
-    public void ToggleCraft(bool isOpen)
-    {
-        craftUIManager.SetActive(isOpen);
-    }
-
-    public void ToggleBackPack(bool isOpen)
-    {
-        backpackUIManager.SetActive(isOpen);
     }
 }

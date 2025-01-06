@@ -1,4 +1,5 @@
 using Core;
+using Player;
 using UnityEngine;
 
 namespace Weapons

@@ -5,6 +5,7 @@ using System.IO;
 using Entities.Player;
 using Core;
 using KeyboardInput;
+using Player;
 
 namespace UI
 {
