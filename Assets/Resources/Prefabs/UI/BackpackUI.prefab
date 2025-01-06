@@ -451,10 +451,11 @@ MonoBehaviour:
   backpackUI: {fileID: 2933644691356577744}
   backpackGrid: {fileID: 8277710001919667309}
   backpackButton: {fileID: 4747593786891021817}
-  backpackIcon: {fileID: 0}
+  backpackIcon: {fileID: 21300000, guid: 923d9a69e0c853f4ba4bc65959ed907a, type: 3}
   closeIcon: {fileID: 21300000, guid: 2852062ecd63a1e41957be171fe59ec5, type: 3}
   itemSlotPrefab: {fileID: 8390433076931752298}
   gridSize: 15
+  playerBag: {fileID: 0}
 --- !u!1 &7499430325211313916
 GameObject:
   m_ObjectHideFlags: 0

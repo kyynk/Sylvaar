@@ -14,6 +14,7 @@ namespace KeyboardInput
         private bool dialogClick;
         private bool attack;
         private bool block;
+        private bool isBackpackActive;
         // wait AVG
         private bool isMute;
 
@@ -89,7 +90,7 @@ namespace KeyboardInput
 
         protected override void CalculateAttack()
         {
-            if (Input.GetKeyDown("mouse 0") && !isMute)
+            if (Input.GetKeyDown("mouse 0") && !isMute && !isBackpackActive)
             {
                 attack = true;
                 evtAttack?.Invoke(attack); 
@@ -99,6 +100,7 @@ namespace KeyboardInput
                 attack = false;
             }
         }
+
 
         protected override void CalculateBlock()
         {
@@ -124,5 +126,13 @@ namespace KeyboardInput
         {
             isMute = _isMute;
         }
+
+        public void SetBackpackActive(bool active)
+        {
+            isBackpackActive = active;
+            Debug.Log("SetBackpackActive: " + active); 
+        }
+
+
     }
 }

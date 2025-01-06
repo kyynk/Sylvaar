@@ -1,4 +1,5 @@
 using Core;
+using Player;
 using UnityEngine;
 
 namespace Weapons
@@ -41,6 +42,8 @@ namespace Weapons
 
             // bomo explode after 5s
             Destroy(bombInstance, 5.1f);
+            PlayerBag playerBag = GameObject.Find("PlayerBag").GetComponent<PlayerBag>();
+            playerBag.RemoveItem(WeaponName);
         }
 
         public bool CanAttack()
